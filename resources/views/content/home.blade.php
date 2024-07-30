@@ -655,7 +655,7 @@
                     </div>
                 </div>
                 <center>
-                <a href="detail_faq.html" class="btn custom-btn mt-2 mt-lg-3" style="background-color: #13547a;">Lihat semua pertanyaan</a>
+                <a href="/detail_fnq" class="btn custom-btn mt-2 mt-lg-3" style="background-color: #13547a;">Lihat semua pertanyaan</a>
                 </center>
             </div>
 

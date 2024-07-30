@@ -15,14 +15,14 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-lg-5 me-lg-auto">
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_1">Home</a>
+                    <a class="nav-link click-scroll" href="/#section_1">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " href="panduan_layanan.html">Panduan Layanan</a>
                     <!-- <a class="nav-link " href="#" onclick="openModal(this)">Panduan Layanan</a> -->
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_2">Browse Topics</a>
+                    <a class="nav-link click-scroll" href="/#section_2">Browse Topics</a>
                 </li>
 
                 <li class="nav-item">
@@ -30,7 +30,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_4">FAQs</a>
+                    <a class="nav-link click-scroll" href="/detail_fnq">FAQs</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="/pelacakan">Lacak Pengajuan</a>
