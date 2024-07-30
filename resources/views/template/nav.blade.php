@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="index.html">
-            <img src="images/logo.png" class="" alt="" style="width: 65%;">
+            <img src="{{ asset('template/images/logo.png') }}" class="" alt="" style="width: 65%;">
         </a>
 
         <div class="d-lg-none ms-auto me-4">

@@ -4,7 +4,7 @@
 
             <div class="col-lg-3 col-12 mb-4 pb-2">
                 <a class="navbar-brand mb-2" href="index.html">
-                    <img src="images/logo_aja.png" class="" alt="" style="width: 25%;">
+                    <img src="{{ asset('template/images/logo_aja.png') }}" class="" alt="" style="width: 25%;">
                     <span>I S B N </span>
                 </a>
                 <ul class="site-footer-links">
