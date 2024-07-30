@@ -26,14 +26,14 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_3">How it works</a>
+                    <a class="nav-link click-scroll" href="/#section_3">How it works</a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="#section_4">FAQs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="tracking_pemohonan_isbn.html">Lacak Pengajuan</a>
+                    <a class="nav-link click-scroll" href="/pelacakan">Lacak Pengajuan</a>
                 </li>
                 
             </ul>
