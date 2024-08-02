@@ -67,17 +67,24 @@
         @include('template/footer')
 
          <!-- JAVASCRIPT FILES -->
+
+        
+
         <script src="{{ asset('template/js/jquery.min.js') }}"></script>
         <script src="{{ asset('template/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('template/js/jquery.sticky.js') }}"></script>
         <script src="{{ asset('template/js/click-scroll.js') }}"></script>
         <script src="{{ asset('template/js/custom.js') }}"></script>
 
+        @stack('scripts')
+
+
+
         <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
         <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
         <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
 
-        @stack('scripts')
+        
 
         <!-- modal panduan layanan -->
         <script>
