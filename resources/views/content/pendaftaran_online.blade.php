@@ -41,8 +41,7 @@
                         <div>
                             <h3>Penerbit</h3>
                             <section>
-                               
-
+                                
                                 <label for="name">Penerbit  *</label> <br>
                                 <label>
                                     <input type="radio" id="swasta" value="swasta" onclick="kat_penerbit(this)" name="radio"/>
@@ -118,87 +117,90 @@
                             </section>
                             <h3>Identitas</h3>
                             <section>
-                                <div class="form-row">
-                                    <div class="form-holder form-holder-2">
+                                <div class="form-row row" style="margin-top:10%">
+                                    <div class="col">
                                         <label for="username" style="color:black">Penerbit*</label>
                                         <input type="text" placeholder="" class="form-control" id="username" name="username"  >
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-holder form-holder-2">
+                                <div class="form-row row" style="margin-top:14%">
+                                    <div class="col">
                                         <label for="username" style="color:black">Username*</label>
                                         <input type="text" placeholder="Username" class="form-control" id="username" name="username"  >
                                     </div>
-                                </div>
-                                
-                                <div class="form-row">
-                                    <div class="form-holder">
+                                </div>    
+
+                                <div class="form-row row" style="margin-top:14%">
+                                    <div class="col">
                                         <label for="password" style="color:black">Password*</label>
                                         <input type="password" placeholder="Password" class="form-control" id="password" name="password"   >
                                     </div>
-                                    <div class="form-holder">
+                                    <div class="col">
                                         <label for="confirm_password" style="color:black">Confirm Password*</label>
                                         <input type="password" placeholder="" class="form-control" id="confirm_password" name="confirm_password"  >
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-holder form-holder-2">
+                                <div class="form-row row" style="margin-top:14%">
+                                    <div class="col">
                                         <label for="username" style="color:black">Nama Gedung (jika ada)</label>
                                         <input type="text" placeholder="" class="form-control" id="username" name="username"  >
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-holder form-holder-2">
+                                <div class="form-row row" style="margin-top:14%">
+                                    <div class="col">
                                         <label for="username" style="color:black">Nama Jalan*</label>
                                         <input type="text" placeholder="" class="form-control" id="username" name="username"  >
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-holder">
+                                <div class="form-row row" style="margin-top:14%">
+                                    <div class="col">
                                         <label for="password" style="color:black">provinsi*</label>
                                         <input type="text" placeholder="" class="form-control" id="" name=""   >
                                     </div>
-                                    <div class="form-holder">
+                                    <div class="col">
                                         <label for="confirm_password" style="color:black">Kabupaten / Kota</label>
                                         <input type="text" placeholder="" class="form-control" id="" name=""  >
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-holder">
+                                <div class="form-row row" style="margin-top:14%">
+                                    <div class="col">
                                         <label for="" style="color:black">Kecamatan</label>
                                         <input type="text" placeholder="" class="form-control" id="" name=""  >
                                     </div>
-                                    <div class="form-holder">
+                                    <div class="col">
                                         <label for="" style="color:black">Kelurahan</label>
                                         <input type="text" placeholder="" class="form-control" id="" name="" >
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-holder">
+
+                               <div class="form-row row" style="margin-top:14%">
+                                    <div class="col">
                                         <label for="email" style="color:black">Email*</label>
                                         <input type="text" placeholder="Your Email" class="form-control" id="email" name="email" >
                                     </div>
-                                    <div class="form-holder">
+                                    <div class="col">
                                         <label for="email" style="color:black">Email Alternatif*</label>
                                         <input type="text" placeholder="Your Email" class="form-control" id="email" name="email">
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-holder form-holder-2">
+                                <div class="form-row row" style="margin-top:14%">
+                                    <div class="col">
                                         <label for="username" style="color:black">Nama Admin</label>
                                         <input type="text" placeholder="" class="form-control" id="username" name="username">
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-holder">
+                                <div class="form-row row" style="margin-top:14%">
+                                    <div class="col">
                                         <label for="password" style="color:black">Telephone</label>
                                         <input type="text" placeholder="" class="form-control" id="" name="" >
                                     </div>
-                                    <div class="form-holder">
+                                    <div class="col">
                                         <label for="confirm_password" style="color:black">Kode Pos</label>
                                         <input type="text" placeholder="" class="form-control" id="" name="">
                                     </div>
                                 </div>
+
+                                <p>(*) Mandatory</p>
                             </section>
                             <h3>Tambahan</h3>
                             <section>
@@ -223,11 +225,11 @@
                                     <div class="captcha_form"> 
                                         <input type="text" id="captcha_form" class="form_input_captcha" placeholder=" ">
                                         <button class="captcha_refersh">
-                                            <i class="fa fa-refresh"></i>
                                         </button>
                                     </div>
                                 </div>
-                                <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                                <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms" >I agree with the Terms and Conditions.</label>
+                            <section>
                         </div>
                     </form>
                 </div>
