@@ -20,7 +20,7 @@
                         <input name="keyword" type="search" class="form-control" id="keyword_pencarian" placeholder="Cari Judul, Pengarang, Penerbit, ISBN ..." aria-label="Search">
 
                         <button type="submit" class="form-control">
-                            <a class="nav-link click-scroll" href="#section_pencarian" onclick="handleClickPencarian()">Cari</a>
+                            <a class="nav-link click-scroll" href="" onclick="handleClickSearch()">Cari</a>
                         </button>
                     </div>
                 </form>
@@ -84,35 +84,6 @@
         </div>
     </div>
 </section>
-
-<section class="explore-section section-padding" id="section_pencarian" style="display: none;">
-    <div class="container" >
-
-        <div class="col-12 text-center">
-            <h2 class="mb-4">Hasil Pencarian</h1>
-            <div class="col-lg-12 col-md-12 col-12 mb-12 mb-lg-12">
-                <div class="custom-block bg-white shadow-lg">
-                    <div class="d-flex">
-                        
-                    </div>
-
-                    <table id="table_filter" class="display responsive" style="width:100%;">
-                        <thead>
-                            <tr>
-                                <th><center>ISBN</center></th>
-                                <th><center>Judul </center></th>
-                                <th><center>Pengarang</center></th>
-                                <th><center>Tahun Terbit</center></th>
-                            </tr>
-                        </thead>
-                    </table>
-                        <!-- <img src="images/topics/undraw_Compose_music_re_wpiw.png" class="custom-block-image img-fluid" alt=""> -->
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 
 <section class="explore-section section-padding" id="section_2">
     <div class="container">
@@ -686,3 +657,15 @@
         </div>
     </div>
 </div>
+
+
+<!-- js data table pencarian-->
+<script>
+    function handleClickSearch() {
+        //keyword pencarian
+        var keyword_pencarian = $("#keyword_pencarian").val();
+        //get data pencarian
+        window.location.assign("/search?keyword="+keyword_pencarian);
+    }
+</script>
+<!-- end -->

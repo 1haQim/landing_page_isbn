@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="images/logo_aja.png" type="image/x-icon">
 
@@ -26,7 +27,7 @@
         <link href="{{ asset('template/css/templatemo-topic-listing.css') }}" rel="stylesheet">  
         
         <!-- data table -->
-        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
+        {{-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
         <link href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" rel="stylesheet">  
         <link href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.dataTables.css" rel="stylesheet">  
         <style>
@@ -46,8 +47,22 @@
                 display: none; /* Menyembunyikan elemen label */
             }
 
-        </style>
+        </style> --}}
         <!-- end datatable -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('template/plugins/DataTable/css/jquery.dataTables.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('template/plugins/DataTable/css/dataTables.bootstrap4.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('template/plugins/DataTable/css/responsive.bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('template/plugins/DataTable/css/responsive.jqueryui.min.css') }}">
+        
+        <style>
+            .card {
+                border-radius: var(--border-radius-medium);
+                padding: 30px;
+                transition: all 0.3s ease;
+                border : none
+            }
+
+        </style>
 
         @stack('styles')
 
@@ -67,9 +82,6 @@
         @include('template/footer')
 
          <!-- JAVASCRIPT FILES -->
-
-        
-
         <script src="{{ asset('template/js/jquery.min.js') }}"></script>
         <script src="{{ asset('template/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('template/js/jquery.sticky.js') }}"></script>
@@ -78,13 +90,21 @@
 
         @stack('scripts')
 
+        {{-- datatable --}}
+         <!-- bootstrap 4 js -->
+        <script src="{{ asset('template/plugins/DataTable/js/bootstrap.min.js ') }}"></script>
+        <script src="{{ asset('template/plugins/DataTable/js/metisMenu.min.js ') }}"></script>
+        <script src="{{ asset('template/plugins/DataTable/js/jquery.slimscroll.min.js ') }}"></script>
 
-
-        <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
-        <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
-        <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
-
-        
+        <!-- Start datatable js -->
+        <script src="{{ asset('template/plugins/DataTable/js/jquery.dataTables.js ') }}"></script>
+        <script src="{{ asset('template/plugins/DataTable/js/jquery.dataTables.min.js ') }}"></script>
+        <script src="{{ asset('template/plugins/DataTable/js/dataTables.bootstrap4.min.js ') }}"></script>
+        <script src="{{ asset('template/plugins/DataTable/js/dataTables.responsive.min.js ') }}"></script>
+        <script src="{{ asset('template/plugins/DataTable/js/responsive.bootstrap.min.js ') }}"></script>
+        <!-- others plugins -->
+        <script src="{{ asset('template/plugins/DataTable/js/scripts.js') }}"></script>
+        {{-- end datatable --}}
 
         <!-- modal panduan layanan -->
         <script>
@@ -105,55 +125,7 @@
              })
         </script>
 
-        <!-- js data table pencarian-->
-        <script>
-            function isNotEmptyString(value) {
-                return value !== null && value !== undefined && value.trim() !== '';
-            }
-
-            function handleClickPencarian() {
-                // tampilan pencarian
-                var element = document.getElementById('section_pencarian');
-                element.style.display = '';
-                //keyword pencarian
-                var keyword_pencarian = $("#keyword_pencarian").val();
-                //get data pencarian
-                $.ajax({
-                    url: 'https://dummyjson.com/c/cd7a-89b4-4645-a6e6',
-                    dataType: 'json',
-                    serverSide: true,
-                    success: function(data) {
-                        var tableElement = $('#table_filter');
-                        // hapus DataTable jika sudah ada
-                        if ($.fn.DataTable.isDataTable(tableElement)) {
-                            tableElement.DataTable().destroy();
-                        }
-
-                        // Inisialisasi DataTable
-                        console.log('AJAX response:', data.data); // Log the response data to the console
-                        var tableElement = $('#table_filter').DataTable({
-                            data: data.data,
-                            columns: [
-                                { data: 'isbn' },
-                                { data: 'judul' },
-                                { data: 'pengarang' },
-                                { data: 'terbit' }
-                            ],
-                            lengthMenu: false,
-                        });
-
-                        //filter datatable
-                        if (isNotEmptyString(keyword_pencarian)) {
-                            tableElement.search(keyword_pencarian).draw();
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('AJAX error:', textStatus, errorThrown); // Log any errors
-                    }
-                });
-            }
-        </script>
-        <!-- end -->
+       
 
         <!-- js data table BIP-->
         <script>
