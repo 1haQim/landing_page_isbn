@@ -8,46 +8,19 @@
 
         <meta name="description" content="">
         <meta name="author" content="">
-        {{-- <meta name="csrf-token" content="{{ csrf_token() }}" /> --}}
 
         <title>ISBN</title>
 
         <!-- CSS FILES -->        
          
         <link rel="preconnect" href="https://fonts.googleapis.com">
-        
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap" rel="stylesheet">
                         
         <link href="{{ asset('template/css/bootstrap.min.css') }}" rel="stylesheet">
-
         <link href="{{ asset('template/css/bootstrap-icons.css') }}" rel="stylesheet">
-
         <link href="{{ asset('template/css/templatemo-topic-listing.css') }}" rel="stylesheet">  
         
-        <!-- data table -->
-        {{-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
-        <link href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" rel="stylesheet">  
-        <link href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.dataTables.css" rel="stylesheet">  
-        <style>
-            .dt-length {
-                display: none;
-            }
-            /* Gaya untuk elemen pencarian DataTables */
-            .dt-input {
-                width: 100%; /* Ubah lebar input */
-                padding: 10px; /* Ubah padding */
-                border-radius: 150px; /* Ubah radius border */
-                border: 1px solid #ccc; /* Ubah border */
-                font-size: 14px; /* Ubah ukuran font */
-            }
-
-            label[for^="dt-search-"] {
-                display: none; /* Menyembunyikan elemen label */
-            }
-
-        </style> --}}
         <!-- end datatable -->
         <link rel="stylesheet" type="text/css" href="{{ asset('template/plugins/DataTable/css/jquery.dataTables.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('template/plugins/DataTable/css/dataTables.bootstrap4.min.css') }}">
@@ -65,11 +38,9 @@
         </style>
 
         @stack('styles')
-
     </head>
     
     <body id="top">
-
         <main>
 
             @include('template/nav')
@@ -115,17 +86,24 @@
             }
         </script>
 
+        <!-- modal pengumuman -->
         <script>
-             $(document).ready(function() {
-                // Set the image source to the modal image jika besok menggunakan ajax
-                // document.getElementById('modalImage').src = imgSrc;
-                // Show the modal
-                var myModal = new bootstrap.Modal(document.getElementById('imageModalPengumuman'));
-                myModal.show();
-             })
-        </script>
+            function EmptyString(value) {
+                return value == null || value == undefined || value.trim() == '';
+            }
+            document.addEventListener('DOMContentLoaded', (event) => {
+                var url = window.location.href;
+                // Extract the fragment identifier
+                var fragment = window.location.hash;
+                // You can also remove the '#' character if needed
+                var section = fragment.substring(1);
 
-       
+                if (EmptyString(section)) {
+                    var myModal = new bootstrap.Modal(document.getElementById('imageModalPengumuman'));
+                    myModal.show();
+                }
+            })
+        </script>
 
         <!-- js data table BIP-->
         <script>
@@ -188,20 +166,6 @@
             });
         </script>
         <!-- end -->
-
-        <script>
-            //menampilkan data lengkap statistik
-            function statistik_read_all() {
-                document.getElementById('statistik_lengkap').style.display = '';
-                document.getElementById('statistik_singkat').style.display = 'none';
-            }
-
-            //hide data lengkap statistik
-            function statistik_read_section() {
-                document.getElementById('statistik_lengkap').style.display = 'none';
-                document.getElementById('statistik_singkat').style.display = '';
-            }
-        </script>
 
     </body>
 
