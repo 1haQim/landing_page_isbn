@@ -48,37 +48,6 @@
     </div>
 </section>
 
-<section class="featured-section" style="display: none;">
-    <div class="container">
-        <div class="row justify-content-center">
-
-            <div class="col-lg-12 col-12 mb-12 mb-lg-0">
-                <div class="custom-block bg-white shadow-lg">
-                    <a href="topics-detail.html">
-                        <div class="d-flex">
-                            <div>
-                                <h5 class="mb-2">Prosedur</h5>
-
-                                <p class="mb-0">
-                                    Informasi tentang Prosedur Pendaftaran Penerbit dan Permohonan ISBN
-                                </p>
-                            </div>
-                            
-                        </div>
-                        <div>
-                            <center>
-                                <a href="topics-detail.html" class="btn custom-btn mt-2 mt-lg-3">Selengkapnya</a>
-                            </center>
-                        </div>
-                        <img src="images/icon_1.png" class="custom-block-image img-fluid" alt="">
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
 <section class="explore-section section-padding" id="section_pencarian" style="display: none;">
     <div class="container" >
 
