@@ -77,20 +77,12 @@
         <script src="{{ asset('template/plugins/DataTable/js/scripts.js') }}"></script>
         {{-- end datatable --}}
 
-        <!-- modal panduan layanan -->
-        <script>
-            function openModal(element) {
-                // Show the modal
-                var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
-                myModal.show();
-            }
-        </script>
-
         <!-- modal pengumuman -->
         <script>
             function EmptyString(value) {
                 return value == null || value == undefined || value.trim() == '';
             }
+
             document.addEventListener('DOMContentLoaded', (event) => {
                 var url = window.location.href;
                 // Extract the fragment identifier
@@ -99,10 +91,36 @@
                 var section = fragment.substring(1);
 
                 if (EmptyString(section)) {
-                    var myModal = new bootstrap.Modal(document.getElementById('imageModalPengumuman'));
-                    myModal.show();
+                    $.ajax({
+                        url: '/flyer',
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        dataType: 'json',
+                        serverSide: true,
+                        success: function(data) {
+                            let data = "http://127.0.0.1:8000/template/images/HasilSKMISBN2024Periode1.jpg" //kalau live dihapus
+                            showPengumuman(data)
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.error('AJAX error:', textStatus, errorThrown); // Log any errors
+                        }
+                    });
                 }
             })
+
+            function showPengumuman(imageUrl) {
+                // Set the image source
+                var imageElement = document.getElementById('modalImage');
+                imageElement.src = imageUrl;
+
+                // Wait for the image to load before showing the modal
+                imageElement.onload = function() {
+                    var myModal = new bootstrap.Modal(document.getElementById('imageModalPengumuman'));
+                    myModal.show();
+                };
+            }
         </script>
 
         <!-- js data table BIP-->

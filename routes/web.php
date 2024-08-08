@@ -18,7 +18,8 @@ Route::get('/welcome', function () {
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index']);
-Route::get('/home-search', [HomeController::class, 'search']);
+Route::post('/flyer', [HomeController::class, 'flyer']);
+
 Route::match(['get', 'post'], '/search', [PencarianController::class, 'index']);
 
 

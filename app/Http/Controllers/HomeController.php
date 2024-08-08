@@ -11,4 +11,15 @@ class HomeController extends Controller
         return view('content.home');
     }
 
+    //ambil data untuk popup modal home first load
+    function flyer(Request $request)  {
+        if ($request->isMethod('post')) {
+            $filter = [["name"=>"VISIBLE","Value"=>"1","SearchType"=>"Tepat"]];
+            $data = kurl('get','getlist', 'ISBN_MST_FLYER', $filter);
+            return json_encode($data['Data']['Items'][0]['DESCRIPTION']);
+        } else {
+            return errorResponse();
+        }
+    }
+
 }
