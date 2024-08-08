@@ -2,6 +2,8 @@
 
 @section('content')
 
+
+
 <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
     <div class="container">
         <div class="row">
@@ -636,23 +638,12 @@
 <!-- end pertanyaan -->
 
 
-<!-- Modal -->
-<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <img id="modalImage" src="{{ asset('template/images/maklumat_layanan.jpg') }}" alt="Image Preview" class="img-fluid">
-            </div>
-        </div>
-    </div>
-</div>
-
-    <!-- Modal pengumuman-->
+<!-- Modal pengumuman-->
 <div class="modal fade" id="imageModalPengumuman" tabindex="-1" aria-labelledby="imageModalLabelPengumuman" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <img id="modalImage" src="{{ asset('template/images/HasilSKMISBN2024Periode1.jpg') }}" alt="Image Preview" class="img-fluid">
+                <img id="modalImage" src="" alt="Image Preview" class="img-fluid">
             </div>
         </div>
     </div>
@@ -661,6 +652,7 @@
 
 <!-- js data table pencarian-->
 <script>
+    
     function handleClickSearch() {
         //keyword pencarian
         var keyword_pencarian = $("#keyword_pencarian").val();
@@ -669,3 +661,4 @@
     }
 </script>
 <!-- end -->
+
