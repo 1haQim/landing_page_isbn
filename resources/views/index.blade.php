@@ -59,7 +59,6 @@
         <script src="{{ asset('template/js/click-scroll.js') }}"></script>
         <script src="{{ asset('template/js/custom.js') }}"></script>
 
-        @stack('scripts')
 
         {{-- datatable --}}
          <!-- bootstrap 4 js -->
@@ -77,113 +76,14 @@
         <script src="{{ asset('template/plugins/DataTable/js/scripts.js') }}"></script>
         {{-- end datatable --}}
 
-        <!-- modal pengumuman -->
-        <script>
-            function EmptyString(value) {
-                return value == null || value == undefined || value.trim() == '';
-            }
+        @stack('scripts')
 
-            document.addEventListener('DOMContentLoaded', (event) => {
-                var url = window.location.href;
-                // Extract the fragment identifier
-                var fragment = window.location.hash;
-                // You can also remove the '#' character if needed
-                var section = fragment.substring(1);
 
-                if (EmptyString(section)) {
-                    $.ajax({
-                        url: '/flyer',
-                        type: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        dataType: 'json',
-                        serverSide: true,
-                        success: function(data) {
-                            let data = "http://127.0.0.1:8000/template/images/HasilSKMISBN2024Periode1.jpg" //kalau live dihapus
-                            showPengumuman(data)
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.error('AJAX error:', textStatus, errorThrown); // Log any errors
-                        }
-                    });
-                }
-            })
+        
 
-            function showPengumuman(imageUrl) {
-                // Set the image source
-                var imageElement = document.getElementById('modalImage');
-                imageElement.src = imageUrl;
+        
 
-                // Wait for the image to load before showing the modal
-                imageElement.onload = function() {
-                    var myModal = new bootstrap.Modal(document.getElementById('imageModalPengumuman'));
-                    myModal.show();
-                };
-            }
-        </script>
-
-        <!-- js data table BIP-->
-        <script>
-            $.ajax({
-                url: 'https://dummyjson.com/c/e7b8-359e-41d6-9789',
-                success: function(data) {
-                    console.log('AJAX response:', data.data); // Log the response data to the console
-                    var tableElement =  $('#doc_bip').DataTable({
-                        data: data.data,
-                        columns: [
-                            { data: 'judul' },
-                            { data: 'deskripsi' },
-                            {
-                                data: null,
-                                defaultContent: '<button type="submit" class="form-control"><a class="nav-link click-scroll" href="#">Download</a></button>', // Tombol aksi
-                                orderable: false
-                            }
-                        ],
-                        lengthMenu: false 
-                    });
-
-                    //total row pada header card
-                    var totalRows = tableElement.data().count();
-                    document.getElementById('totalRowsBip').innerHTML = totalRows;
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('AJAX error:', textStatus, errorThrown); // Log any errors
-                }
-            });
-        </script>
-        <!-- end -->
-
-        <!-- js data table surat-->
-        <script>
-            $.ajax({
-                url: 'https://dummyjson.com/c/7162-7e63-4256-98bb',
-                success: function(data) {
-                    console.log('AJAX response:', data.data); // Log the response data to the console
-                    var tableElement =  $('#doc_surat').DataTable({
-                        data: data.data,
-                        columns: [
-                            { data: 'judul' },
-                            { data: 'deskripsi' },
-                            {
-                                data: null,
-                                defaultContent: '<button type="submit" class="form-control"><a class="nav-link click-scroll" href="#">Download</a></button>', // Tombol aksi
-                                orderable: false
-                            }
-                        ],
-                        lengthMenu: false 
-                    });
-
-                    //total row pada header card
-                    var totalRows = tableElement.data().count();
-                    document.getElementById('totalRowsSurat').innerHTML = totalRows;
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('AJAX error:', textStatus, errorThrown); // Log any errors
-                }
-            });
-        </script>
-        <!-- end -->
+        
 
     </body>
 
