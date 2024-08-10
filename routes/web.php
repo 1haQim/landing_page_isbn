@@ -24,6 +24,11 @@ Route::match(['get', 'post'], '/search', [PencarianController::class, 'index']);
 
 
 Route::get('/pendaftaran_online', [PendaftaranController::class, 'index']);
+Route::post('/checking_data_existing', [PendaftaranController::class, 'checking_data_existing']);
+Route::post('/get_wilayah', [PendaftaranController::class, 'get_wilayah']);
+
+
+
 Route::get('/pelacakan', [PelacakanController::class, 'index']);
 Route::get('/detail_fnq', [FnQsController::class, 'index']);
 Route::get('/panduan_layanan', [PanduanLayananController::class, 'index']);

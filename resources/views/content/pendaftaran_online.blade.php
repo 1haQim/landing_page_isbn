@@ -17,7 +17,16 @@
             margin-bottom: 1.6em;
 
         }
+        .select2-selection--single {
+            height: 37px !important;
+            line-height: 37px !important; /* Ensures the text is vertically centered */
+        }
+
+        .select2-selection__rendered {
+            line-height: 37px !important; /* Ensures the text is vertically centered */
+        }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
 
 @section('content')
@@ -119,14 +128,14 @@
                             <section>
                                 <div class="form-row row" style="margin-top:10%">
                                     <div class="col">
-                                        <label for="username" style="color:black">Penerbit*</label>
-                                        <input type="text" placeholder="" class="form-control" id="username" name="username"  >
+                                        <label for="penerbit" style="color:black">Penerbit*</label>
+                                        <input type="text" placeholder="" class="form-control" id="penerbit" name="penerbit"  >
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
                                         <label for="username" style="color:black">Username*</label>
-                                        <input type="text" placeholder="Username" class="form-control" id="username" name="username"  >
+                                        <input type="text" placeholder="Username" class="form-control" onchange="checkDataExisting('username',this.value)" id="username" name="username"  >
                                     </div>
                                 </div>    
 
@@ -142,51 +151,60 @@
                                 </div>
                                 <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
-                                        <label for="username" style="color:black">Nama Gedung (jika ada)</label>
-                                        <input type="text" placeholder="" class="form-control" id="username" name="username"  >
+                                        <label for="nm_gedung" style="color:black">Nama Gedung (jika ada)</label>
+                                        <input type="text" placeholder="" class="form-control" id="nm_gedung" name="nm_gedung"  >
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
-                                        <label for="username" style="color:black">Nama Jalan*</label>
-                                        <input type="text" placeholder="" class="form-control" id="username" name="username"  >
+                                        <label for="nm_jalan" style="color:black">Nama Jalan*</label>
+                                        <input type="text" placeholder="" class="form-control" id="nm_jalan" name="nm_jalan"  >
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
-                                        <label for="password" style="color:black">provinsi*</label>
-                                        <input type="text" placeholder="" class="form-control" id="" name=""   >
+                                        <label for="provinsi" style="color:black">provinsi*</label>
+                                        <select id="provinsi" style="width: 100%;" class="form-control select2" name="provinsi" onchange="get_wilayah_prov('kab_kot',this.value)">
+                                             
+                                        </select>
                                     </div>
                                     <div class="col">
-                                        <label for="confirm_password" style="color:black">Kabupaten / Kota</label>
-                                        <input type="text" placeholder="" class="form-control" id="" name=""  >
+                                        <label for="kab_kot" style="color:black">Kabupaten / Kota</label>
+                                        <select id="kab_kot" style="width: 100%;" class="form-control select2" name="kab_kot" onchange="get_wilayah_prov('kec',this.value)">
+                                            
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
                                         <label for="" style="color:black">Kecamatan</label>
-                                        <input type="text" placeholder="" class="form-control" id="" name=""  >
+                                        <select id="kec" style="width: 100%;" class="form-control select2" name="kec" onchange="get_wilayah_prov('kel',this.value)">
+                                           
+                                        </select>
                                     </div>
                                     <div class="col">
                                         <label for="" style="color:black">Kelurahan</label>
-                                        <input type="text" placeholder="" class="form-control" id="" name="" >
+                                        <select id="kel" style="width: 100%;" class="form-control select2" name="kel" >
+                                           
+                                        </select>
+                                        {{-- <input type="text" placeholder="" class="form-control" id="" name="" > --}}
                                     </div>
                                 </div>
 
                                <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
                                         <label for="email" style="color:black">Email*</label>
-                                        <input type="text" placeholder="Your Email" class="form-control" id="email" name="email" >
+                                        <input type="text" placeholder="Your Email" class="form-control" id="email" name="email" onchange="checkDataExisting('admin_email',this.value)">
                                     </div>
                                     <div class="col">
                                         <label for="email" style="color:black">Email Alternatif*</label>
-                                        <input type="text" placeholder="Your Email" class="form-control" id="email" name="email">
+                                        <input type="text" placeholder="Your Email" class="form-control" id="email" name="email" onchange="checkDataExisting('alternatif_email',this.value)">
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
-                                        <label for="username" style="color:black">Nama Admin</label>
-                                        <input type="text" placeholder="" class="form-control" id="username" name="username">
+                                        <label for="nm_admin" style="color:black">Nama Admin</label>
+                                        <input type="text" placeholder="" class="form-control" id="nm_admin" name="nm_admin">
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:14%">
@@ -216,8 +234,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-holder form-holder-2">
-                                        <label for="username" style="color:black">Website</label>
-                                        <input type="text" placeholder="Username" class="form-control" id="username" name="username"  >
+                                        <label for="website" style="color:black">Website</label>
+                                        <input type="text" placeholder="Website" class="form-control" id="website" name="website"  >
                                     </div>
                                 </div>
                                 <div id="captcha" >
@@ -279,21 +297,164 @@
         }
         initCaptcha();
 
-        document.querySelector(".form_button").addEventListener("click",function(){
-            let inputcaptchavalue = document.querySelector("#captcha input").value;
+        // document.querySelector(".form_button").addEventListener("click",function(){
+        //     let inputcaptchavalue = document.querySelector("#captcha input").value;
 
-            if (inputcaptchavalue === captchaValue) 
-            {
-                // swal("","Log in","success");
-                alert("Log in success");
+        //     if (inputcaptchavalue === captchaValue) 
+        //     {
+        //         // swal("","Log in","success");
+        //         alert("Log in success");
+        //     }
+        //     else
+        //     {
+        //         // swal("Invalid Captcha");
+        //         alert("Invalid Captcha");
+        //     }
+        // });
+    })();
+</script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    // validasi kategori penerbit
+    function kat_penerbit(radio) {
+        if (radio.value == 'pemerintah') {
+            document.getElementById('form-akta').style.display = 'none';
+        } else {
+            document.getElementById('form-akta').style.display = 'block';
+        }
+    }
+
+    //select2 pemilihan wilayah
+    $(function () {
+        $('.select2').select2()
+    })
+    //select2 first load
+    document.addEventListener('DOMContentLoaded', (event) => {
+        $.ajax({
+            url: '/get_wilayah',
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            success: function(data) {
+                var selectElement = document.getElementById('provinsi');
+                // Use forEach to loop through each item in the array
+                data.forEach(function(item) {
+                    // Create a new option element
+                    var newOption = document.createElement('option');
+                    newOption.text = item.NAMAPROPINSI;
+                    newOption.value = item.ID;
+
+                    // Add the option to the select element
+                    selectElement.add(newOption);
+                });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('AJAX error:', textStatus, errorThrown);
             }
-            else
-            {
-                // swal("Invalid Captcha");
-                alert("Invalid Captcha");
+        })
+     })
+
+     //get kabupaten -> kec -> kel
+    function get_wilayah_prov(name, value) {
+        //condition req data 
+        if (name == 'kab_kot') {
+            var req_data = { 'kab_kot' : value }
+            var item_var = 'NAMAKAB'
+        }else if(name == 'kec') {
+            var req_data = { 'kec' : value }
+            var item_var = 'NAMAKEC'
+        } else if(name ==  'kel'){
+            var req_data = { 'kel' : value }
+            var item_var = 'NAMAKEL'
+        } else {
+            var req_data = {} 
+            var item_var = 'NAMAPROPINSI'
+        }
+        //get api data berdasarkan filter req
+        $.ajax({
+            url: '/get_wilayah',
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            data: req_data,
+            success: function(data) {
+                var selectElement = document.getElementById(name);
+                // Clear existing options
+                selectElement.innerHTML = '';
+                // Use forEach to loop through each item in the array
+                data.forEach(function(item) {
+                    // Create a new option element
+                    var newOption = document.createElement('option');
+                    newOption.text = item[item_var];
+                    newOption.value = item.ID;
+                    // Add the option to the select element
+                    selectElement.add(newOption);
+                });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('AJAX error:', textStatus, errorThrown);
+            }
+        })
+    }
+    //end pemilihan wilayah
+    //check data existing username and email
+    function checkDataExisting(name, value) {
+        if (name == 'username') {
+            var req_data = { 'username' : value }
+        } else if (name == 'admin_email') {
+            var req_data = { 'admin_email' : value }
+        } else {
+            var req_data = { 'alternatif_email' : value }
+        }
+        $.ajax({
+            url: '/checking_data_existing',
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            serverSide: true,
+            data: req_data,
+            success: function(data) {
+                if (data.length > 0) {
+                    alert( name +'sudah digunakan')
+                    //nanti harus dikasih validasi tidak bisa next jika sudah digunakan
+                } else {
+                    alert('bisa digunakan')
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('AJAX error:', textStatus, errorThrown); // Log any errors
             }
         });
-    })();
+    }
+    // END check data existing username and email
+
+    //upload file 
+    Dropzone.autoDiscover = false;
+    var dropzone1 = new Dropzone("#dropzone1", {
+        url: '/',
+        paramName: "file",
+        maxFilesize: 2, // MB
+        acceptedFiles: ".pdf",
+        autoProcessQueue: false
+    });
+    var dropzone1 = new Dropzone("#dropzone2", {
+        url: '/',
+        paramName: "file",
+        maxFilesize: 2, // MB
+        acceptedFiles: ".pdf",
+        autoProcessQueue: false
+    });
+
+
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"></script>
@@ -330,33 +491,8 @@
     });
 </script>
 
-
-<script>
-    // validasi kategori penerbit
-    function kat_penerbit(radio) {
-        if (radio.value == 'pemerintah') {
-            document.getElementById('form-akta').style.display = 'none';
-        } else {
-            document.getElementById('form-akta').style.display = 'block';
-        }
-    }
-</script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
-    <script>
-        var dropzone1 = new Dropzone("#dropzone1", {
-            url: '/',
-            paramName: "file",
-            maxFilesize: 2, // MB
-            acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            autoProcessQueue: false
-        });
-        var dropzone1 = new Dropzone("#dropzone2", {
-            url: '/',
-            paramName: "file",
-            maxFilesize: 2, // MB
-            acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            autoProcessQueue: false
-        });
+<script>
+    
 </script>
 @endpush
