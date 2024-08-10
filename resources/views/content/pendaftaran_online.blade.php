@@ -436,25 +436,6 @@
         });
     }
     // END check data existing username and email
-
-    //upload file 
-    Dropzone.autoDiscover = false;
-    var dropzone1 = new Dropzone("#dropzone1", {
-        url: '/',
-        paramName: "file",
-        maxFilesize: 2, // MB
-        acceptedFiles: ".pdf",
-        autoProcessQueue: false
-    });
-    var dropzone1 = new Dropzone("#dropzone2", {
-        url: '/',
-        paramName: "file",
-        maxFilesize: 2, // MB
-        acceptedFiles: ".pdf",
-        autoProcessQueue: false
-    });
-
-
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"></script>
@@ -486,13 +467,175 @@
         },
         onFinished: function (event, currentIndex)
         {
-            alert("Submitted!");
+            $.ajax({
+                url: '/submit_pendaftaran',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                data: req_data,
+                success: function(data) {
+                    
+                    alert("Submitted!");
+
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX error:', textStatus, errorThrown);
+                }
+            })
+
         }
     });
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
 <script>
+    //upload file 
+    Dropzone.autoDiscover = false;
+    var dropzone1 = new Dropzone("#dropzone1", {
+        url: '/projects/media-one',
+        paramName: "file",
+        maxFiles: 1,
+        maxFilesize: 2, // MB
+        acceptedFiles: ".pdf",
+        autoProcessQueue: false,
+        addRemoveLinks: true, // Option to remove files from the dropzone
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token for Laravel
+        },
+        init: function() {
+            this.on("addedfile", function(file) {
+                // Automatically process the file when it is added
+                if (this.files.length > 1) {
+                    this.removeFile(this.files[0]);
+                }
+                
+                dropzone1.processFile(file);
+            });
+
+            this.on("sending", function(file, xhr, formData) {
+                // Additional data can be sent here if required
+                console.log('Sending file:', file);
+            });
+
+            this.on("success", function(file, response) {
+                $('#contact').append('<input type="hidden" id="file_pernyataan" name="file_pernyataan" value="' + response[0]['name'] + '">');
+                // Handle the response from the server after the file is uploaded
+                console.log('File uploaded successfully', response);
+            });
+
+            this.on("error", function(file, response) {
+                // Handle the errors
+                console.error('Upload error', response);
+            });
+
+            this.on("queuecomplete", function() {
+                // Called when all files in the queue have been processed
+                console.log('All files have been uploaded');
+            });
+
+            this.on("removedfile", function(file) {
+                console.log(file, 'hakim delete', file.serverFileName)
+                if (file.serverFileName) {
+                    $.ajax({
+                        url: '/projects/media/delete',
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: { 
+                            filename: file.serverFileName[0]['name']
+                        },
+                        success: function(data) {
+                            $('#file_pernyataan').remove();
+                            console.log("File deleted successfully");
+                        },
+                        error: function(xhr, textStatus, errorThrown) {
+                            console.error('Failed to delete file:', errorThrown);
+                        }
+                    });
+                }
+            });
+
+            this.on("success", function(file, response) {
+                // Store the server file name for deletion purposes
+                file.serverFileName = response;
+            });
+        }
+       
+    });
+    var dropzone2 = new Dropzone("#dropzone2", {
+        url: '/projects/media-one',
+        paramName: "file",
+        maxFiles: 1,
+        maxFilesize: 2, // MB
+        acceptedFiles: ".pdf",
+        autoProcessQueue: false,
+        addRemoveLinks: true, // Option to remove files from the dropzone
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token for Laravel
+        },
+        init: function() {
+            this.on("addedfile", function(file) {
+                // Automatically process the file when it is added
+                if (this.files.length > 1) {
+                    this.removeFile(this.files[0]);
+                }
+                
+                dropzone1.processFile(file);
+            });
+
+            this.on("sending", function(file, xhr, formData) {
+                // Additional data can be sent here if required
+                console.log('Sending file:', file);
+            });
+
+            this.on("success", function(file, response) {
+                $('#contact').append('<input type="hidden" id="file_akta" name="file_akta" value="' + response[0]['name'] + '">');
+                // Handle the response from the server after the file is uploaded
+                console.log('File uploaded successfully', response);
+            });
+
+            this.on("error", function(file, response) {
+                // Handle the errors
+                console.error('Upload error', response);
+            });
+
+            this.on("queuecomplete", function() {
+                // Called when all files in the queue have been processed
+                console.log('All files have been uploaded');
+            });
+
+            this.on("removedfile", function(file) {
+                if (file.serverFileName) {
+                    $.ajax({
+                        url: '/projects/media/delete',
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: { 
+                            filename: file.serverFileName[0]['name']
+                        },
+                        success: function(data) {
+                            $('#file_akta').remove();
+                            console.log("File deleted successfully");
+                        },
+                        error: function(xhr, textStatus, errorThrown) {
+                            console.error('Failed to delete file:', errorThrown);
+                        }
+                    });
+                }
+            });
+
+            this.on("success", function(file, response) {
+                // Store the server file name for deletion purposes
+                file.serverFileName = response;
+            });
+        }
+    });
+
     
 </script>
 @endpush
