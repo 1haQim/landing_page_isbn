@@ -53,11 +53,11 @@
                                 
                                 <label for="name">Penerbit  *</label> <br>
                                 <label>
-                                    <input type="radio" id="swasta" value="swasta" onclick="kat_penerbit(this)" name="radio"/>
+                                    <input type="radio" id="swasta" value="swasta" onclick="kat_penerbit(this)" name="kategori_penerbit"/>
                                     <span>Lembaga Swasta</span>
                                 </label><br>
                                 <label>
-                                    <input type="radio" id="pemerintah" value="pemerintah" onclick="kat_penerbit(this)" name="radio"/>
+                                    <input type="radio" id="pemerintah" value="pemerintah" onclick="kat_penerbit(this)" name="kategori_penerbit"/>
                                     <span>Lembaga Pemerintah</span>
                                 </label>
                             </section>
@@ -70,27 +70,27 @@
                                         </div>
                                         <div class="col-lg-8 col-md-8 col-6 mb-6 mb-lg-6">
                                             <label>
-                                                <input type="radio" name="radio"/>
+                                                <input type="radio" value="1" name="jenis"/>
                                                 <span>Kementerian dan dinas terkait</span>
                                             </label><br>
                                             <label>
-                                                <input type="radio" name="radio"/>
+                                                <input type="radio" value="2" name="jenis"/>
                                                 <span>Lembaga Pemerintah Non Kementerian dan unit terkait</span>
                                             </label><br>
                                             <label>
-                                                <input type="radio" name="radio"/>
+                                                <input type="radio" value="3" name="jenis"/>
                                                 <span>Perguruan Tinggi Negeri</span>
                                             </label><br>
                                             <label>
-                                                <input type="radio" name="radio"/>
+                                                <input type="radio" value="4" name="jenis"/>
                                                 <span>Pemerintah provinsi/Pemda dan dinas terkait</span>
                                             </label><br>
                                             <label>
-                                                <input type="radio" name="radio"/>
+                                                <input type="radio" value="5" name="jenis"/>
                                                 <span>BUMD/BUMN</span>
                                             </label><br>
                                             <label>
-                                                <input type="radio" name="radio"/>
+                                                <input type="radio" value="6" name="jenis"/>
                                                 <span>UPT Penerbitan /Press/Publishing</span>
                                             </label>
                                         </div>
@@ -129,48 +129,48 @@
                                 <div class="form-row row" style="margin-top:10%">
                                     <div class="col">
                                         <label for="penerbit" style="color:black">Penerbit*</label>
-                                        <input type="text" placeholder="" class="form-control" id="penerbit" name="penerbit"  >
+                                        <input type="text" placeholder="" class="form-control" id="penerbit" name="name"  >
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
                                         <label for="username" style="color:black">Username*</label>
-                                        <input type="text" placeholder="Username" class="form-control" onchange="checkDataExisting('username',this.value)" id="username" name="username"  >
+                                        <input type="text" placeholder="Username" class="form-control" onchange="checkDataExisting('username',this.value)" id="username" name="isbn_user_name">
                                     </div>
                                 </div>    
 
                                 <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
                                         <label for="password" style="color:black">Password*</label>
-                                        <input type="password" placeholder="Password" class="form-control" id="password" name="password"   >
+                                        <input type="password" placeholder="Password" class="form-control" id="password" name="isbn_password">
                                     </div>
                                     <div class="col">
                                         <label for="confirm_password" style="color:black">Confirm Password*</label>
-                                        <input type="password" placeholder="" class="form-control" id="confirm_password" name="confirm_password"  >
+                                        <input type="password" placeholder="" class="form-control" id="confirm_password" name="isbn_password2"  >
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
                                         <label for="nm_gedung" style="color:black">Nama Gedung (jika ada)</label>
-                                        <input type="text" placeholder="" class="form-control" id="nm_gedung" name="nm_gedung"  >
+                                        <input type="text" placeholder="" class="form-control" id="nm_gedung" name="nama_gedung"  >
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
                                         <label for="nm_jalan" style="color:black">Nama Jalan*</label>
-                                        <input type="text" placeholder="" class="form-control" id="nm_jalan" name="nm_jalan"  >
+                                        <input type="text" placeholder="" class="form-control" id="nm_jalan" name="alamat"  >
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
                                         <label for="provinsi" style="color:black">provinsi*</label>
-                                        <select id="provinsi" style="width: 100%;" class="form-control select2" name="provinsi" onchange="get_wilayah_prov('kab_kot',this.value)">
+                                        <select id="provinsi" style="width: 100%;" class="form-control select2" name="province_id" onchange="get_wilayah_prov('kab_kot',this.value)">
                                              
                                         </select>
                                     </div>
                                     <div class="col">
                                         <label for="kab_kot" style="color:black">Kabupaten / Kota</label>
-                                        <select id="kab_kot" style="width: 100%;" class="form-control select2" name="kab_kot" onchange="get_wilayah_prov('kec',this.value)">
+                                        <select id="kab_kot" style="width: 100%;" class="form-control select2" name="city_id" onchange="get_wilayah_prov('kec',this.value)">
                                             
                                         </select>
                                     </div>
@@ -178,13 +178,13 @@
                                 <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
                                         <label for="" style="color:black">Kecamatan</label>
-                                        <select id="kec" style="width: 100%;" class="form-control select2" name="kec" onchange="get_wilayah_prov('kel',this.value)">
+                                        <select id="kec" style="width: 100%;" class="form-control select2" name="district_id" onchange="get_wilayah_prov('kel',this.value)">
                                            
                                         </select>
                                     </div>
                                     <div class="col">
                                         <label for="" style="color:black">Kelurahan</label>
-                                        <select id="kel" style="width: 100%;" class="form-control select2" name="kel" >
+                                        <select id="kel" style="width: 100%;" class="form-control select2" name="village_id" >
                                            
                                         </select>
                                         {{-- <input type="text" placeholder="" class="form-control" id="" name="" > --}}
@@ -194,27 +194,27 @@
                                <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
                                         <label for="email" style="color:black">Email*</label>
-                                        <input type="text" placeholder="Your Email" class="form-control" id="email" name="email" onchange="checkDataExisting('admin_email',this.value)">
+                                        <input type="text" placeholder="Your Email" class="form-control" id="email" name="email1" onchange="checkDataExisting('admin_email',this.value)">
                                     </div>
                                     <div class="col">
                                         <label for="email" style="color:black">Email Alternatif*</label>
-                                        <input type="text" placeholder="Your Email" class="form-control" id="email" name="email" onchange="checkDataExisting('alternatif_email',this.value)">
+                                        <input type="text" placeholder="Your Email" class="form-control" id="email" name="email2" onchange="checkDataExisting('alternatif_email',this.value)">
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
                                         <label for="nm_admin" style="color:black">Nama Admin</label>
-                                        <input type="text" placeholder="" class="form-control" id="nm_admin" name="nm_admin">
+                                        <input type="text" placeholder="" class="form-control" id="nm_admin" name="kontak1">
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:14%">
                                     <div class="col">
                                         <label for="password" style="color:black">Telephone</label>
-                                        <input type="text" placeholder="" class="form-control" id="" name="" >
+                                        <input type="text" placeholder="" class="form-control" id="" name="telp1" >
                                     </div>
                                     <div class="col">
                                         <label for="confirm_password" style="color:black">Kode Pos</label>
-                                        <input type="text" placeholder="" class="form-control" id="" name="">
+                                        <input type="text" placeholder="" class="form-control" id="" name="kodepos">
                                     </div>
                                 </div>
 
@@ -224,12 +224,12 @@
                             <section>
                                 <div class="form-row">
                                     <div class="form-holder">
-                                        <label for="password" style="color:black">Admin Alternatif</label>
-                                        <input type="password" placeholder="Password" class="form-control" id="password" name="password"   >
+                                        <label for="" style="color:black">Admin Alternatif</label>
+                                        <input type="text" placeholder="" class="form-control" id="" name="kontak2"   >
                                     </div>
                                     <div class="form-holder">
-                                        <label for="confirm_password" style="color:black">Telephone Alternatif</label>
-                                        <input type="password" placeholder="Confirm Password" class="form-control" id="confirm_password" name="confirm_password"  >
+                                        <label for="" style="color:black">Telephone Alternatif</label>
+                                        <input type="" placeholder="" class="form-control" id="" name="telp2"  >
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -467,6 +467,10 @@
         },
         onFinished: function (event, currentIndex)
         {
+            $('#contact').append('<input type="hidden" name="provinsi" value="' + $('#provinsi option:selected').text() + '">');
+            $('#contact').append('<input type="hidden" name="city" value="' + $('#kab_kot option:selected').text() + '">');
+           
+            //ajax submit
             $.ajax({
                 url: '/submit_pendaftaran',
                 type: 'POST',
@@ -474,9 +478,10 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 dataType: 'json',
-                data: req_data,
+                data: $('#contact').serialize(),
                 success: function(data) {
                     
+                    console.log(data, 'hakim data submit')
                     alert("Submitted!");
 
                 },
@@ -520,7 +525,7 @@
             });
 
             this.on("success", function(file, response) {
-                $('#contact').append('<input type="hidden" id="file_pernyataan" name="file_pernyataan" value="' + response[0]['name'] + '">');
+                $('#contact').append('<input type="hidden" id="file_pernyataan" name="file_sp" value="' + response[0]['name'] + '">');
                 // Handle the response from the server after the file is uploaded
                 console.log('File uploaded successfully', response);
             });
@@ -583,7 +588,7 @@
                     this.removeFile(this.files[0]);
                 }
                 
-                dropzone1.processFile(file);
+                dropzone2.processFile(file);
             });
 
             this.on("sending", function(file, xhr, formData) {
@@ -592,7 +597,7 @@
             });
 
             this.on("success", function(file, response) {
-                $('#contact').append('<input type="hidden" id="file_akta" name="file_akta" value="' + response[0]['name'] + '">');
+                $('#contact').append('<input type="hidden" id="file_akta" name="file_akte_notaris" value="' + response[0]['name'] + '">');
                 // Handle the response from the server after the file is uploaded
                 console.log('File uploaded successfully', response);
             });
