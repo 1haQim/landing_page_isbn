@@ -2,13 +2,12 @@
 
 use Illuminate\Support\Facades\Http;
 
-function kurl($method, $action, $table, $req_filter) {
-    $filter = json_encode($req_filter);
-    $response = Http::$method('http://demo321.online/ISBN_API/Restful.aspx', [
+function kurl($method, $action, $table, $data, $kategori) {
+    $response = Http::asForm()->$method('http://demo321.online/ISBN_API/Restful.aspx', [
         'token' => 'WWQG9BP0JBCL3QSAW9K75G',
         'op' => $action,
         'table' => $table,
-        'KriteriaFilter' => $filter
+        $kategori => json_encode($data) // Mengirimkan array sebagai JSON string
     ]);
 
     if ($response->successful()) {

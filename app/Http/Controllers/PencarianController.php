@@ -16,7 +16,7 @@ class PencarianController extends Controller
                  $filter = '';
             }
 
-            $data = kurl('GET','getlist', 'ISBN_DATA', $filter); 
+            $data = kurl('GET','getlist', 'ISBN_DATA', $filter, 'KriteriaFilter'); 
             return $data;
         }
 
