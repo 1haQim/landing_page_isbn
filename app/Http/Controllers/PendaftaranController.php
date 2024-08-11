@@ -29,13 +29,13 @@ class PendaftaranController extends Controller
             }
 
             $filter = [["name"=>$col,"Value"=>$value,"SearchType"=>"Tepat"]];
-            $data = kurl('get','getlist', 'PENERBIT', $filter);
+            $data = kurl('get','getlist', 'PENERBIT', $filter, 'KriteriaFilter');
             return json_encode($data['Data']['Items']);
         } else {
             return errorResponse();
         }
     }
-    //data select 2 wilayah 
+    //data select2 wilayah 
     function get_wilayah(Request $request) {
         if ($request->isMethod('post')) {
             //validasi berdasarakan ...
@@ -58,7 +58,7 @@ class PendaftaranController extends Controller
             }
 
             $filter = [["name"=>$col,"Value"=>$value,"SearchType"=>"Tepat"]];
-            $data = kurl('get','getlist', $tbl, $filter);
+            $data = kurl('get','getlist', $tbl, $filter, 'KriteriaFilter');
             return json_encode($data['Data']['Items']);
         } else {
             return errorResponse();
@@ -69,34 +69,38 @@ class PendaftaranController extends Controller
     function upload_file($file, $penerbit_id, $ip) {
         $gagal = [];
         //surat pernyataan
-        $filePath_one = public_path('img_tmp_upload/'.$file['file_pernyataan']);
-        if (File::exists($filePath_one)) {
-            $file_one = new UploadedFile(
-                $filePath_one,
-                $file['file_pernyataan'],
-                File::mimeType($filePath_one),
-                null,
-                true
-            );
-            $post_pernyataan = kurl_upload('post', 'uploadfilesuratpernyataan', $penerbit_id, $file_one, $ip);
-            $res_pernyataan = $post_pernyataan;
-            //res status
-            $gagal['pernyataan'] = $res_pernyataan['Status'] == "Success" ? 0 : 1;
+        if ($file['file_pernyataan']) {
+            $filePath_one = public_path('img_tmp_upload/'.$file['file_pernyataan']);
+            if (File::exists($filePath_one)) {
+                $file_one = new UploadedFile(
+                    $filePath_one,
+                    $file['file_pernyataan'],
+                    File::mimeType($filePath_one),
+                    null,
+                    true
+                );
+                $post_pernyataan = kurl_upload('post', 'uploadfilesuratpernyataan', $penerbit_id, $file_one, $ip);
+                $res_pernyataan = $post_pernyataan;
+                //res status
+                $gagal['pernyataan'] = $res_pernyataan['Status'] == "Success" ? 0 : 1;
+            }
         }
         //file akta notaris
-        $filePath_two = public_path('img_tmp_upload/'.$file['file_akte']);
-        if (File::exists($filePath_one)) {
-            $file_one = new UploadedFile(
-                $filePath_two,
-                $file['file_akte'],
-                File::mimeType($filePath_two),
-                null,
-                true
-            );
-            $post_akte_notaris = kurl_upload('post', 'uploadfileaktenotaris', $penerbit_id, $file_one, $ip);
-            $res_akte = $post_akte_notaris;
-            //res status
-            $gagal['akte']  = $res_akte['Status'] == "Success" ? 0 : 1;
+        if ($file['file_akte']) {
+            $filePath_two = public_path('img_tmp_upload/'.$file['file_akte']);
+            if (File::exists($filePath_two)) {
+                $file_one = new UploadedFile(
+                    $filePath_two,
+                    $file['file_akte'],
+                    File::mimeType($filePath_two),
+                    null,
+                    true
+                );
+                $post_akte_notaris = kurl_upload('post', 'uploadfileaktenotaris', $penerbit_id, $file_one, $ip);
+                $res_akte = $post_akte_notaris;
+                //res status
+                $gagal['akte']  = $res_akte['Status'] == "Success" ? 0 : 1;
+            }
         }
 
         $mess = '';
@@ -111,15 +115,12 @@ class PendaftaranController extends Controller
                 $mess = 'sukses upload semua files';
             }
         }
-
         $data = [
-            'status' => 0,
-            // 'status' => $sts,
+            // 'status' => 0, // keperluan debug untuk file yang gagal upload
+            'status' => $sts,
             'message' => $mess
         ];
-
         return $data;
-
     }
 
     //form data
@@ -127,27 +128,44 @@ class PendaftaranController extends Controller
         if ($request->isMethod('post')) {
             $ip = $request->ip();
             $file = [
-                'file_pernyataan' => $request->input('file_surat_pernyataan'),
-                'file_akte' => $request->input('file_akte_notaris')
+                'file_pernyataan' => $request->input('file_surat_pernyataan') ?? null,
+                'file_akte' => $request->input('file_akte_notaris') ?? null
             ];
 
-            dd($request->input());
-            
-            $call_func = $this->upload_file($file, 3, $ip);
+            $send_data = [];
+            foreach ($request->input() as $k => $v) {
+                if ($k != 'acceptTerms') { //unset array acceptTerms
+                    $send_data[] = [
+                        'name' => $k,
+                        'Value' => $v,
+                    ];
+                }
+            };
 
-            //jika gagal maka akan dihapus 
-            if ($call_func['status'] < 1 ) {
-                $this->rollback_pendaftaran(3);
+            $data = kurl('post','add', 'PENERBIT', $send_data, 'ListAddItem');
+
+            if (!empty($data['Data'])) {
+                $id = $data['Data']['ID'];
+                $call_func = $this->upload_file($file, $id, $ip);
+                //jika upload doc gagal maka akan rollback (hapus data)
+                if ($call_func['status'] == 0 ) {
+                    $hapus_data = $this->rollback_pendaftaran($id);
+                    //masukkan kedalam log untuk kegunaan tracking data
+                }
+
+                //return json berhasil
+                $res_data = [
+                    'status' => 'success',
+                    'message' => 'berhasil pendaftaran silahkan check email anda untuk verifikasi'
+                ];
+
+                return $res_data;
             }
-
-            // $data = kurl('get','getlist', $tbl, $filter);
-
-            dd($call_func);
         }
     }
 
     function rollback_pendaftaran($penerbit_id) {
-        dd($penerbit_id);
-        
+        $data = kurl('post','delete', 'PENERBIT', $penerbit_id , null);
+        return $data['Status'];
     }
 }

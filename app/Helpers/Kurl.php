@@ -3,12 +3,26 @@
 use Illuminate\Support\Facades\Http;
 
 function kurl($method, $action, $table, $data, $kategori) {
-    $response = Http::asForm()->$method('http://demo321.online/ISBN_API/Restful.aspx', [
+    $form_data = [
         'token' => 'WWQG9BP0JBCL3QSAW9K75G',
         'op' => $action,
         'table' => $table,
-        $kategori => json_encode($data) // Mengirimkan array sebagai JSON string
-    ]);
+        $kategori => json_encode($data)
+        
+    ];
+    //jika kondisi ADD
+    if ($action == 'add') {
+        $form_data += [
+            'CreateBy' => 'pendaftaran_online',
+            'terminal' => '127.0.0.1',
+        ];
+    } else if ($action == 'delete') {
+        $form_data += [
+            'id' => $data,
+        ];
+    } else {}
+
+    $response = Http::asForm()->$method('http://demo321.online/ISBN_API/Restful.aspx', $form_data);
 
     if ($response->successful()) {
         $data = $response->json();

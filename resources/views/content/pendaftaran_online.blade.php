@@ -441,6 +441,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
 
+{{-- //form submit --}}
 <script>
     var form = $("#contact");
     form.validate({
@@ -494,6 +495,7 @@
     });
 </script>
 
+{{-- dropzone --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
 <script>
     //upload file 
