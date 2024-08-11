@@ -18,18 +18,18 @@ class PendaftaranController extends Controller
     function checking_data_existing(Request $request) {
         if ($request->isMethod('post')) {
             if ($request->input('username')) {
-                $col = 'USER_NAME';
+                $col = 'ISBN_USER_NAME';
                 $value = $request->input('username');
             } else if($request->input('admin_email')) {
-                $col = 'ADMIN_EMAIL';
+                $col = 'EMAIL1';
                 $value = $request->input('admin_email');
             } else {
-                $col = 'ALTERNATE_EMAIL';
+                $col = 'EMAIL2';
                 $value = $request->input('alternatif_email');
             }
 
             $filter = [["name"=>$col,"Value"=>$value,"SearchType"=>"Tepat"]];
-            $data = kurl('get','getlist', 'ISBN_REGISTRASI_PENERBIT', $filter);
+            $data = kurl('get','getlist', 'PENERBIT', $filter);
             return json_encode($data['Data']['Items']);
         } else {
             return errorResponse();
