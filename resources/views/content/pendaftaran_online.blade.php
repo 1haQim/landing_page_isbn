@@ -25,7 +25,142 @@
         .select2-selection__rendered {
             line-height: 37px !important; /* Ensures the text is vertically centered */
         }
+        
+        .inputcontainer {
+            position: relative;
+        }
+
+        .icon-container {
+            position: absolute;
+            right: 10px;
+            top: calc(50% - 10px);
+        }
+        .loader {
+            position: relative;
+            height: 20px;
+            width: 20px;
+            display: inline-block;
+            animation: around 5.4s infinite;
+        }
+
+        @keyframes around {
+            0% {
+                transform: rotate(0deg)
+            }
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+
+        .loader::after, .loader::before {
+            content: "";
+            background: white;
+            position: absolute;
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            border-width: 2px;
+            border-color: #333 #333 transparent transparent;
+            border-style: solid;
+            border-radius: 20px;
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            animation: around 0.7s ease-in-out infinite;
+        }
+
+        .loader::after {
+            animation: around 0.7s ease-in-out 0.1s infinite;
+            background: transparent;
+        }
+        /* icon checklis berhasil  */
+        .checkmark {
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 2;
+            stroke: #fff;
+            stroke-miterlimit: 10;
+            box-shadow: inset 0px 0px 0px #7ac142;
+            animation: fill 0.4s ease-in-out 0.4s forwards, scale 0.3s ease-in-out 0.9s both;
+        }
+        .checkmark__circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #7ac142;
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark__check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+        @keyframes scale {
+            0%, 100% {
+                transform: none;
+            }
+            50% {
+                transform: scale3d(1.1, 1.1, 1);
+            }
+        }
+        @keyframes fill {
+            100% {
+                box-shadow: inset 0px 0px 0px 30px #7ac142;
+                /* box-shadow: inset 0px 0px 0px 30px  transparent; */
+            }
+        }
+        /* end icon centang */
+
+        .checkmark1 {
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 2;
+            stroke: #fff;
+            stroke-miterlimit: 10;
+            box-shadow: inset 0px 0px 0px red;
+            animation: fill1 0.4s ease-in-out 0.4s forwards, scale1 0.3s ease-in-out 0.9s both;
+        }
+        .checkmark__circle1 {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #fff;
+            fill: none;
+            animation: stroke1 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        @keyframes stroke1 {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+        @keyframes scale1 {
+            0%, 100% {
+                transform: none;
+            }
+            50% {
+                transform: scale3d(1.1, 1.1, 1);
+            }
+        }
+        @keyframes fill1 {
+            100% {
+                box-shadow: inset 0px 0px 0px 30px red;
+            }
+        }
     </style>
+
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
 
@@ -50,7 +185,7 @@
                         <div>
                             <h3>Penerbit</h3>
                             <section>
-                                
+                               
                                 <label for="name">Penerbit  *</label> <br>
                                 <label>
                                     <input type="radio" id="swasta" value="swasta" onclick="kat_penerbit(this)" name="kategori_penerbit"/>
@@ -126,42 +261,56 @@
                             </section>
                             <h3>Identitas</h3>
                             <section>
-                                <div class="form-row row" style="margin-top:10%">
+                                <div class="form-row row" style="margin-top:90px">
                                     <div class="col">
                                         <label for="penerbit" style="color:black">Penerbit*</label>
-                                        <input type="text" placeholder="" class="form-control" id="penerbit" name="name"  >
+                                        <input type="text" placeholder="" class="form-control" id="penerbit" name="nama_penerbit"  >
                                     </div>
                                 </div>
-                                <div class="form-row row" style="margin-top:14%">
+                                <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="username" style="color:black">Username*</label>
-                                        <input type="text" placeholder="Username" class="form-control" onchange="checkDataExisting('username',this.value)" id="username" name="isbn_user_name">
+                                        <div class="inputcontainer">
+                                            <input type="text" placeholder="Username" class="form-control" onchange="checkDataExisting('username',this.value)" id="username" name="user_name"  >
+                                            <div class="icon-container">
+                                                <i class="loader" id="loader_username" style="display: none"></i>
+                                                <svg class="checkmark" id="success_username" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                                </svg>
+                                                <svg class="checkmark1" id="error_username" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                    <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
+                                                    <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <span id="ket_username" style="font-size:11px; color:red"></span>
                                     </div>
                                 </div>    
 
-                                <div class="form-row row" style="margin-top:14%">
+                                <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="password" style="color:black">Password*</label>
-                                        <input type="password" placeholder="Password" class="form-control" id="password" name="isbn_password">
+                                        <input type="password" placeholder="Password" class="form-control" id="password" name="password"   >
                                     </div>
                                     <div class="col">
                                         <label for="confirm_password" style="color:black">Confirm Password*</label>
-                                        <input type="password" placeholder="" class="form-control" id="confirm_password" name="isbn_password2"  >
+                                        <input type="password" placeholder="" class="form-control" id="confirm_password" name="password2"  >
                                     </div>
                                 </div>
-                                <div class="form-row row" style="margin-top:14%">
+                                <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="nm_gedung" style="color:black">Nama Gedung (jika ada)</label>
                                         <input type="text" placeholder="" class="form-control" id="nm_gedung" name="nama_gedung"  >
                                     </div>
                                 </div>
-                                <div class="form-row row" style="margin-top:14%">
+                                <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="nm_jalan" style="color:black">Nama Jalan*</label>
-                                        <input type="text" placeholder="" class="form-control" id="nm_jalan" name="alamat"  >
+                                        <input type="text" placeholder="" class="form-control" id="nm_jalan" name="alamat_penerbit"  >
                                     </div>
                                 </div>
-                                <div class="form-row row" style="margin-top:14%">
+                                <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="provinsi" style="color:black">provinsi*</label>
                                         <select id="provinsi" style="width: 100%;" class="form-control select2" name="province_id" onchange="get_wilayah_prov('kab_kot',this.value)">
@@ -175,7 +324,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-row row" style="margin-top:14%">
+                                <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="" style="color:black">Kecamatan</label>
                                         <select id="kec" style="width: 100%;" class="form-control select2" name="district_id" onchange="get_wilayah_prov('kel',this.value)">
@@ -191,26 +340,54 @@
                                     </div>
                                 </div>
 
-                               <div class="form-row row" style="margin-top:14%">
+                               <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="email" style="color:black">Email*</label>
-                                        <input type="text" placeholder="Your Email" class="form-control" id="email" name="email1" onchange="checkDataExisting('admin_email',this.value)">
+                                        <div class="inputcontainer">
+                                            <input type="text" placeholder="Your Email" class="form-control" id="email" name="admin_email" onchange="checkDataExisting('admin_email',this.value)">
+                                            <div class="icon-container">
+                                                <i class="loader" id="loader_admin_email" style="display: none"></i>
+                                                <svg class="checkmark" id="success_admin_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                                </svg>
+                                                <svg class="checkmark1" id="error_admin_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                    <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
+                                                    <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <span id="ket_admin_email" style="font-size:11px; color:red"></span>
                                     </div>
                                     <div class="col">
                                         <label for="email" style="color:black">Email Alternatif*</label>
-                                        <input type="text" placeholder="Your Email" class="form-control" id="email" name="email2" onchange="checkDataExisting('alternatif_email',this.value)">
+                                        <div class="inputcontainer">
+                                            <input type="text" placeholder="Your Email" class="form-control" id="email" name="alternate_email" onchange="checkDataExisting('alternatif_email',this.value)">
+                                            <div class="icon-container">
+                                                <i class="loader" id="loader_alternatif_email" style="display: none"></i>
+                                                <svg class="checkmark" id="success_alternatif_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                                </svg>
+                                                <svg class="checkmark1" id="error_alternatif_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                    <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
+                                                    <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <span id="ket_alternatif_email" style="font-size:11px; color:red"></span>
                                     </div>
                                 </div>
-                                <div class="form-row row" style="margin-top:14%">
+                                <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="nm_admin" style="color:black">Nama Admin</label>
-                                        <input type="text" placeholder="" class="form-control" id="nm_admin" name="kontak1">
+                                        <input type="text" placeholder="" class="form-control" id="nm_admin" name="admin_contact_name">
                                     </div>
                                 </div>
-                                <div class="form-row row" style="margin-top:14%">
+                                <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="password" style="color:black">Telephone</label>
-                                        <input type="text" placeholder="" class="form-control" id="" name="telp1" >
+                                        <input type="text" placeholder="" class="form-control" id="" name="admin_phone" >
                                     </div>
                                     <div class="col">
                                         <label for="confirm_password" style="color:black">Kode Pos</label>
@@ -225,17 +402,17 @@
                                 <div class="form-row">
                                     <div class="form-holder">
                                         <label for="" style="color:black">Admin Alternatif</label>
-                                        <input type="text" placeholder="" class="form-control" id="" name="kontak2"   >
+                                        <input type="text" placeholder="" class="form-control" id="" name="alternate_contact_name"   >
                                     </div>
                                     <div class="form-holder">
                                         <label for="" style="color:black">Telephone Alternatif</label>
-                                        <input type="" placeholder="" class="form-control" id="" name="telp2"  >
+                                        <input type="" placeholder="" class="form-control" id="" name="alternate_phone"  >
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-holder form-holder-2">
                                         <label for="website" style="color:black">Website</label>
-                                        <input type="text" placeholder="Website" class="form-control" id="website" name="website"  >
+                                        <input type="text" placeholder="Website" class="form-control" id="website" name="website_url"  >
                                     </div>
                                 </div>
                                 <div id="captcha" >
@@ -404,36 +581,78 @@
         })
     }
     //end pemilihan wilayah
+
+    function validasi_username(username) {
+        var errorMessage = '';
+        // Check if the username contains only letters and numbers
+        var validUsername = /^[a-zA-Z0-9]+$/.test(username);
+        if (!validUsername) {
+            errorMessage = 'Username tidak boleh mengandung spasi atau karakter khusus.';
+        }
+        // Check if the username has at least 6 characters
+        if (username.length < 6) {
+            errorMessage = 'Username harus memiliki minimal 6 karakter.';
+        }
+
+        if (errorMessage) {
+            document.getElementById('loader_username').style.display = 'none';
+            document.getElementById('error_username').style.display = 'block';
+            document.getElementById('ket_username').innerHTML = errorMessage;
+            return 'error';
+        } else {
+            return 'success';
+        }        
+    }
+
     //check data existing username and email
     function checkDataExisting(name, value) {
+
+        //loader
+        document.getElementById('error_'+name).style.display = 'none';
+        document.getElementById('success_'+name).style.display = 'none';
+        document.getElementById('loader_'+name).style.display = 'block';
+        //end loader
+
+        var validate = ''
         if (name == 'username') {
             var req_data = { 'username' : value }
+            validate = validasi_username(value)
         } else if (name == 'admin_email') {
             var req_data = { 'admin_email' : value }
         } else {
             var req_data = { 'alternatif_email' : value }
         }
-        $.ajax({
-            url: '/checking_data_existing',
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: 'json',
-            serverSide: true,
-            data: req_data,
-            success: function(data) {
-                if (data.length > 0) {
-                    alert( name +'sudah digunakan')
-                    //nanti harus dikasih validasi tidak bisa next jika sudah digunakan
-                } else {
-                    alert('bisa digunakan')
+        
+
+        if (validate != 'error') {
+            $.ajax({
+                url: '/checking_data_existing',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                serverSide: true,
+                data: req_data,
+                success: function(data) {
+                    if (data.length > 0) {
+                        document.getElementById('loader_'+ name).style.display = 'none';
+                        document.getElementById('error_'+ name).style.display = 'block';
+                        document.getElementById('ket_'+ name).innerHTML = name +'sudah digunakan'
+                        // alert( name +'sudah digunakan')
+                        //nanti harus dikasih validasi tidak bisa next jika sudah digunakan
+                    } else {
+                        // alert('bisa digunakan')
+                        document.getElementById('loader_'+ name).style.display = 'none';
+                        document.getElementById('success_'+ name).style.display = 'block';
+                        document.getElementById('ket_'+ name).style.display = 'none';
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX error:', textStatus, errorThrown); // Log any errors
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('AJAX error:', textStatus, errorThrown); // Log any errors
-            }
-        });
+            });
+        }
     }
     // END check data existing username and email
 </script>
@@ -441,7 +660,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
 
-{{-- //form submit --}}
 <script>
     var form = $("#contact");
     form.validate({
@@ -468,10 +686,7 @@
         },
         onFinished: function (event, currentIndex)
         {
-            $('#contact').append('<input type="hidden" name="provinsi" value="' + $('#provinsi option:selected').text() + '">');
-            $('#contact').append('<input type="hidden" name="city" value="' + $('#kab_kot option:selected').text() + '">');
-           
-            //ajax submit
+            $('#contact').append('<input type="hidden" id="" name="nama_kota" value="' + $('#kab_kot option:selected').text() + '">');
             $.ajax({
                 url: '/submit_pendaftaran',
                 type: 'POST',
@@ -481,7 +696,6 @@
                 dataType: 'json',
                 data: $('#contact').serialize(),
                 success: function(data) {
-                    
                     console.log(data, 'hakim data submit')
                     alert("Submitted!");
 
@@ -495,7 +709,6 @@
     });
 </script>
 
-{{-- dropzone --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
 <script>
     //upload file 
@@ -527,7 +740,7 @@
             });
 
             this.on("success", function(file, response) {
-                $('#contact').append('<input type="hidden" id="file_pernyataan" name="file_sp" value="' + response[0]['name'] + '">');
+                $('#contact').append('<input type="hidden" id="file_pernyataan" name="file_surat_pernyataan" value="' + response[0]['name'] + '">');
                 // Handle the response from the server after the file is uploaded
                 console.log('File uploaded successfully', response);
             });
