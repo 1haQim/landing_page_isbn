@@ -291,12 +291,13 @@
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="password" style="color:black">Password*</label>
-                                        <input type="password" placeholder="Password" class="form-control" id="password" name="password"   >
+                                        <input type="password" placeholder="Password" class="form-control" id="password" name="password"  onchange="validasi_password(this.value)" >
                                     </div>
                                     <div class="col">
                                         <label for="confirm_password" style="color:black">Confirm Password*</label>
                                         <input type="password" placeholder="" class="form-control" id="confirm_password" name="password2"  >
                                     </div>
+                                    <span id="ket_password" style="font-size:11px; color:red"></span>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
@@ -520,6 +521,13 @@
             success: function(data) {
                 var selectElement = document.getElementById('provinsi');
                 // Use forEach to loop through each item in the array
+                var defaultOption = document.createElement('option');
+                defaultOption.text = 'Pilih Wilayah';
+                defaultOption.value = ''; 
+                defaultOption.disabled = true; 
+                defaultOption.selected = true; 
+                selectElement.add(defaultOption);
+                
                 data.forEach(function(item) {
                     // Create a new option element
                     var newOption = document.createElement('option');
@@ -565,6 +573,13 @@
                 var selectElement = document.getElementById(name);
                 // Clear existing options
                 selectElement.innerHTML = '';
+                // Tambahkan opsi default "Pilih Wilayah"
+                var defaultOption = document.createElement('option');
+                defaultOption.text = 'Pilih Wilayah';
+                defaultOption.value = ''; 
+                defaultOption.disabled = true; 
+                defaultOption.selected = true; 
+                selectElement.add(defaultOption);
                 // Use forEach to loop through each item in the array
                 data.forEach(function(item) {
                     // Create a new option element
@@ -582,31 +597,10 @@
     }
     //end pemilihan wilayah
 
-    function validasi_username(username) {
-        var errorMessage = '';
-        // Check if the username contains only letters and numbers
-        var validUsername = /^[a-zA-Z0-9]+$/.test(username);
-        if (!validUsername) {
-            errorMessage = 'Username tidak boleh mengandung spasi atau karakter khusus.';
-        }
-        // Check if the username has at least 6 characters
-        if (username.length < 6) {
-            errorMessage = 'Username harus memiliki minimal 6 karakter.';
-        }
-
-        if (errorMessage) {
-            document.getElementById('loader_username').style.display = 'none';
-            document.getElementById('error_username').style.display = 'block';
-            document.getElementById('ket_username').innerHTML = errorMessage;
-            return 'error';
-        } else {
-            return 'success';
-        }        
-    }
+    
 
     //check data existing username and email
     function checkDataExisting(name, value) {
-
         //loader
         document.getElementById('error_'+name).style.display = 'none';
         document.getElementById('success_'+name).style.display = 'none';
@@ -655,6 +649,42 @@
         }
     }
     // END check data existing username and email
+
+    //validasi username
+    function validasi_username(username) {
+        var errorMessage = '';
+        // Check if the username contains only letters and numbers
+        var validUsername = /^[a-zA-Z0-9]+$/.test(username);
+        if (!validUsername) {
+            errorMessage = 'Username tidak boleh mengandung spasi atau karakter khusus.';
+        }
+        // Check if the username has at least 6 characters
+        if (username.length < 6) {
+            errorMessage = 'Username harus memiliki minimal 6 karakter.';
+        }
+
+        if (errorMessage) {
+            document.getElementById('loader_username').style.display = 'none';
+            document.getElementById('error_username').style.display = 'block';
+            document.getElementById('ket_username').innerHTML = errorMessage;
+            return 'error';
+        } else {
+            return 'success';
+        }        
+    }
+    //end validasi username
+
+    //validasi password
+    function validasi_password(value) {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
+        if (passwordRegex.test(value)) {
+            document.getElementById('ket_password').style.display = 'none';
+        } else {
+            document.getElementById('ket_password').style.display = 'block';
+            document.getElementById('ket_password').innerHTML = 'Password harus terdiri dari setidaknya 8 karakter, mengandung huruf besar dan kecil, angka, dan karakter khusus.';
+        }
+    }
+    //end validasi password
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"></script>
