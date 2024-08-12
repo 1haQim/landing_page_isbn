@@ -159,6 +159,72 @@
                 box-shadow: inset 0px 0px 0px 30px red;
             }
         }
+
+        /* loader page */
+        
+
+/* loader css starts from here */
+.loader_page {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #444;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader_page .loader_page-inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background-color: #f17f7f;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-transition: width .5s, height 1s; /* For Safari 3.1 to 6.0 */
+    transition: width .5s, height 1s;
+}
+
+.loader_page .loader_page-inner .loading-box .loader-message {
+	padding: 1em 0;
+	color: white;
+}
+
+.loader_page .loader_page-inner .loading-box .circular-loader {
+    border: 3px solid #f3f3f3; /* Light grey */
+    border-top: 3px solid #444; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+    transition: all .5s ease-out;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader_page .loader_page-inner .loading-box .circular-loader:before,
+.loader_page .loader_page-inner .loading-box .circular-loader:after {
+	content: '';
+	height: 0px;
+    width: 0px;
+	background-color: white;
+    position: absolute;
+    -webkit-transition: height .5s; /* For Safari 3.1 to 6.0 */
+    transition: height .5s;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -181,7 +247,20 @@
         <div class="row ">
             <div class="col-lg-12 col-md-12 col-12 mb-12 mb-lg-12">
                 <div class="custom-block bg-white shadow-lg">
+                    <div class="loader_page " id="loader_page" style="display: none">
+                        <div class="card">
+                        <div class="loader_page-inner loading">
+                            <div class="loading-box">
+                                <div class="circular-loader">
+                                </div>
+                                <div class="loader-message">Loading your data...</div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    
                     <form id="contact" action="#">
+
                         <div>
                             <h3>Penerbit</h3>
                             <section>
@@ -363,7 +442,7 @@
                                     <div class="col">
                                         <label for="email" style="color:black">Email Alternatif*</label>
                                         <div class="inputcontainer">
-                                            <input type="text" placeholder="Your Email" class="form-control" id="email" name="alternate_email" onchange="checkDataExisting('alternatif_email',this.value)">
+                                            <input type="text" placeholder="Your Email" class="form-control" id="email_alternatif" name="alternate_email" onchange="checkDataExisting('alternatif_email',this.value)">
                                             <div class="icon-container">
                                                 <i class="loader" id="loader_alternatif_email" style="display: none"></i>
                                                 <svg class="checkmark" id="success_alternatif_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -504,7 +583,6 @@
             document.getElementById('form-akta').style.display = 'block';
         }
     }
-
     //select2 pemilihan wilayah
     $(function () {
         $('.select2').select2()
@@ -527,7 +605,7 @@
                 defaultOption.disabled = true; 
                 defaultOption.selected = true; 
                 selectElement.add(defaultOption);
-                
+
                 data.forEach(function(item) {
                     // Create a new option element
                     var newOption = document.createElement('option');
@@ -542,9 +620,8 @@
                 console.error('AJAX error:', textStatus, errorThrown);
             }
         })
-     })
-
-     //get kabupaten -> kec -> kel
+    })
+    //get kabupaten -> kec -> kel
     function get_wilayah_prov(name, value) {
         //condition req data 
         if (name == 'kab_kot') {
@@ -596,9 +673,6 @@
         })
     }
     //end pemilihan wilayah
-
-    
-
     //check data existing username and email
     function checkDataExisting(name, value) {
         //loader
@@ -649,7 +723,6 @@
         }
     }
     // END check data existing username and email
-
     //validasi username
     function validasi_username(username) {
         var errorMessage = '';
@@ -673,7 +746,6 @@
         }        
     }
     //end validasi username
-
     //validasi password
     function validasi_password(value) {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
@@ -716,6 +788,9 @@
         },
         onFinished: function (event, currentIndex)
         {
+            document.getElementById('loader_page').style.display = 'block';
+            document.getElementById('contact').style.display = 'none';
+            
             $('#contact').append('<input type="hidden" id="" name="nama_kota" value="' + $('#kab_kot option:selected').text() + '">');
             $.ajax({
                 url: '/submit_pendaftaran',
@@ -726,22 +801,69 @@
                 dataType: 'json',
                 data: $('#contact').serialize(),
                 success: function(data) {
+                    document.getElementById('loader_page').style.display = 'none';
                     console.log(data, 'hakim data submit')
-                    alert("Submitted!");
-
+                    // alert("Submitted!");
+                    openNewWindowWithParams()
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('AJAX error:', textStatus, errorThrown);
                 }
             })
-
         }
     });
+
+    //redirect verifikasi halaman input otp
+    function getCsrfToken() {
+        return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    }
+    function openNewWindowWithParams() {
+        // URL of the new window
+        const url = "/verifikasi_pendaftaran";
+
+        // Create a form element
+        const form = document.createElement("form");
+        form.setAttribute("method", "POST");
+        form.setAttribute("action", url);
+
+        // Create hidden input fields for the parameters
+        const params = {
+            'admin_email': $('#email').val(),
+            'user_name': $('#username').val()
+        };
+
+        for (const key in params) {
+            if (params.hasOwnProperty(key)) {
+                const hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        // Add CSRF token
+        const csrfToken = getCsrfToken();
+        const csrfField = document.createElement("input");
+        csrfField.setAttribute("type", "hidden");
+        csrfField.setAttribute("name", "_token");
+        csrfField.setAttribute("value", csrfToken);
+        form.appendChild(csrfField);
+
+        // Append the form to the body
+        document.body.appendChild(form);
+        // Submit the form
+        form.submit();
+
+        // Remove the form from the DOM after submitting
+        document.body.removeChild(form);
+    }
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
 <script>
-    //upload file 
+    //upload file  file_pernyataan
     Dropzone.autoDiscover = false;
     var dropzone1 = new Dropzone("#dropzone1", {
         url: '/projects/media-one',
@@ -763,28 +885,23 @@
                 
                 dropzone1.processFile(file);
             });
-
             this.on("sending", function(file, xhr, formData) {
                 // Additional data can be sent here if required
                 console.log('Sending file:', file);
             });
-
             this.on("success", function(file, response) {
                 $('#contact').append('<input type="hidden" id="file_pernyataan" name="file_surat_pernyataan" value="' + response[0]['name'] + '">');
                 // Handle the response from the server after the file is uploaded
                 console.log('File uploaded successfully', response);
             });
-
             this.on("error", function(file, response) {
                 // Handle the errors
                 console.error('Upload error', response);
             });
-
             this.on("queuecomplete", function() {
                 // Called when all files in the queue have been processed
                 console.log('All files have been uploaded');
             });
-
             this.on("removedfile", function(file) {
                 console.log(file, 'hakim delete', file.serverFileName)
                 if (file.serverFileName) {
@@ -807,7 +924,6 @@
                     });
                 }
             });
-
             this.on("success", function(file, response) {
                 // Store the server file name for deletion purposes
                 file.serverFileName = response;
@@ -815,6 +931,7 @@
         }
        
     });
+    //upload file  file_akta
     var dropzone2 = new Dropzone("#dropzone2", {
         url: '/projects/media-one',
         paramName: "file",
@@ -835,28 +952,23 @@
                 
                 dropzone2.processFile(file);
             });
-
             this.on("sending", function(file, xhr, formData) {
                 // Additional data can be sent here if required
                 console.log('Sending file:', file);
             });
-
             this.on("success", function(file, response) {
                 $('#contact').append('<input type="hidden" id="file_akta" name="file_akte_notaris" value="' + response[0]['name'] + '">');
                 // Handle the response from the server after the file is uploaded
                 console.log('File uploaded successfully', response);
             });
-
             this.on("error", function(file, response) {
                 // Handle the errors
                 console.error('Upload error', response);
             });
-
             this.on("queuecomplete", function() {
                 // Called when all files in the queue have been processed
                 console.log('All files have been uploaded');
             });
-
             this.on("removedfile", function(file) {
                 if (file.serverFileName) {
                     $.ajax({
@@ -878,14 +990,11 @@
                     });
                 }
             });
-
             this.on("success", function(file, response) {
                 // Store the server file name for deletion purposes
                 file.serverFileName = response;
             });
         }
     });
-
-    
 </script>
 @endpush

@@ -153,7 +153,8 @@ class PendaftaranController extends Controller
                 'password' => md5($request->input('password')),
                 'password2' => $encryptedPassword, //rijndael
                 'code_otp' => $otp, //rijndael
-                'kd_penerbit' => $request->input('user_name')
+                'kd_penerbit' => $request->input('user_name'),
+                'registrasi_valid' => 0
             ]);
 
             $send_data = [];
@@ -220,32 +221,110 @@ class PendaftaranController extends Controller
     }
 
     function verifikasi_pendaftaran(Request $request) {
-
         if ($request->isMethod('post')) {
             $tbl = 'ISBN_REGISTRASI_PENERBIT';
             if ($request->input('tipe') == 'generate') {
                 $otp = $this->generateOTP();
-
-                 $data_send_otp = [
+                //set data OTP
+                $data_send_otp = [
                     'email_admin' => $request->input('admin_email'),
                     'username'    => $request->input('username'),
                     'kode_otp'    => $otp
                 ];
-                $this->send_email($data_send_otp);
+
+                $filter = [
+                    ["name"=>"admin_email","Value"=>$request->input('admin_email'),"SearchType"=>"Tepat"],
+                    ["name"=>"user_name","Value"=>$request->input('username'),"SearchType"=>"Tepat"]
+                ];
+                $get_data = kurl('get','getlist', $tbl, $filter, 'KriteriaFilter');
+
+                //validasi response
+                if (!empty($get_data['Data']['Items'])) {
+                    $id = $get_data['Data']['Items'][0]['ID'];
+
+                    $res_otp = $this->send_email($data_send_otp);
+                    if ($res_otp) {
+                        $update_data = $this->update_status_pendaftar($id, 'no_valid', $data_send_otp['kode_otp']); //update data
+                        if ($update_data == 'Success') {
+                            $status = 1; //success
+                            $message = 'Kode OTP baru sudah dikirim, silahkan check email anda untuk verifikasi';
+                        } else {
+                            $status = 0; //success
+                            $message = 'Gagal mengiri OTP baru';
+                        }
+                    } else {
+                        $status = 0;
+                        $message = 'Gagal mengirim email klik kirim ulang kode OTP';
+                    }
+                } else {
+                    $status = 0;
+                    $message = 'Data Pendaftar tidak ditemukan';
+                }
+
+                $res_data = [
+                    'status' => $status,
+                    'message' => $message
+                ];
+                return $res_data;
+
+            } else if ($request->input('tipe') == 'submit') {
+                $filter = [
+                    ["name"=>"admin_email","Value"=>$request->input('admin_email'),"SearchType"=>"Tepat"],
+                    ["name"=>"user_name","Value"=>$request->input('username'),"SearchType"=>"Tepat"],
+                    ["name"=>"CODE_OTP","Value"=>$request->input('kode_otp'),"SearchType"=>"Tepat"]
+                ];
+
+                $data = kurl('get','getlist', $tbl, $filter, 'KriteriaFilter');
+                //validasi response
+                if (empty($data['Data']['Items'])) {
+                    $status = 0; //gagal
+                    $message = 'Kode OTP tidak sesuai';
+                } else {
+                    $update_data = $this->update_status_pendaftar($data['Data']['Items'][0]['ID'], 'valid'); //update data
+                    if ($update_data == 'Success') {
+                        $status = 1; //success
+                        $message = 'Sukses verifikasi pendaftaran';
+                    } else {
+                        $status = 1; //success
+                        $message = 'Gagal verifikasi pendaftaran silahkan hubungi Admin';
+                    }
+                }
+                //res data
+                $res_data = [
+                    'status' => $status,
+                    'message' => $message
+                ];
+                return $res_data;
 
             } else {
-                $filter = [["name"=>"admin_email","Value"=>$request->input('admin_email'), "SearchType"=>"Tepat"]];
-                $data = kurl('get','getlist', $tbl, $filter, 'KriteriaFilter');
-
-                dd($data);
-                // if ($data['Data']) {
-                    
-                // }
-
+                //index view
+                $email = $request->input('admin_email');
+                $username = $request->input('user_name');
+                return view('content.verifikasi_pendaftaran', compact('email','username'));
             }
         }
+    }
 
-        return view('content.verifikasi_pendaftaran');
+    function update_status_pendaftar($penerbit_id, $valid, $otp = "") {
+
+        $send_data = [
+            [
+                'name' => 'CODE_OTP',
+                'Value' => $otp,
+                
+            ]
+        ];
+
+        if ($valid == 'valid') {
+            $send_data[] = 
+                [
+                    'name' => 'REGISTRASI_VALID',
+                    'Value' => 1,
+                ];
+        }
+
+        $data = kurl('post','update', 'ISBN_REGISTRASI_PENERBIT', $send_data , 'ListUpdateItem', $penerbit_id);
+        return $data['Status'];
     }
 
     function rijndaelEncryptPassword($password)

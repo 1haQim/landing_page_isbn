@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Http;
 
-function kurl($method, $action, $table, $data, $kategori) {
+function kurl($method, $action, $table, $data, $kategori, $id = null) {
     $form_data = [
         'token' => 'WWQG9BP0JBCL3QSAW9K75G',
         'op' => $action,
@@ -14,13 +14,21 @@ function kurl($method, $action, $table, $data, $kategori) {
     if ($action == 'add') {
         $form_data += [
             'CreateBy' => 'pendaftaran_online',
-            'terminal' => '127.0.0.1',
+            'terminal' => '127.0.0.1'
         ];
     } else if ($action == 'delete') {
         $form_data += [
             'id' => $data,
         ];
-    } else {}
+    } else if ($action == 'update') {
+        $form_data += [
+            'id' => $id,
+            'UpdateBy' => 'pendaftaran_online',
+            'terminal' => '127.0.0.1',
+        ];
+    }else {}
+
+    // dd($form_data);
 
     $response = Http::asForm()->$method('http://demo321.online/ISBN_API/Restful.aspx', $form_data);
 
