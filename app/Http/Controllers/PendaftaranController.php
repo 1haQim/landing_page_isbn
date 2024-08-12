@@ -18,18 +18,18 @@ class PendaftaranController extends Controller
     function checking_data_existing(Request $request) {
         if ($request->isMethod('post')) {
             if ($request->input('username')) {
-                $col = 'ISBN_USER_NAME';
+                $col = 'USER_NAME';
                 $value = $request->input('username');
             } else if($request->input('admin_email')) {
-                $col = 'EMAIL1';
+                $col = 'ADMIN_EMAIL';
                 $value = $request->input('admin_email');
             } else {
-                $col = 'EMAIL2';
+                $col = 'ALTERNATE_EMAIL';
                 $value = $request->input('alternatif_email');
             }
 
             $filter = [["name"=>$col,"Value"=>$value,"SearchType"=>"Tepat"]];
-            $data = kurl('get','getlist', 'PENERBIT', $filter, 'KriteriaFilter');
+            $data = kurl('get','getlist', 'ISBN_REGISTRASI_PENERBIT', $filter, 'KriteriaFilter');
             return json_encode($data['Data']['Items']);
         } else {
             return errorResponse();
@@ -142,7 +142,7 @@ class PendaftaranController extends Controller
                 }
             };
 
-            $data = kurl('post','add', 'PENERBIT', $send_data, 'ListAddItem');
+            $data = kurl('post','add', 'ISBN_REGISTRASI_PENERBIT', $send_data, 'ListAddItem');
 
             if (!empty($data['Data'])) {
                 $id = $data['Data']['ID'];
@@ -165,7 +165,7 @@ class PendaftaranController extends Controller
     }
 
     function rollback_pendaftaran($penerbit_id) {
-        $data = kurl('post','delete', 'PENERBIT', $penerbit_id , null);
+        $data = kurl('post','delete', 'ISBN_REGISTRASI_PENERBIT', $penerbit_id , null);
         return $data['Status'];
     }
 }
