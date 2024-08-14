@@ -190,32 +190,9 @@
                             </div>
                         </div>
                     </div>
-
+                    {{-- BIP PAGE --}}
                     <div class="tab-pane fade" id="marketing-tab-pane" role="tabpanel" aria-labelledby="marketing-tab" tabindex="0">
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-12">
-                                <div class="custom-block bg-white shadow-lg">
-                                    <div class="d-flex">
-                                        <div>
-                                            <h5 class="mb-2">BIP Online</h5>
-
-                                            <p class="mb-0">Unduh Book In Print secara online</p>
-                                        </div>
-                                        <span class="badge rounded-pill ms-auto" id="totalRowsBip" style="background-color: #13547a;"></span>
-                                    </div>
-
-                                    <table id="doc_bip" class="display responsive nowrap" style="width:100%;">
-                                        <thead>
-                                            <tr>
-                                                <th><center>Judul</center></th>
-                                                <th><center>Deskripsi</center></th>
-                                                <th><center>Download</center></th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                        @include('content.home_bip')
                     </div>
 
                         <div class="tab-pane fade" id="finance-tab-pane" role="tabpanel" aria-labelledby="finance-tab" tabindex="0">   <div class="row">
@@ -707,37 +684,7 @@
             };
         }
     </script>
-    <!-- js data table BIP-->
-    <script>
-        $.ajax({
-            url: 'https://dummyjson.com/c/e7b8-359e-41d6-9789',
-            success: function(data) {
-                console.log('AJAX response:', data.data); // Log the response data to the console
-                var tableElement =  $('#doc_bip').DataTable({
-                    data: data.data,
-                    columns: [
-                        { data: 'judul' },
-                        { data: 'deskripsi' },
-                        {
-                            data: null,
-                            defaultContent: '<button type="submit" class="form-control"><a class="nav-link click-scroll" href="#">Download</a></button>', // Tombol aksi
-                            orderable: false
-                        }
-                    ],
-                    lengthMenu: false 
-                });
-
-                //total row pada header card
-                var totalRows = tableElement.data().count();
-                document.getElementById('totalRowsBip').innerHTML = totalRows;
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('AJAX error:', textStatus, errorThrown); // Log any errors
-            }
-        });
-    </script>
-    <!-- end -->
-
+    
     <!-- js data table surat-->
     <script>
         $.ajax({
@@ -770,4 +717,6 @@
     <!-- end -->
 
 @endpush
+
+@stack('scripts')
 
