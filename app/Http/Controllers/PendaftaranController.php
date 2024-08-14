@@ -24,6 +24,13 @@ class PendaftaranController extends Controller
         for ($i = 0; $i < $length; $i++) {
             $otp .= mt_rand(0, 9);
         }
+
+        session([
+            'otp' => $otp,
+            'otp_generated_at' => now(),
+        ]);
+
+        
         return $otp;
     }
 
@@ -167,8 +174,13 @@ class PendaftaranController extends Controller
                 }
             };
             // dd($send_data);
+
+            $params = [
+                'CreateBy' => 'pendaftaran_online',
+                'terminal' => '127.0.0.1'
+            ];
             
-            $data = kurl('post','add', 'ISBN_REGISTRASI_PENERBIT', $send_data, 'ListAddItem');
+            $data = kurl('post','add', 'ISBN_REGISTRASI_PENERBIT', $send_data, 'ListAddItem', $params);
 
             if (!empty($data['Data'])) {
                 $id = $data['Data']['ID'];
@@ -208,7 +220,10 @@ class PendaftaranController extends Controller
     }
 
     function rollback_pendaftaran($penerbit_id) {
-        $data = kurl('post','delete', 'ISBN_REGISTRASI_PENERBIT', $penerbit_id , null);
+        $params = [
+            'id' => $penerbit_id,
+        ];
+        $data = kurl('post','delete', 'ISBN_REGISTRASI_PENERBIT', '', '' , $params);
         return $data['Status'];
     }
 
@@ -322,8 +337,13 @@ class PendaftaranController extends Controller
                     'Value' => 1,
                 ];
         }
+        $params = [
+            'id' => $penerbit_id,
+            'UpdateBy' => 'pendaftaran_online',
+            'terminal' => '127.0.0.1',
+        ];
 
-        $data = kurl('post','update', 'ISBN_REGISTRASI_PENERBIT', $send_data , 'ListUpdateItem', $penerbit_id);
+        $data = kurl('post','update', 'ISBN_REGISTRASI_PENERBIT', $send_data , 'ListUpdateItem', $params);
         return $data['Status'];
     }
 

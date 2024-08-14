@@ -2,33 +2,28 @@
 
 use Illuminate\Support\Facades\Http;
 
-function kurl($method, $action, $table, $data, $kategori, $id = null) {
+/*
+params kurl
+$method = post/get
+$action = add, getlist, update, delete
+$table = table yang akan dieksekusi
+$data = data filter atau data update atau data add yang berupa array
+$kategori = dari backend ada ListAddItem, ListUpdateItem
+$params = untuk penambahan params pada saat req api (pagination dll)
+*/
+
+function kurl($method, $action, $table, $data, $kategori, $params = null) { 
     $form_data = [
         'token' => 'WWQG9BP0JBCL3QSAW9K75G',
         'op' => $action,
         'table' => $table,
         $kategori => json_encode($data)
-        
     ];
-    //jika kondisi ADD
-    if ($action == 'add') {
-        $form_data += [
-            'CreateBy' => 'pendaftaran_online',
-            'terminal' => '127.0.0.1'
-        ];
-    } else if ($action == 'delete') {
-        $form_data += [
-            'id' => $data,
-        ];
-    } else if ($action == 'update') {
-        $form_data += [
-            'id' => $id,
-            'UpdateBy' => 'pendaftaran_online',
-            'terminal' => '127.0.0.1',
-        ];
-    }else {}
 
-    // dd($form_data);
+    //page
+    if (!empty($params)) {
+        $form_data = array_merge($form_data, $params);
+    }
 
     $response = Http::asForm()->$method('http://demo321.online/ISBN_API/Restful.aspx', $form_data);
 
