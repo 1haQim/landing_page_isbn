@@ -1,24 +1,26 @@
 <div class="row">
-    <div class="col-lg-12 col-md-12 col-12">
+    <div class="col-lg-12 col-md-12 col-12 mb-12 mb-lg-12">
         <div class="custom-block bg-white shadow-lg">
             <div class="d-flex">
                 <div>
-                    <h5 class="mb-2">BIP Online</h5>
+                    <h5 class="mb-2">Dokumen atau Surat</h5>
 
-                    <p class="mb-0">Unduh Book In Print secara online</p>
+                    <p class="mb-0">Unduh dokumen-surat secara online</p>
+
                 </div>
-                <span class="badge rounded-pill ms-auto" id="totalRowsBip" style="background-color: #13547a;"></span>
+                <span class="badge rounded-pill ms-auto" id="totalRowsSurat" style="background-color: #13547a;"></span>
             </div>
 
-            <table id="doc_bip" class="display responsive nowrap" style="width:100%;">
+            <table id="doc_surat" class="display responsive nowrap" style="width:100%;">
                 <thead>
                     <tr>
-                        <th><center>Judul</center></th>
+                        <th><center>Judul </center></th>
                         <th><center>Deskripsi</center></th>
                         <th><center>Download</center></th>
                     </tr>
                 </thead>
             </table>
+                <!-- <img src="images/topics/undraw_Compose_music_re_wpiw.png" class="custom-block-image img-fluid" alt=""> -->
         </div>
     </div>
 </div>
@@ -27,11 +29,11 @@
 <!-- js data table BIP-->
     <script>
         $(document).ready(function() {
-            $('#doc_bip').DataTable({
+            $('#doc_surat').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('bip.serverside_bip') }}", 
+                    url: "{{ route('surat.serverside_surat') }}", 
                     type: 'GET', 
                     data: function(d) {
                         // Calculate the current page and send it to the server
@@ -51,7 +53,7 @@
                     }
                 ],
                 drawCallback: function(settings) {
-                    document.getElementById('totalRowsBip').innerHTML = settings._iRecordsTotal;
+                    document.getElementById('totalRowsSurat').innerHTML = settings._iRecordsTotal;
                 }
             });
         });

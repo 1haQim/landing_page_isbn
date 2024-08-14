@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
 
 class BIPsController extends Controller
 {
@@ -31,7 +30,7 @@ class BIPsController extends Controller
             'PageNumber' => $page,
             'MaxItemPerPage' => $pageSize
         ];
-        
+
         //get restAPI
         $data = kurl('get','getlist', 'ISBN_MST_BIP_DOWN', $filter, 'KriteriaFilter', $params);
         $responseData = $data['Data'];

@@ -239,32 +239,8 @@
                     </div>
 
                     <div class="tab-pane fade" id="music-tab-pane" role="tabpanel" aria-labelledby="music-tab" tabindex="0">
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-12 mb-12 mb-lg-12">
-                                <div class="custom-block bg-white shadow-lg">
-                                    <div class="d-flex">
-                                        <div>
-                                            <h5 class="mb-2">Dokumen atau Surat</h5>
-
-                                            <p class="mb-0">Unduh dokumen-surat secara online</p>
-
-                                        </div>
-                                        <span class="badge rounded-pill ms-auto" id="totalRowsSurat" style="background-color: #13547a;"></span>
-                                    </div>
-
-                                    <table id="doc_surat" class="display responsive nowrap" style="width:100%;">
-                                        <thead>
-                                            <tr>
-                                                <th><center>Judul </center></th>
-                                                <th><center>Deskripsi</center></th>
-                                                <th><center>Download</center></th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                        <!-- <img src="images/topics/undraw_Compose_music_re_wpiw.png" class="custom-block-image img-fluid" alt=""> -->
-                                </div>
-                            </div>
-                        </div>
+                        @include('content.home_surat')
+                        
                     </div>
 
                     <div class="tab-pane fade" id="education-tab-pane" role="tabpanel" aria-labelledby="education-tab" tabindex="0">
@@ -685,37 +661,6 @@
         }
     </script>
     
-    <!-- js data table surat-->
-    <script>
-        $.ajax({
-            url: 'https://dummyjson.com/c/7162-7e63-4256-98bb',
-            success: function(data) {
-                console.log('AJAX response:', data.data); // Log the response data to the console
-                var tableElement =  $('#doc_surat').DataTable({
-                    data: data.data,
-                    columns: [
-                        { data: 'judul' },
-                        { data: 'deskripsi' },
-                        {
-                            data: null,
-                            defaultContent: '<button type="submit" class="form-control"><a class="nav-link click-scroll" href="#">Download</a></button>', // Tombol aksi
-                            orderable: false
-                        }
-                    ],
-                    lengthMenu: false 
-                });
-
-                //total row pada header card
-                var totalRows = tableElement.data().count();
-                document.getElementById('totalRowsSurat').innerHTML = totalRows;
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('AJAX error:', textStatus, errorThrown); // Log any errors
-            }
-        });
-    </script>
-    <!-- end -->
-
 @endpush
 
 @stack('scripts')
