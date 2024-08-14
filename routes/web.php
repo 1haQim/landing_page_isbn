@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BIPsController;
 use App\Http\Controllers\SuratController;
+use App\Http\Controllers\BeritaController;
 
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\PelacakanController;
@@ -31,6 +32,8 @@ Route::get('serverside_bip', [BIPsController::class, 'serverside_bip'])->name('b
 //surat
 Route::get('surat', [SuratController::class, 'index'])->name('surat.index');
 Route::get('serverside_surat', [SuratController::class, 'serverside_surat'])->name('surat.serverside_surat');
+//berita
+Route::get('berita', [BeritaController::class, 'index'])->name('berita');
 
 Route::match(['get', 'post'], '/search', [PencarianController::class, 'index']);
 

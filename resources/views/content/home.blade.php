@@ -195,52 +195,12 @@
                         @include('content.home_bip')
                     </div>
 
-                        <div class="tab-pane fade" id="finance-tab-pane" role="tabpanel" aria-labelledby="finance-tab" tabindex="0">   <div class="row">
-                            <div class="col-lg-6 col-md-6 col-12 mb-4 mb-lg-0">
-                                <div class="custom-block bg-white shadow-lg">
-                                    <a href="topics-detail.html">
-                                        <div class="d-flex">
-                                            <div>
-                                                <h5 class="mb-2">Berita dari Salemba</h5>
-
-                                                <p class="mb-0">
-                                                    Layanan kembali normal
-                                                    Diinformasikan bahwa Layanan ISBN Online sudah kembali normal. Penerbit yang masih belum bisa akses pada pendaftaran ISBN atau terkendala upload lampiran, silahkan lakukan clear cache terlebih dahulu. Salam sehat dan salam literasi
-                                                </p>
-                                            </div>
-
-                                            <span class="badge rounded-pill" style="background-color: #13547a;width:100%">23.4.2024</span>
-                                        </div>
-
-                                        <img src="{{ asset('template/images/topics/undraw_Finance_re_gnv2.png') }}" class="custom-block-image img-fluid" alt="">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12 mb-4 mb-lg-0">
-                                <div class="custom-block bg-white shadow-lg">
-                                    <a href="topics-detail.html">
-                                        <div class="d-flex">
-                                            <div>
-                                                <h5 class="mb-2">Berita dari Salemba</h5>
-
-                                                <p class="mb-0">
-                                                    Layanan kembali normal
-                                                    Diinformasikan bahwa Layanan ISBN Online sudah kembali normal. Penerbit yang masih belum bisa akses pada pendaftaran ISBN atau terkendala upload lampiran, silahkan lakukan clear cache terlebih dahulu. Salam sehat dan salam literasi
-                                                </p>
-                                            </div>
-                                            <span class="badge rounded-pill " style="background-color: #13547a; width:100%">23.4.2024</span>
-                                        </div>
-
-                                        <img src="{{ asset('template/images/topics/undraw_Finance_re_gnv2.png') }}" class="custom-block-image img-fluid" alt="">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="tab-pane fade" id="finance-tab-pane" role="tabpanel" aria-labelledby="finance-tab" tabindex="0">   
+                       @include('content.home_berita')
                     </div>
 
                     <div class="tab-pane fade" id="music-tab-pane" role="tabpanel" aria-labelledby="music-tab" tabindex="0">
                         @include('content.home_surat')
-                        
                     </div>
 
                     <div class="tab-pane fade" id="education-tab-pane" role="tabpanel" aria-labelledby="education-tab" tabindex="0">
@@ -262,158 +222,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end statistik panjang-->
-                            <!-- detail statistik panjang-->
-                            <div class="col-lg-12 col-md-12 col-12 mb-12 mb-lg-12" id="statistik_lengkap" style="display: none;">
-                                <div class="custom-block bg-white shadow-lg">
-                                    <div class="d-flex">
-                                        <div>
-                                            <h5 class="mb-2">Statistik</h5>
-
-                                            <p class="mb-0">
-                                                Informasi tentang penomoran Isbn dan data-data statistik per tahun, per bulan, per provinsi dan data lainnya <br>
-                                                <b> 1. Pendahuluan </b><br>
-                                                Perpustakaan Nasional RI Sebagai badan yang ditunjuk oleh International ISBN Agency untuk mengelola International Standard Book Number (ISBN) di Indonesia sejak tahun 1986, telah menjalankan tugasnya mengelola dan mendistribusikan penomoran ISBN kepada seluruh penerbit yang ada di wilayah negara kesatuan Republik Indonesia.
-                                                <br><br>
-                                                Indonesia sudah tiga kali menerima Group Identifier, yaitu 979 pada tahun 1985, 602 pada tahun 2003 dan 623 pada tahun 2018. Berikut Struktur ISBN untuk Indonesia
-                                            </p>
-                                            <img src="{{ asset('template/images/topics/undraw_Finance_re_gnv2.png') }}" class="custom-block-image img-fluid" alt="">
-                                            <p>
-                                                Berdasarkan block number tersebut, Perpustakaan Nasional RI sudah mendistribusikan registrant element dan rentang ISBN, sebanyak :
-                                            </p>
-                                            <img src="{{ asset('template/images/topics/undraw_Finance_re_gnv2.png') }}" class="custom-block-image img-fluid" alt="">
-                                            <p>
-                                            Data ini menunjukkan bahwa penerbit Indonesia sudah menggunakan 13.510 registrant elemant pada group identifier 979, dan 24.607 registrant element pada group identifier 602. Sedangkan penggunaan registrant element pada block number 623 belum menjadi hitungan karena masih terus dikembangkan bersamaan dengan kondisi penerbitan di Indonesia. Jika diperhatikan, sejak diterapkannya sistem ISBN di Indonesia sejak tahun 1986, penerbit di Indonesia telah menerbitkan buku sebanyak 2.000.000 judul buku ber-ISBN (diluar hitungan buku berjilid) 
-                                            <br>
-                                            Layanan pengurusan ISBN Perpustakaan Nasional RI telah memenuhi persyaratan SNI ISO 9001 : 2015 dan terdaftar dalam MUTU Certification. Berdasarkan Surat edaran Kepala Direktorat Deposit Bahan Pustaka Perpustakaan Nasional RI no. 224/3.1/DBP.05/II.2018, berlaku mulai April 2018 layanan ISBN dinyatakan online dan tidak ada lagi pengajuan ISBN secara onsite. 
-                                            <br>
-                                            Perpustakaan Nasional RI berusaha menyediakan informasi hasil layanan ISBN secara terbuka dan real time. Layanan tersebut merupakan pertanggungjawaban lembaga dalam mewujudkan layanan publik yang transparan dan akuntabel.
-                                            <br>
-                                            </p>
-                                            <!-- menu baru -->
-                                            <div class="row">
-                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link active" id="terbitan-tab" data-bs-toggle="tab" data-bs-target="#terbitan-tab-pane" type="button" role="tab" aria-controls="terbitan-tab-pane" aria-selected="true">Terbitan</button>
-                                                    </li>
-
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link" id="penerbit-tab" data-bs-toggle="tab" data-bs-target="#penerbit-tab-pane" type="button" role="tab" aria-controls="penerbit-tab-pane" aria-selected="false">Penerbit</button>
-                                                    </li>
-
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link" id="periode-isbn-tab" data-bs-toggle="tab" data-bs-target="#periode-isbn-tab-pane" type="button" role="tab" aria-controls="periode-isbn-tab-pane" aria-selected="false">ISBN per periode</button>
-                                                    </li>
-
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link" id="wilayah-isbn-tab" data-bs-toggle="tab" data-bs-target="#wilayah-isbn-tab-pane" type="button" role="tab" aria-controls="wilayah-isbn-tab-pane" aria-selected="false">ISBN per wilayah</button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <!-- konten detail statistik -->
-                                            <div class="tab-content" id="myTabContent1">
-                                                <div class="tab-pane fade show active" id="terbitan-tab-pane" role="tabpanel" aria-labelledby="terbitan-tab" tabindex="0">
-                                                    <div class="row">
-                                                        <div class="col-lg-12 col-md-6 col-12 mb-12 mb-lg-0">
-                                                            <div class="custom-block bg-white shadow-lg">
-                                                                <div class="d-flex">
-                                                                    <div>
-                                                                        <h5 class="mb-2">Katalog Dalam Terbitan & BIP Online</h5>
-                                                                            <p class="mb-0">
-                                                                                KDT atau Katalog Dalam Terbitan adalah salah satu layanan untuk penerbit, ingin mengetahui selengkapnya?
-                                                                            </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="penerbit-tab-pane" role="tabpanel" aria-labelledby="penerbit-tab" tabindex="0">
-                                                    <div class="row">
-                                                        <div class="col-lg-12 col-md-12 col-12 mb-12 mb-lg-0">
-                                                            <div class="custom-block bg-white shadow-lg">
-                                                                <div class="d-flex">
-                                                                    <div>
-                                                                        <h5 class="mb-2">Informasi Seputar ISBN</h5>
-                                                                        <p class="mb-0">
-                                                                            Ingin tahu lebih banyak tentang apa, bagaimana dan fungsi ISBN serta persyaratan untuk mendapatkannya?
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="periode-isbn-tab-pane" role="tabpanel" aria-labelledby="periode-isbn-tab" tabindex="0">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 col-md-6 col-12 mb-6 mb-lg-0">
-                                                            <div class="custom-block bg-white shadow-lg">
-                                                                <div class="d-flex">
-                                                                    <div>
-                                                                        <h5 class="mb-2">Informasi Seputar ISBN</h5>
-                                                                        <p class="mb-0">
-                                                                            Ingin tahu lebih banyak tentang apa, bagaimana dan fungsi ISBN serta persyaratan untuk mendapatkannya?
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 col-md-6 col-12 mb-6 mb-lg-0">
-                                                            <div class="custom-block bg-white shadow-lg">
-                                                                <div class="d-flex">
-                                                                    <div>
-                                                                        <h5 class="mb-2">Katalog Dalam Terbitan & BIP Online</h5>
-                                                                            <p class="mb-0">
-                                                                                KDT atau Katalog Dalam Terbitan adalah salah satu layanan untuk penerbit, ingin mengetahui selengkapnya?
-                                                                            </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="wilayah-isbn-tab-pane" role="tabpanel" aria-labelledby="wilayah-isbn-tab" tabindex="0">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 col-md-6 col-12 mb-6 mb-lg-0">
-                                                            <div class="custom-block bg-white shadow-lg">
-                                                                <div class="d-flex">
-                                                                    <div>
-                                                                        <h5 class="mb-2">Informasi Seputar ISBN</h5>
-                                                                        <p class="mb-0">
-                                                                            Ingin tahu lebih banyak tentang apa, bagaimana dan fungsi ISBN serta persyaratan untuk mendapatkannya?
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 col-md-6 col-12 mb-6 mb-lg-0">
-                                                            <div class="custom-block bg-white shadow-lg">
-                                                                <div class="d-flex">
-                                                                    <div>
-                                                                        <h5 class="mb-2">Katalog Dalam Terbitan & BIP Online</h5>
-                                                                            <p class="mb-0">
-                                                                                KDT atau Katalog Dalam Terbitan adalah salah satu layanan untuk penerbit, ingin mengetahui selengkapnya?
-                                                                            </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <center>
-                                                <a href="#section_2" class="btn custom-btn mt-2 mt-lg-3" style="background-color: #13547a;" onclick="statistik_read_section()">Lebih sedikit</a>
-                                            </center>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <!-- end statistik panjang-->
                         </div>
                     </div>
                 </div>
-
+            </div>
         </div>
     </div>
 </section>
@@ -590,7 +402,6 @@
 </section>
 <!-- end pertanyaan -->
 
-
 <!-- Modal pengumuman-->
 <div class="modal fade" id="imageModalPengumuman" tabindex="-1" aria-labelledby="imageModalLabelPengumuman" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -602,10 +413,8 @@
     </div>
 </div>
 
-
 <!-- js data table pencarian-->
 <script>
-    
     function handleClickSearch() {
         //keyword pencarian
         var keyword_pencarian = $("#keyword_pencarian").val();
