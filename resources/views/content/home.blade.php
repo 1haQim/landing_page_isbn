@@ -436,7 +436,7 @@
             var fragment = window.location.hash;
             // You can also remove the '#' character if needed
             var section = fragment.substring(1);
-
+            const appUrl = @json(env('APP_URL'));
             if (EmptyString(section)) {
                 $.ajax({
                     url: '/flyer',
@@ -447,7 +447,7 @@
                     dataType: 'json',
                     serverSide: true,
                     success: function(data) {
-                        var data1 = "http://127.0.0.1:8000/template/images/HasilSKMISBN2024Periode1.jpg" //kalau live dihapus
+                        var data1 = appUrl + "/template/images/HasilSKMISBN2024Periode1.jpg" //kalau live dihapus
                         showPengumuman(data1)
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
