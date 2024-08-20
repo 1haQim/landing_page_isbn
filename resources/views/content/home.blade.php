@@ -13,7 +13,7 @@
 
                 <h6 class="text-white text-center">International Standard Book Number</h6>
 
-                <form method="get" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" role="search">
+                {{-- <form method="get" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" role="search"> --}}
                     <div class="input-group input-group-lg">
                         <span class="input-group-text bi-search" id="basic-addon1">
                             
@@ -22,10 +22,10 @@
                         <input name="keyword" type="search" class="form-control" id="keyword_pencarian" placeholder="Cari Judul, Pengarang, Penerbit, ISBN ..." aria-label="Search">
 
                         <button type="submit" class="form-control">
-                            <a class="nav-link click-scroll" href="" onclick="handleClickSearch()">Cari</a>
+                            <a class="nav-link click-scroll" onclick="handleClickSearch()">Cari</a>
                         </button>
                     </div>
-                </form>
+                {{-- </form> --}}
             </div>
 
         </div>
@@ -418,6 +418,7 @@
     function handleClickSearch() {
         //keyword pencarian
         var keyword_pencarian = $("#keyword_pencarian").val();
+        
         //get data pencarian
         window.location.assign("/search?keyword="+keyword_pencarian);
     }

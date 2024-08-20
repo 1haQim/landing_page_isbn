@@ -42,15 +42,15 @@
                         <ul class="list-group">
                             <center><p>Lokasi Terbitan</p></center>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Cras justo odio
+                                JAKARTA
                                 <span class="badge badge-primary badge-pill">14</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Dapibus ac facilisis in
+                                BANDUNG
                                 <span class="badge badge-primary badge-pill">2</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Morbi leo risus
+                                SURABAYA
                                 <span class="badge badge-primary badge-pill">1</span>
                             </li>
                         </ul>
@@ -86,107 +86,48 @@
 
 
 <!-- js data table pencarian-->
-
+@push('scripts')
 <script>
+    $(document).ready(function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const keyword_pencarian = urlParams.get('keyword');
+        window.history.replaceState({}, document.title, window.location.pathname);
 
-    document.addEventListener('DOMContentLoaded', (event) => {
-         const url = new URL(window.location.href);
-        // Create a URLSearchParams object from the query string
-        const params = new URLSearchParams(url.search);
-        // Get the value of the 'keyword' parameter
-        const keyword_pencarian = params.get('keyword');
+        if ($.fn.DataTable.isDataTable('#dataTable')) {
+            $('#dataTable').DataTable().destroy();
+        }
 
-        $.ajax({
-            url: '/search',
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: 'json',
+        $('#dataTable').DataTable({
+            processing: true,
             serverSide: true,
-            data: {
-                keyword: keyword_pencarian
-            },
-            success: function(data) {
-                var tableElement = $('#dataTable');
-                // hapus DataTable jika sudah ada
-                if ($.fn.DataTable.isDataTable(tableElement)) {
-                    tableElement.DataTable().destroy();
+            ajax: {
+                url: "{{ route('pencarian.search') }}", 
+                type: 'GET', 
+                data: function(d) {
+                    // Calculate the current page and send it to the server
+                    d.page = (d.start / d.length) + 1; // Current page (1-based)
+                    d.pageSize = d.length; // Number of records per page
+                    d.search = d.search.value; // Pencarian global
                 }
-
-                // Inisialisasi DataTable
-                console.log('AJAX response:', data.Data.Items); // Log the response data to the console
-                var tableElement = $('#dataTable').DataTable({
-                    data: data.Data.Items,
-                    columns: [
-                        { data: 'TITLE' },
-                        { data: 'CREATEBY' },
-                        { data: 'PUBLISHER' },
-                        { data: 'PUBLISH_YEAR' },
-                        { data: 'ISBN' }
-                        
-                    ],
-                    lengthMenu: false,
-                });
-
-                //filter datatable
-                tableElement.search(keyword_pencarian).draw();
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('AJAX error:', textStatus, errorThrown); // Log any errors
+            pageLength: 10, // Default number of records per page
+            lengthMenu: [5, 10, 25, 50],
+            columns: [
+                { data: 'TITLE' },
+                { data: 'CREATEBY' },
+                { data: 'PUBLISHER' },
+                { data: 'PUBLISH_YEAR' },
+                { data: 'ISBN' }
+            ],
+            search: {
+                search: keyword_pencarian 
+            },
+            drawCallback: function(settings) {
+                // document.getElementById('totalRowsSurat').innerHTML = settings._iRecordsTotal;
             }
         });
     })
-   
-
-
-
-
-    // function isNotEmptyString(value) {
-    //     return value !== null && value !== undefined && value.trim() !== '';
-    // }
-
-    // function handleClickPencarian() {
-    //     // tampilan pencarian
-    //     var element = document.getElementById('section_pencarian');
-    //     element.style.display = '';
-    //     //keyword pencarian
-    //     var keyword_pencarian = $("#keyword_pencarian").val();
-    //     //get data pencarian
-    //     $.ajax({
-    //         url: 'https://dummyjson.com/c/cd7a-89b4-4645-a6e6',
-    //         dataType: 'json',
-    //         serverSide: true,
-    //         success: function(data) {
-    //             var tableElement = $('#table_filter');
-    //             // hapus DataTable jika sudah ada
-    //             if ($.fn.DataTable.isDataTable(tableElement)) {
-    //                 tableElement.DataTable().destroy();
-    //             }
-
-    //             // Inisialisasi DataTable
-    //             console.log('AJAX response:', data.data); // Log the response data to the console
-    //             var tableElement = $('#table_filter').DataTable({
-    //                 data: data.data,
-    //                 columns: [
-    //                     { data: 'isbn' },
-    //                     { data: 'judul' },
-    //                     { data: 'pengarang' },
-    //                     { data: 'terbit' }
-    //                 ],
-    //                 lengthMenu: false,
-    //             });
-
-    //             //filter datatable
-    //             if (isNotEmptyString(keyword_pencarian)) {
-    //                 tableElement.search(keyword_pencarian).draw();
-    //             }
-    //         },
-    //         error: function(jqXHR, textStatus, errorThrown) {
-    //             console.error('AJAX error:', textStatus, errorThrown); // Log any errors
-    //         }
-    //     });
-    // }
 </script>
-<!-- end -->
+
+@endpush
   

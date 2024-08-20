@@ -28,6 +28,9 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index']);
 //flyer pengumuman
 Route::post('/flyer', [HomeController::class, 'flyer']);
+//pencarian home
+Route::get('/search', [PencarianController::class, 'index'])->name('pencarian.index');
+Route::get('/serverside_search', [PencarianController::class, 'search'])->name('pencarian.search');
 //bip
 Route::get('bip', [BIPsController::class, 'index'])->name('bip.index');
 Route::get('serverside_bip', [BIPsController::class, 'serverside_bip'])->name('bip.serverside_bip');
@@ -36,8 +39,6 @@ Route::get('surat', [SuratController::class, 'index'])->name('surat.index');
 Route::get('serverside_surat', [SuratController::class, 'serverside_surat'])->name('surat.serverside_surat');
 //berita
 Route::get('berita', [BeritaController::class, 'index'])->name('berita');
-
-Route::match(['get', 'post'], '/search', [PencarianController::class, 'index']);
 
 Route::get('/pendaftaran_online', [PendaftaranController::class, 'index']);
 Route::post('/checking_data_existing', [PendaftaranController::class, 'checking_data_existing']);
