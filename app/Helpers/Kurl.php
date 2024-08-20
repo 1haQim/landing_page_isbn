@@ -13,11 +13,13 @@ $params = untuk penambahan params pada saat req api (pagination dll)
 */
 
 function kurl($method, $action, $table, $data, $kategori, $params = null) { 
+
+    $body = $action == 'getlistraw' ? $data : json_encode($data);
     $form_data = [
         'token' => 'WWQG9BP0JBCL3QSAW9K75G',
         'op' => $action,
         'table' => $table,
-        $kategori => json_encode($data)
+        $kategori => $body
     ];
 
     //page
