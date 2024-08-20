@@ -1,21 +1,16 @@
 @extends('index')
 
 @push('styles')
-     <style>
-        .dt-length {
-            display: none;
+    <style>
+        .table-container {
+            display: flex;
         }
-        /* Gaya untuk elemen pencarian DataTables */
-        .dt-input {
-            width: 100%; /* Ubah lebar input */
-            padding: 10px; /* Ubah padding */
-            border-radius: 150px; /* Ubah radius border */
-            border: 1px solid #ccc; /* Ubah border */
-            font-size: 14px; /* Ubah ukuran font */
+        .table-container .table-wrapper {
+            flex: 1;
         }
-
-        label[for^="dt-search-"] {
-            display: none; /* Menyembunyikan elemen label */
+        .table-container .side-content {
+            width: 200px; /* Adjust as needed */
+            margin-right: 20px; /* Space between the table and the side content */
         }
     </style>
 @endpush
@@ -29,50 +24,41 @@
             <div class="col-lg-8 col-12 mx-auto">
                 <h1 class="text-white text-center">Lacak Permohonan ISBN</h1>
 
-                <h6 class="text-white text-center">International Standard Book Number</h6>
+                <h6 class="text-white text-center mb-4" >International Standard Book Number</h6>
 
-                <form method="get" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" role="search">
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-text bi-search" id="basic-addon1">
-                            
-                        </span>
-                        <input name="keyword" type="search" class="form-control" id="keyword_pencarian" placeholder="Tracking pengajuan ISBN berdasarkan No Resi Pengajuan ..." aria-label="Search">
-                        <button type="submit" class="form-control">
-                            <a class="nav-link click-scroll" href="#section_pencarian" onclick="handleClickPencarian()">Cari</a>
-                        </button>
-                    </div>
-                </form>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text bi-search" id="basic-addon1">
+                        
+                    </span>
+                    <input name="keyword" type="search" class="form-control" id="tracking" placeholder="Tracking pengajuan ISBN berdasarkan No Resi Pengajuan ..." aria-label="Search">
+                    <button type="submit" class="form-control">
+                        <a class="nav-link" onclick="handleClickTracking()">Cari</a>
+                    </button>
+                </div>
             </div>
 
         </div>
     </div>
 </section>
 
-<section class="explore-section section-padding" id="section_pencarian" style="display: none;">
-    <div class="container" >
 
-        <div class="col-12 text-center">
-            <h2 class="mb-4">Hasil Pencarian</h1>
-            <div class="col-lg-12 col-md-12 col-12 mb-12 mb-lg-12">
+<section class="featured-section" style="background-color:white; display: none" id="card_tracking_pencarian">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-12 mb-4 mb-lg-0">
                 <div class="custom-block bg-white shadow-lg">
-                    <div class="d-flex">
-                        
+                    <div>
+                        <center><h5 class="mb-4 ">Hasil Pencarian</h5></center>
                     </div>
-
-                    <table id="table_filter" class="display responsive" style="width:100%;">
-                        <thead>
-                            <tr>
-                                <th><center>No Resi </center></th>
-                                <th><center>Judul </center></th>
-                                <th><center>Kepengarang</center></th>
-                                <th><center>Penerbit </center></th>
-                                <th><center>NO. Antrian </center></th>
-                                <th><center>Tahun Terbit</center></th>
-                                <th><center>Tanggal Pengajuan</center></th>
-                            </tr>
-                        </thead>
-                    </table>
-                        <!-- <img src="images/topics/undraw_Compose_music_re_wpiw.png" class="custom-block-image img-fluid" alt=""> -->
+                    <div class="table-container">
+                        <div class="side-content table-wrapper">
+                            <table class="table table-bordered">
+                                <tbody id="result_tracking">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,56 +66,66 @@
 </section>
 
 @push('scripts')
-    <!-- js data table pencarian-->
+
     <script>
-        function isNotEmptyString(value) {
-            return value !== null && value !== undefined && value.trim() !== '';
-        }
-
-        function handleClickPencarian() {
-            // tampilan pencarian
-            var element = document.getElementById('section_pencarian');
-            element.style.display = '';
-            //keyword pencarian
-            var keyword_pencarian = $("#keyword_pencarian").val();
-            //get data pencarian
-            $.ajax({
-                url: 'https://dummyjson.com/c/7417-1869-4e0a-83d5',
-                dataType: 'json',
-                serverSide: true,
-                success: function(data) {
-                    var tableElement = $('#table_filter');
-                    // hapus DataTable jika sudah ada
-                    if ($.fn.DataTable.isDataTable(tableElement)) {
-                        tableElement.DataTable().destroy();
+        function handleClickTracking() {
+            //show card
+            document.getElementById('card_tracking_pencarian').style.display = 'block';
+            //get value
+            let no_resi =  $('#tracking').val();
+            //get ajax
+            if (no_resi) {
+                $.ajax({
+                    url: "{{ route('tracking.resi') }}",
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    dataType: 'json',
+                    serverSide: true,
+                    data : {
+                        resi : no_resi
+                    },
+                    success: function(data) {
+                        var bodyTbl = ``;
+                        if (data.Items.length > 0) {
+                            bodyTbl += `
+                                <tr>
+                                    <th>No Resi</th>
+                                    <td>`+ data.Items[0].NO_RESI + `</td>
+                                </tr>
+                                <th>Status</th>
+                                    <td>`+ data.Items[0].STATUS + ` </td>
+                                </tr>
+                                <tr>
+                                    <th>Tanggal Pengajuan</th>
+                                    <td>`+ data.Items[0].CREATEDATE + `</td>
+                                </tr>
+                                <tr>
+                                <tr>
+                                    <th>Dibuat Oleh</th>
+                                    <td>`+ data.Items[0].CREATEBY + ` </td>
+                                </tr>
+                                <tr>
+                                    <th>Diajukan Oleh</th>
+                                    <td>`+ data.Items[0].NAME + ` </td>
+                                </tr>
+                            `
+                        } else {
+                            bodyTbl += `
+                                <center><p class="mb-0">Data Tidak Ditemukan</p></center>
+                            `
+                        }
+                        
+                        document.getElementById('result_tracking').innerHTML = bodyTbl
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('AJAX error:', textStatus, errorThrown); // Log any errors
                     }
-
-                    // Inisialisasi DataTable
-                    console.log('AJAX response:', data.data); // Log the response data to the console
-                    var tableElement = $('#table_filter').DataTable({
-                        data: data.data,
-                        columns: [
-                            { data: 'resi' },
-                            { data: 'judul' },
-                            { data: 'kepengarangan' },
-                            { data: 'penerbit' },
-                            { data: 'no_antrian' },
-                            { data: 'thn_terbit' },
-                            { data: 'tgl_pengajuan' },
-                        ],
-                        lengthMenu: false,
-                    });
-
-                    //filter datatable
-                    if (isNotEmptyString(keyword_pencarian)) {
-                        tableElement.search(keyword_pencarian).draw();
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('AJAX error:', textStatus, errorThrown); // Log any errors
-                }
-            });
+                });
+            } else {
+                alert('masukkan no resi')
+            }
         }
     </script>
-    <!-- end -->
 @endpush

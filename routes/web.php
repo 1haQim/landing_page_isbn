@@ -16,6 +16,7 @@ use App\Http\Controllers\DropzoneController;
 use App\Http\Controllers\ProsedurController;
 
 
+
 Route::get('/welcome', function () {
     return view('welcome');
 });
@@ -55,6 +56,9 @@ Route::get('/prosedur', [ProsedurController::class, 'index']);
 
 
 Route::get('/pelacakan', [PelacakanController::class, 'index']);
+Route::POST('/request_pelacakan', [PelacakanController::class, 'serverside_pelacakan'])->name('tracking.resi');
+
+
 Route::get('/detail_fnq', [FnQsController::class, 'index']);
 Route::get('/panduan_layanan', [PanduanLayananController::class, 'index']);
 
