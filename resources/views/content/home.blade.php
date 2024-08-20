@@ -52,7 +52,7 @@
                         </div>
                         <div>
                             <center>
-                                <a href="topics-detail.html" class="btn custom-btn mt-2 mt-lg-3">Selengkapnya</a>
+                                <a href="/prosedur" class="btn custom-btn mt-2 mt-lg-3">Selengkapnya</a>
                             </center>
                         </div>
                         <img src="{{ asset('template/images/icon_1.png') }}" class="custom-block-image img-fluid" alt="">

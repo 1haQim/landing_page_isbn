@@ -13,6 +13,8 @@ use App\Http\Controllers\PanduanLayananController;
 use App\Http\Controllers\PencarianController;
 use App\Http\Controllers\DropzoneController;
 
+use App\Http\Controllers\ProsedurController;
+
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -43,6 +45,10 @@ Route::post('/get_wilayah', [PendaftaranController::class, 'get_wilayah']);
 Route::post('/submit_pendaftaran', [PendaftaranController::class, 'submit_pendaftaran']);
 Route::get('/send_email_verification', [PendaftaranController::class, 'send_email']);
 Route::match(['get', 'post'], '/verifikasi_pendaftaran', [PendaftaranController::class, 'verifikasi_pendaftaran']);
+
+
+Route::get('/prosedur', [ProsedurController::class, 'index']);
+
 
 
 
