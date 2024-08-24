@@ -163,70 +163,69 @@
         /* loader page */
         
 
-/* loader css starts from here */
-.loader_page {
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	background-color: #444;
-	display: flex;
-    justify-content: center;
-    align-items: center;
-}
+        /* loader css starts from here */
+        .loader_page {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #444;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.loader_page .loader_page-inner {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	background-color: #f17f7f;
-	display: flex;
-    justify-content: center;
-    align-items: center;
-    -webkit-transition: width .5s, height 1s; /* For Safari 3.1 to 6.0 */
-    transition: width .5s, height 1s;
-}
+        .loader_page .loader_page-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #f17f7f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            -webkit-transition: width .5s, height 1s; /* For Safari 3.1 to 6.0 */
+            transition: width .5s, height 1s;
+        }
 
-.loader_page .loader_page-inner .loading-box .loader-message {
-	padding: 1em 0;
-	color: white;
-}
+        .loader_page .loader_page-inner .loading-box .loader-message {
+            padding: 1em 0;
+            color: white;
+        }
 
-.loader_page .loader_page-inner .loading-box .circular-loader {
-    border: 3px solid #f3f3f3; /* Light grey */
-    border-top: 3px solid #444; /* Blue */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
-    margin: 0 auto;
-    transition: all .5s ease-out;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+        .loader_page .loader_page-inner .loading-box .circular-loader {
+            border: 3px solid #f3f3f3; /* Light grey */
+            border-top: 3px solid #444; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+            transition: all .5s ease-out;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.loader_page .loader_page-inner .loading-box .circular-loader:before,
-.loader_page .loader_page-inner .loading-box .circular-loader:after {
-	content: '';
-	height: 0px;
-    width: 0px;
-	background-color: white;
-    position: absolute;
-    -webkit-transition: height .5s; /* For Safari 3.1 to 6.0 */
-    transition: height .5s;
-}
+        .loader_page .loader_page-inner .loading-box .circular-loader:before,
+        .loader_page .loader_page-inner .loading-box .circular-loader:after {
+            content: '';
+            height: 0px;
+            width: 0px;
+            background-color: white;
+            position: absolute;
+            -webkit-transition: height .5s; /* For Safari 3.1 to 6.0 */
+            transition: height .5s;
+        }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
 
     </style>
-
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
 
@@ -258,20 +257,17 @@
                         </div>
                         </div>
                     </div>
-                    
                     <form id="contact" action="#">
-
                         <div>
                             <h3>Penerbit</h3>
                             <section>
-                               
                                 <label for="name">Penerbit  *</label> <br>
                                 <label>
-                                    <input type="radio" id="swasta" value="swasta" onclick="kat_penerbit(this)" name="kategori_penerbit"/>
+                                    <input type="radio" id="swasta" value="swasta" onclick="kat_penerbit(this)" name="kategori_penerbit" required/>
                                     <span>Lembaga Swasta</span>
                                 </label><br>
                                 <label>
-                                    <input type="radio" id="pemerintah" value="pemerintah" onclick="kat_penerbit(this)" name="kategori_penerbit"/>
+                                    <input type="radio" id="pemerintah" value="pemerintah" onclick="kat_penerbit(this)" name="kategori_penerbit" required/>
                                     <span>Lembaga Pemerintah</span>
                                 </label>
                             </section>
@@ -343,14 +339,14 @@
                                 <div class="form-row row" style="margin-top:90px">
                                     <div class="col">
                                         <label for="penerbit" style="color:black">Penerbit*</label>
-                                        <input type="text" placeholder="" class="form-control" id="penerbit" name="nama_penerbit"  >
+                                        <input type="text" placeholder="" class="form-control" id="penerbit" name="nama_penerbit"  required>
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="username" style="color:black">Username*</label>
                                         <div class="inputcontainer">
-                                            <input type="text" placeholder="Username" class="form-control" onchange="checkDataExisting('username',this.value)" id="username" name="user_name"  >
+                                            <input type="text" placeholder="Username" class="form-control" onchange="checkDataExisting('username',this.value)" id="username" name="user_name"  required>
                                             <div class="icon-container">
                                                 <i class="loader" id="loader_username" style="display: none"></i>
                                                 <svg class="checkmark" id="success_username" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -370,11 +366,11 @@
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="password" style="color:black">Password*</label>
-                                        <input type="password" placeholder="Password" class="form-control" id="password" name="password"  onchange="validasi_password(this.value)" >
+                                        <input type="password" placeholder="Password" class="form-control" id="password" name="password"  onchange="validasi_password(this.value)" required>
                                     </div>
                                     <div class="col">
                                         <label for="confirm_password" style="color:black">Confirm Password*</label>
-                                        <input type="password" placeholder="" class="form-control" id="confirm_password" name="password2"  >
+                                        <input type="password" placeholder="" class="form-control" id="confirm_password" name="password2" required>
                                     </div>
                                     <span id="ket_password" style="font-size:11px; color:red"></span>
                                 </div>
@@ -387,13 +383,13 @@
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="nm_jalan" style="color:black">Nama Jalan*</label>
-                                        <input type="text" placeholder="" class="form-control" id="nm_jalan" name="alamat_penerbit"  >
+                                        <input type="text" placeholder="" class="form-control" id="nm_jalan" name="alamat_penerbit" required >
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="provinsi" style="color:black">provinsi*</label>
-                                        <select id="provinsi" style="width: 100%;" class="form-control select2" name="province_id" onchange="get_wilayah_prov('kab_kot',this.value)">
+                                        <select id="provinsi" style="width: 100%;" class="form-control select2" name="province_id" onchange="get_wilayah_prov('kab_kot',this.value)" required>
                                              
                                         </select>
                                     </div>
@@ -424,7 +420,7 @@
                                     <div class="col">
                                         <label for="email" style="color:black">Email*</label>
                                         <div class="inputcontainer">
-                                            <input type="text" placeholder="Your Email" class="form-control" id="email" name="admin_email" onchange="checkDataExisting('admin_email',this.value)">
+                                            <input type="text" placeholder="Your Email" class="form-control" id="email" name="admin_email" onchange="checkDataExisting('admin_email',this.value)" required>
                                             <div class="icon-container">
                                                 <i class="loader" id="loader_admin_email" style="display: none"></i>
                                                 <svg class="checkmark" id="success_admin_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -442,7 +438,7 @@
                                     <div class="col">
                                         <label for="email" style="color:black">Email Alternatif*</label>
                                         <div class="inputcontainer">
-                                            <input type="text" placeholder="Your Email" class="form-control" id="email_alternatif" name="alternate_email" onchange="checkDataExisting('alternatif_email',this.value)">
+                                            <input type="text" placeholder="Your Email" class="form-control" id="email_alternatif" name="alternate_email" onchange="checkDataExisting('alternatif_email',this.value)" required>
                                             <div class="icon-container">
                                                 <i class="loader" id="loader_alternatif_email" style="display: none"></i>
                                                 <svg class="checkmark" id="success_alternatif_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -492,7 +488,7 @@
                                 <div class="form-row">
                                     <div class="form-holder form-holder-2">
                                         <label for="website" style="color:black">Website</label>
-                                        <input type="text" placeholder="Website" class="form-control" id="website" name="website_url"  >
+                                        <input type="text" placeholder="Website" class="form-control" id="website" name="website_url" required >
                                     </div>
                                 </div>
                                 <div id="captcha" >

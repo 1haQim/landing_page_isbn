@@ -146,6 +146,12 @@ class PendaftaranController extends Controller
     //form data
     function submit_pendaftaran(Request $request) {
         if ($request->isMethod('post')) {
+            //validate
+            $request->validate([
+                'file_pernyataan' => 'required|mimes:jpg,jpeg,pdf|max:2048',
+                'file_akte' => 'required|mimes:jpg,jpeg,pdf|max:2048',
+            ]);
+
             $ip = $request->ip();
             $file = [
                 'file_pernyataan' => $request->input('file_surat_pernyataan') ?? null,
