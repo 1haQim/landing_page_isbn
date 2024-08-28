@@ -37,45 +37,41 @@
     <div class="container">
         <div class="row justify-content-center">
 
-            <div class="col-lg-3 col-12 mb-4 mb-lg-0">
+            <div class="col-lg-9 col-12 mb-4 mb-lg-0">
                 <div class="custom-block bg-white shadow-lg">
-                    <a href="topics-detail.html">
-                        <div class="d-flex">
-                            <div>
-                                <h5 class="mb-2">Prosedur</h5>
-
-                                <p class="mb-0">
-                                    Informasi tentang Prosedur Pendaftaran Penerbit dan Permohonan ISBN
-                                </p>
-                            </div>
-                            
-                        </div>
+                    <div class="d-flex">
                         <div>
-                            <center>
-                                <a href="/prosedur" class="btn custom-btn mt-2 mt-lg-3">Selengkapnya</a>
-                            </center>
+                            <h5 class="mb-2">ISBN</h5>
+
+                            <p class="mb-0">
+                                ISBN (International Standard Book Number) adalah deretan angka 13 digit sebagai pemberi identifikasi unik secara internasional terhadap satu buku maupun produk seperti buku yang diterbitkan oleh penerbit. Setiap nomor memberikan identifikasi unik untuk setiap terbitan buku dari setiap penerbit, sehingga keunikan tersebut memungkinkan pemasaran produk yang 
+                                selengkapnya ...
+                            </p>
                         </div>
-                        <img src="{{ asset('template/images/icon_1.png') }}" class="custom-block-image img-fluid" alt="">
-                    </a>
+                        
+                    </div>
+                    <div>
+                        <center>
+                            <a href="{{ url('pendaftaran_online') }}" class="btn custom-btn mt-2 mt-lg-3">Daftar Online</a>
+                        </center>
+                    </div>
+                    <img src="{{ asset('template/images/icon_1.png') }}" class="custom-block-image img-fluid" alt="">
                 </div>
             </div>
 
-            <div class="col-lg-7 col-12">
+            <div class="col-lg-3 col-12">
                 <div class="custom-block custom-block-overlay">
                     <div class="d-flex flex-column h-100">
                         <img src="{{ asset('template/images/icon_7.png') }}" class="custom-block-image img-fluid" alt="">
 
-                        <div class="custom-block-overlay-text d-flex">
-                            <div>
-                                <h5 class="text-white mb-2">ISBN</h5>
-
-                                <p class="text-white">
-                                    ISBN (International Standard Book Number) adalah deretan angka 13 digit sebagai pemberi identifikasi unik secara internasional terhadap satu buku maupun produk seperti buku yang diterbitkan oleh penerbit. Setiap nomor memberikan identifikasi unik untuk setiap terbitan buku dari setiap penerbit, sehingga keunikan tersebut memungkinkan pemasaran produk yang 
-                                    selengkapnya ...
-                                </p>
-
-                                <a href="{{ url('pendaftaran_online') }}" class="btn custom-btn mt-2 mt-lg-3">Daftar Online</a>
-                            </div>
+                        <div class="custom-block-overlay-text">
+                            <h5 class="text-white mt-2">Prosedur</h5> 
+                            <p class="text-white">
+                                Informasi tentang Prosedur Pendaftaran Penerbit dan Permohonan ISBN
+                            </p>
+                            <center>
+                                <a href="{{ url('pendaftaran_online') }}" class="btn custom-btn mt-2 mt-lg-3">Selengkapnya</a>
+                            </center>
                         </div>
 
                         <div class="section-overlay"></div>
