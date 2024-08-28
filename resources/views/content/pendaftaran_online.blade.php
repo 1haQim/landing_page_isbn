@@ -225,6 +225,22 @@
         }
 
 
+
+        /* form pendaftaran */
+        @media only screen and (min-width: 350px) and (max-width: 767px) {
+            #jenis_penerbit {
+                margin-top: 120px
+            }
+        }
+
+        @media only screen and (min-width: 768px) {
+            #jenis_penerbit {
+                margin-top: 15%;
+            }
+        }
+
+
+
     </style>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
@@ -261,6 +277,7 @@
                         <div>
                             <h3>Penerbit</h3>
                             <section>
+                                
                                 <label for="name">Penerbit  *</label> <br>
                                 <label>
                                     <input type="radio" id="swasta" value="swasta" onclick="kat_penerbit(this)" name="kategori_penerbit" required/>
@@ -274,43 +291,43 @@
                             <h3>Jenis Penerbit</h3>
                             <section>
                                 <div class="col-lg-12 col-md-12 col-12 mb-12 mb-lg-12">
-                                    <div class="row" style="margin-top: 15% ">
-                                        <div class="col-lg-4 col-md-4 col-6 mb-6 mb-lg-6">
+                                    <div class="row" id="jenis_penerbit">
+                                        <div class="col-lg-4 col-md-4 col-12 mb-6 mb-lg-6">
                                             <label for="name" style="float: ri">Jenis Penerbit  *</label>
                                         </div>
-                                        <div class="col-lg-8 col-md-8 col-6 mb-6 mb-lg-6">
+                                        <div class="col-lg-8 col-md-8 col-12 mb-6 mb-lg-6">
                                             <label>
-                                                <input type="radio" value="1" name="jenis"/>
+                                                <input type="radio" value="1" name="jenis" required/>
                                                 <span>Kementerian dan dinas terkait</span>
                                             </label><br>
                                             <label>
-                                                <input type="radio" value="2" name="jenis"/>
+                                                <input type="radio" value="2" name="jenis" required/>
                                                 <span>Lembaga Pemerintah Non Kementerian dan unit terkait</span>
                                             </label><br>
                                             <label>
-                                                <input type="radio" value="3" name="jenis"/>
+                                                <input type="radio" value="3" name="jenis" required/>
                                                 <span>Perguruan Tinggi Negeri</span>
                                             </label><br>
                                             <label>
-                                                <input type="radio" value="4" name="jenis"/>
+                                                <input type="radio" value="4" name="jenis" required/>
                                                 <span>Pemerintah provinsi/Pemda dan dinas terkait</span>
                                             </label><br>
                                             <label>
-                                                <input type="radio" value="5" name="jenis"/>
+                                                <input type="radio" value="5" name="jenis" required/>
                                                 <span>BUMD/BUMN</span>
                                             </label><br>
                                             <label>
-                                                <input type="radio" value="6" name="jenis"/>
+                                                <input type="radio" value="6" name="jenis" required/>
                                                 <span>UPT Penerbitan /Press/Publishing</span>
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" style="margin-top: 15% ">
-                                    <div class="col-lg-4 col-md-4 col-6 mb-6 mb-lg-6">
+                                <div class="row" id="jenis_penerbit">
+                                    <div class="col-lg-4 col-md-4 col-12 mb-6 mb-lg-6">
                                         <label for="name" style="float: ri">File Pernyataan  *</label>
                                     </div>
-                                    <div class="col-lg-8 col-md-8 col-6 mb-6 mb-lg-6">
+                                    <div class="col-lg-8 col-md-8 col-12 mb-6 mb-lg-6">
                                         <div id="dropzone1" class="dropzone">
                                             <div class="dz-message" data-dz-message><span style="color: rgb(22 163 74)">Drop file pernyataan disini atau <span style="color: #00005c"><i><u>click</u></i></span> untuk upload.</span></div>
                                         </div>
@@ -320,12 +337,12 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div id="form-akta">
-                                    <div class="row" style="margin-top: 15% " >
-                                        <div class="col-lg-4 col-md-4 col-6 mb-6 mb-lg-6">
+                                <div id="form-akta" >
+                                    <div class="row" id="jenis_penerbit" >
+                                        <div class="col-lg-4 col-md-4 col-12 mt-6 mt-lg-6">
                                             <label for="name" style="float: ri">File Akta  *</label>
                                         </div>
-                                        <div class="col-lg-8 col-md-8 col-6 mb-6 mb-lg-6">
+                                        <div class="col-lg-8 col-md-8 col-12 mb-6 mb-lg-6">
                                             <div id="dropzone2" class="dropzone">
                                                 <div class="dz-message" data-dz-message><span style="color: rgb(22 163 74)">Drop file pernyataan disini atau <span style="color: #00005c"><i><u>click</u></i></span> untuk upload.</span></div>
                                             </div>
@@ -364,11 +381,11 @@
                                 </div>    
 
                                 <div class="form-row row" style="margin-top:108px">
-                                    <div class="col">
+                                    <div class="col-lg-6 col-md-6 col-12">
                                         <label for="password" style="color:black">Password*</label>
                                         <input type="password" placeholder="Password" class="form-control" id="password" name="password"  onchange="validasi_password(this.value)" required>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-lg-6 col-md-6 col-12">
                                         <label for="confirm_password" style="color:black">Confirm Password*</label>
                                         <input type="password" placeholder="" class="form-control" id="confirm_password" name="password2" required>
                                     </div>
@@ -393,7 +410,7 @@
                                              
                                         </select>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-lg-6 col-md-6 col-12">
                                         <label for="kab_kot" style="color:black">Kabupaten / Kota</label>
                                         <select id="kab_kot" style="width: 100%;" class="form-control select2" name="city_id" onchange="get_wilayah_prov('kec',this.value)">
                                             
@@ -401,13 +418,13 @@
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
-                                    <div class="col">
+                                    <div class="col-lg-6 col-md-6 col-12">
                                         <label for="" style="color:black">Kecamatan</label>
                                         <select id="kec" style="width: 100%;" class="form-control select2" name="district_id" onchange="get_wilayah_prov('kel',this.value)">
                                            
                                         </select>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-lg-6 col-md-6 col-12">
                                         <label for="" style="color:black">Kelurahan</label>
                                         <select id="kel" style="width: 100%;" class="form-control select2" name="village_id" >
                                            
@@ -417,7 +434,7 @@
                                 </div>
 
                                <div class="form-row row" style="margin-top:108px">
-                                    <div class="col">
+                                    <div class="col-lg-6 col-md-6 col-12">
                                         <label for="email" style="color:black">Email*</label>
                                         <div class="inputcontainer">
                                             <input type="text" placeholder="Your Email" class="form-control" id="email" name="admin_email" onchange="checkDataExisting('admin_email',this.value)" required>
@@ -435,7 +452,7 @@
                                         </div>
                                         <span id="ket_admin_email" style="font-size:11px; color:red"></span>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-lg-6 col-md-6 col-12">
                                         <label for="email" style="color:black">Email Alternatif*</label>
                                         <div class="inputcontainer">
                                             <input type="text" placeholder="Your Email" class="form-control" id="email_alternatif" name="alternate_email" onchange="checkDataExisting('alternatif_email',this.value)" required>
@@ -461,11 +478,11 @@
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
-                                    <div class="col">
+                                    <div class="col-lg-6 col-md-6 col-12">
                                         <label for="password" style="color:black">Telephone</label>
                                         <input type="text" placeholder="" class="form-control" id="" name="admin_phone" >
                                     </div>
-                                    <div class="col">
+                                    <div class="col-lg-6 col-md-6 col-12">
                                         <label for="confirm_password" style="color:black">Kode Pos</label>
                                         <input type="text" placeholder="" class="form-control" id="" name="kodepos">
                                     </div>
@@ -488,15 +505,16 @@
                                 <div class="form-row">
                                     <div class="form-holder form-holder-2">
                                         <label for="website" style="color:black">Website</label>
-                                        <input type="text" placeholder="Website" class="form-control" id="website" name="website_url" required >
+                                        <input type="text" placeholder="Website" class="form-control" id="website" name="website_url" >
                                     </div>
                                 </div>
                                 <div id="captcha" >
                                     <div class="preview"></div>
+                                    <input type="hidden" id="preview_captcha" value="">
                                     <div class="captcha_form"> 
-                                        <input type="text" id="captcha_form" class="form_input_captcha" placeholder=" ">
-                                        <button class="captcha_refersh">
-                                        </button>
+                                        <input type="text" id="captcha_form" class="form_input_captcha" placeholder=" " required>
+
+                                        <button class="captcha_refersh" style="display:none"></button>
                                     </div>
                                 </div>
                                 <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms" >I agree with the Terms and Conditions.</label>
@@ -536,6 +554,8 @@
             >${char} </span>`;
             }).join("");
             document.querySelector("#captcha .preview").innerHTML = html;
+            //input captcha in value
+            document.getElementById('preview_captcha').value = captchaValue;
         }
 
         function initCaptcha()
@@ -569,7 +589,6 @@
 
 <!-- Select2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
 <script>
     // validasi kategori penerbit
     function kat_penerbit(radio) {
@@ -755,9 +774,9 @@
     //end validasi password
 </script>
 
+<!-- validasi form -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
-
 <script>
     var form = $("#contact");
     form.validate({
@@ -784,8 +803,22 @@
         },
         onFinished: function (event, currentIndex)
         {
-            document.getElementById('loader_page').style.display = 'block';
-            document.getElementById('contact').style.display = 'none';
+            // document.getElementById('loader_page').style.display = 'block';
+            // document.getElementById('contact').style.display = 'none';
+
+            let inputcaptchavalue = document.querySelector("#captcha input").value;
+            let captchaValue = document.getElementById('preview_captcha').value;
+
+            if (inputcaptchavalue === captchaValue) 
+            {
+                // swal("","Log in","success");
+                alert("Log in success");
+            }
+            else
+            {
+                // swal("Invalid Captcha");
+                alert("Invalid Captcha");
+            }
             
             $('#contact').append('<input type="hidden" id="" name="nama_kota" value="' + $('#kab_kot option:selected').text() + '">');
             $.ajax({
@@ -797,10 +830,10 @@
                 dataType: 'json',
                 data: $('#contact').serialize(),
                 success: function(data) {
-                    document.getElementById('loader_page').style.display = 'none';
+                    // document.getElementById('loader_page').style.display = 'none';
                     console.log(data, 'hakim data submit')
                     // alert("Submitted!");
-                    openNewWindowWithParams()
+                    // openNewWindowWithParams()
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('AJAX error:', textStatus, errorThrown);
@@ -857,6 +890,7 @@
     }
 </script>
 
+<!-- dropzone -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
 <script>
     //upload file  file_pernyataan
