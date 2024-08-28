@@ -161,70 +161,21 @@
         }
 
         /* loader page */
-        
-
-        /* loader css starts from here */
-        .loader_page {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #444;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .loader_page .loader_page-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background-color: #f17f7f;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            -webkit-transition: width .5s, height 1s; /* For Safari 3.1 to 6.0 */
-            transition: width .5s, height 1s;
-        }
-
-        .loader_page .loader_page-inner .loading-box .loader-message {
-            padding: 1em 0;
-            color: white;
-        }
-
-        .loader_page .loader_page-inner .loading-box .circular-loader {
-            border: 3px solid #f3f3f3; /* Light grey */
-            border-top: 3px solid #444; /* Blue */
+        #loader {
+            border: 10px solid #f3f3f3;
             border-radius: 50%;
+            border-top: 16px solid #4CAF50;
             width: 50px;
             height: 50px;
-            animation: spin 2s linear infinite;
-            margin: 0 auto;
-            transition: all .5s ease-out;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            -webkit-animation: spin 1s linear infinite; /* Safari */
+            animation: spin 1s linear infinite;
         }
-
-        .loader_page .loader_page-inner .loading-box .circular-loader:before,
-        .loader_page .loader_page-inner .loading-box .circular-loader:after {
-            content: '';
-            height: 0px;
-            width: 0px;
-            background-color: white;
-            position: absolute;
-            -webkit-transition: height .5s; /* For Safari 3.1 to 6.0 */
-            transition: height .5s;
-        }
+        
 
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-
 
         /* form pendaftaran */
         @media only screen and (min-width: 350px) and (max-width: 767px) {
@@ -262,22 +213,13 @@
         <div class="row ">
             <div class="col-lg-12 col-md-12 col-12 mb-12 mb-lg-12">
                 <div class="custom-block bg-white shadow-lg">
-                    <div class="loader_page " id="loader_page" style="display: none">
-                        <div class="card">
-                        <div class="loader_page-inner loading">
-                            <div class="loading-box">
-                                <div class="circular-loader">
-                                </div>
-                                <div class="loader-message">Loading your data...</div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
+                    
                     <form id="contact" action="#">
+
                         <div>
                             <h3>Penerbit</h3>
                             <section>
-                                
+                            
                                 <label for="name">Penerbit  *</label> <br>
                                 <label>
                                     <input type="radio" id="swasta" value="swasta" onclick="kat_penerbit(this)" name="kategori_penerbit" required/>
@@ -287,6 +229,7 @@
                                     <input type="radio" id="pemerintah" value="pemerintah" onclick="kat_penerbit(this)" name="kategori_penerbit" required/>
                                     <span>Lembaga Pemerintah</span>
                                 </label>
+                                
                             </section>
                             <h3>Jenis Penerbit</h3>
                             <section>
@@ -487,7 +430,6 @@
                                         <input type="text" placeholder="" class="form-control" id="" name="kodepos">
                                     </div>
                                 </div>
-
                                 <p>(*) Mandatory</p>
                             </section>
                             <h3>Tambahan</h3>
@@ -518,6 +460,12 @@
                                     </div>
                                 </div>
                                 <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms" >I agree with the Terms and Conditions.</label>
+                                <center>
+                                    <div id="loading" style="display:none">
+                                        <div id="loader"></div>
+                                        <span>Mohon Tunggu..</span>
+                                    </div>
+                                </center>
                             <section>
                         </div>
                     </form>
@@ -569,21 +517,6 @@
             setcaptcha();
         }
         initCaptcha();
-
-        // document.querySelector(".form_button").addEventListener("click",function(){
-        //     let inputcaptchavalue = document.querySelector("#captcha input").value;
-
-        //     if (inputcaptchavalue === captchaValue) 
-        //     {
-        //         // swal("","Log in","success");
-        //         alert("Log in success");
-        //     }
-        //     else
-        //     {
-        //         // swal("Invalid Captcha");
-        //         alert("Invalid Captcha");
-        //     }
-        // });
     })();
 </script>
 
@@ -803,8 +736,8 @@
         },
         onFinished: function (event, currentIndex)
         {
-            // document.getElementById('loader_page').style.display = 'block';
-            // document.getElementById('contact').style.display = 'none';
+            const loader = document.getElementById('loading');
+            loader.style.display = 'block'; // Show the loader
 
             let inputcaptchavalue = document.querySelector("#captcha input").value;
             let captchaValue = document.getElementById('preview_captcha').value;
@@ -812,33 +745,28 @@
             if (inputcaptchavalue === captchaValue) 
             {
                 // swal("","Log in","success");
-                alert("Log in success");
+                $('#contact').append('<input type="hidden" id="" name="nama_kota" value="' + $('#kab_kot option:selected').text() + '">');
+                $.ajax({
+                    url: '/submit_pendaftaran',
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    dataType: 'json',
+                    data: $('#contact').serialize(),
+                    success: function(data) {
+                        openNewWindowWithParams() //redirect halaman otp
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown)
+                        // console.error('AJAX error:', textStatus, errorThrown);
+                    }
+                })
             }
             else
             {
-                // swal("Invalid Captcha");
                 alert("Invalid Captcha");
             }
-            
-            $('#contact').append('<input type="hidden" id="" name="nama_kota" value="' + $('#kab_kot option:selected').text() + '">');
-            $.ajax({
-                url: '/submit_pendaftaran',
-                type: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                dataType: 'json',
-                data: $('#contact').serialize(),
-                success: function(data) {
-                    // document.getElementById('loader_page').style.display = 'none';
-                    console.log(data, 'hakim data submit')
-                    // alert("Submitted!");
-                    // openNewWindowWithParams()
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('AJAX error:', textStatus, errorThrown);
-                }
-            })
         }
     });
 

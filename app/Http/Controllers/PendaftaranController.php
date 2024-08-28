@@ -147,10 +147,10 @@ class PendaftaranController extends Controller
     function submit_pendaftaran(Request $request) {
         if ($request->isMethod('post')) {
             //validate
-            $request->validate([
-                'file_pernyataan' => 'required|mimes:jpg,jpeg,pdf|max:2048',
-                'file_akte' => 'required|mimes:jpg,jpeg,pdf|max:2048',
-            ]);
+            // $request->validate([
+            //     'file_pernyataan' => 'required|mimes:jpg,jpeg,pdf|max:5048',
+            //     'file_akte' => 'required|mimes:jpg,jpeg,pdf|max:5048',
+            // ]);
 
             $ip = $request->ip();
             $file = [
@@ -170,22 +170,22 @@ class PendaftaranController extends Controller
                 'registrasi_valid' => 0
             ]);
 
+            $dataset = $request->all();
+            unset($dataset['acceptTerms']);
+
             $send_data = [];
-            foreach ($request->input() as $k => $v) {
-                if ($k != 'acceptTerms') { //unset array acceptTerms
-                    $send_data[] = [
-                        'name' => $k,
-                        'Value' => $v,
-                    ];
-                }
+            foreach ($dataset as $k => $v) {
+                $send_data[] = [
+                    'name' => $k,
+                    'Value' => $v,
+                ];
             };
-            // dd($send_data);
 
             $params = [
                 'CreateBy' => 'pendaftaran_online',
-                'terminal' => '127.0.0.1'
+                'terminal' => $request->ip()
             ];
-            
+
             $data = kurl('post','add', 'ISBN_REGISTRASI_PENERBIT', $send_data, 'ListAddItem', $params);
 
             if (!empty($data['Data'])) {
@@ -198,6 +198,8 @@ class PendaftaranController extends Controller
                     $ket = 'gagal upload file';
                     //masukkan kedalam log untuk kegunaan tracking data
                 }
+
+                // dd()
 
                 $data_send_otp = [
                     'email_admin' => $request->input('admin_email'),
@@ -220,8 +222,16 @@ class PendaftaranController extends Controller
                     'message' => $ket
                 ];
 
+                // dd($res_data);
+
                 return $res_data;
             }
+
+            $res_data = [
+                'status' => 'error',
+                'message' => 'Data gagal ter input'
+            ];
+
         }
     }
 
