@@ -1,6 +1,65 @@
 @extends('index')
 @section('content')
 
+<style>
+    .content_otp h3{
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .otp-input {
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+    .otp-input input {
+        width: 70px;
+        height: 70px;
+        margin: 0 5px;
+        text-align: center;
+        font-size: 1.2rem;
+        border: 1px solid #444;
+        border-radius: 4px;
+        background-color:  #fff;
+        color: rgb(1, 34, 105);;
+        font-size : 30px
+        /* color: #ffffff; */
+    }
+    .otp-input input::-webkit-outer-spin-button,
+    .otp-input input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .otp-input input[type=number] {
+        -moz-appearance: textfield;
+    }
+    button {
+        justify-content: center;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 5px;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    button:disabled {
+        background-color: #cccccc;
+        color: #666666;
+        cursor: not-allowed;
+    }
+    #timer {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        color: #ff9800;
+    }
+</style>
+
 <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
     <div class="container">
         <div class="row">
@@ -13,42 +72,39 @@
 </section>
 
 <section class="explore-section section-padding" >
-    <div class="container" style="margin-top: -220px">
-        <div class="row">
+    <div class="container" style="margin-top: -180px">
+        <div class="row ">
             <div class="col-lg-8 col-8 mt-3 mx-auto">
-                <div class="custom-block custom-block-topics-listing bg-white shadow-lg mb-5">
-                    <div class="custom-block-topics-listing-info ">
-                            <center><h5>Periksa email anda untuk melihat kode OTP</h5></center>
-                            <form class="custom-form contact-form" role="form" style="margin-top: 50px" id="form-otp">
-                                @csrf
-                                <div class="col-lg-12 col-12">
-                                    <div class="form-floating">
-                                        <input type="text" name="kode_otp" class="form-control" placeholder="Name" required="">
-                                        <input type="hidden" value="{{ $username }}" name="username">
-                                        <input type="hidden" value="{{ $email }}"  name="admin_email">
-                                        <label for="floatingInput">Kode OTP</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-12 ms-auto">
-                                    <div class="row">
-                                        <div class="d-flex justify-content-center align-items-center">
-                                        <div class="col-lg-4 col-4">
-                                            <button type="button" class="form-control" onclick="submitOtp('generate')">Kirim Ulang OTP</button>
-                                        </div>
-                                        <div class="col-lg-3 col-3">
-                                            <button type="button" class="form-control" onclick="submitOtp('submit')">Submit</button>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                <div class="custom-block custom-block-topics-listing bg-white shadow-lg mb-5 ">
+                        <center>
+                            <h3>OTP Verifikasi</h3>
+                            <p>Masukan code 6-digit yang telah dikirimkan ke email {{ isset($email) ? $email : '';  }}</p>
+                            <div id="timer">Kirim ulang OTP dalam : 3:00</div>
+                        </center>
+                        <div class="otp-input">
+                            <input type="number" min="0" max="9" required>
+                            <input type="number" min="0" max="9" required>
+                            <input type="number" min="0" max="9" required>
+                            <input type="number" min="0" max="9" required>
+                            <input type="number" min="0" max="9" required>
+                            <input type="number" min="0" max="9" required>
                         </div>
-                    
-                </div>`
+                        <center>
+                            <div style="margin-top:50px">
+                                <button id="resendButton" onclick="resendOTP()" disabled>Kirim Ulang kode</button>
+                                <button onclick="verifyOTP()">Verifikasi</button>
+                            </div>
+                        </center>
+                    </div>    
+                </div>
             </div>
         </div>
     </div>
+
 </section>
+
+
+
 
 <script>
     function submitOtp(params) {
@@ -74,6 +130,82 @@
             }
         })
     }
+
+    const inputs = document.querySelectorAll('.otp-input input');
+          const timerDisplay = document.getElementById('timer');
+          const resendButton = document.getElementById('resendButton');
+          let timeLeft = 180; // 3 minutes in seconds
+          let timerId;
+
+          function startTimer() {
+              timerId = setInterval(() => {
+                  if (timeLeft <= 0) {
+                      clearInterval(timerId);
+                      timerDisplay.textContent = "Code expired";
+                      resendButton.disabled = false;
+                      inputs.forEach(input => input.disabled = true);
+                  } else {
+                      const minutes = Math.floor(timeLeft / 60);
+                      const seconds = timeLeft % 60;
+                      timerDisplay.textContent = `Kirim ulang OTP dalam : ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                      timeLeft--;
+                  }
+              }, 1000);
+          }
+
+          function resendOTP() {
+              // Here you would typically call your backend to resend the OTP
+              alert("New OTP sent!");
+              timeLeft = 180;
+              inputs.forEach(input => {
+                  input.value = '';
+                  input.disabled = false;
+              });
+              resendButton.disabled = true;
+              inputs[0].focus();
+              clearInterval(timerId);
+              startTimer();
+          }
+
+          inputs.forEach((input, index) => {
+              input.addEventListener('input', (e) => {
+                  if (e.target.value.length > 1) {
+                      e.target.value = e.target.value.slice(0, 1);
+                  }
+                  if (e.target.value.length === 1) {
+                      if (index < inputs.length - 1) {
+                          inputs[index + 1].focus();
+                      }
+                  }
+              });
+
+              input.addEventListener('keydown', (e) => {
+                  if (e.key === 'Backspace' && !e.target.value) {
+                      if (index > 0) {
+                          inputs[index - 1].focus();
+                      }
+                  }
+                  if (e.key === 'e') {
+                      e.preventDefault();
+                  }
+              });
+          });
+
+          function verifyOTP() {
+              const otp = Array.from(inputs).map(input => input.value).join('');
+              if (otp.length === 6) {
+                  if (timeLeft > 0) {
+                      alert(`Verifying OTP: ${otp}`);
+                      // Here you would typically send the OTP to your server for verification
+                  } else {
+                      alert('OTP has expired. Please request a new one.');
+                  }
+              } else {
+                  alert('Please enter a 6-digit OTP');
+              }
+          }
+
+          startTimer();
 
 </script>
 

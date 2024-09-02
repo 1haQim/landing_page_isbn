@@ -334,6 +334,7 @@ class PendaftaranController extends Controller
                 return view('content.verifikasi_pendaftaran', compact('email','username'));
             }
         }
+        return view('content.verifikasi_pendaftaran');
     }
 
     function update_status_pendaftar($penerbit_id, $valid, $otp = "") {
