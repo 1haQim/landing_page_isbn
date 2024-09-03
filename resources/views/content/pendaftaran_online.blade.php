@@ -238,7 +238,34 @@
                                         <div class="col-lg-4 col-md-4 col-12 mb-6 mb-lg-6">
                                             <label for="name" style="float: ri">Jenis Penerbit  *</label>
                                         </div>
-                                        <div class="col-lg-8 col-md-8 col-12 mb-6 mb-lg-6">
+                                        <div class="col-lg-8 col-md-8 col-12 mb-6 mb-lg-6" id="if_swasta">
+                                            <label>
+                                                <input type="radio" value="7" name="jenis" required/>
+                                                <span>Perseroan Terbatas (PT)</span>
+                                            </label><br>
+                                            <label>
+                                                <input type="radio" value="8" name="jenis" required/>
+                                                <span>Commanditaire Vennontschap (CV)</span>
+                                            </label><br>
+                                            <label>
+                                                <input type="radio" value="9" name="jenis" required/>
+                                                <span>Usaha Dagang (UD)</span>
+                                            </label><br>
+                                            <label>
+                                                <input type="radio" value="10" name="jenis" required/>
+                                                <span>Perguruan Tinggi Swasta</span>
+                                            </label><br>
+                                            <label>
+                                                <input type="radio" value="11" name="jenis" required/>
+                                                <span>Yayasan / Perkumpulan / Asosiasi / LSM / Perhimpunan / Ikatan</span>
+                                            </label><br>
+                                            <label>
+                                                <input type="radio" value="6" name="jenis" required/>
+                                                <span>UPT Penerbitan /Press/Publishing</span>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="col-lg-8 col-md-8 col-12 mb-6 mb-lg-6" id="if_pemerintah">
                                             <label>
                                                 <input type="radio" value="1" name="jenis" required/>
                                                 <span>Kementerian dan dinas terkait</span>
@@ -527,8 +554,12 @@
     function kat_penerbit(radio) {
         if (radio.value == 'pemerintah') {
             document.getElementById('form-akta').style.display = 'none';
+            document.getElementById('if_swasta').style.display = 'none';
+            document.getElementById('if_pemerintah').style.display = 'block';
         } else {
             document.getElementById('form-akta').style.display = 'block';
+            document.getElementById('if_pemerintah').style.display = 'none';
+            document.getElementById('if_swasta').style.display = 'block';
         }
     }
     //select2 pemilihan wilayah
