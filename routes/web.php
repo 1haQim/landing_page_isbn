@@ -50,7 +50,7 @@ Route::post('/get_wilayah', [PendaftaranController::class, 'get_wilayah']);
 Route::post('/submit_pendaftaran', [PendaftaranController::class, 'submit_pendaftaran']);
 Route::get('/send_email_verification', [PendaftaranController::class, 'send_email']);
 Route::match(['get', 'post'], '/verifikasi_pendaftaran', [PendaftaranController::class, 'verifikasi_pendaftaran']);
-
+Route::get('/timeOtp', [PendaftaranController::class, 'timeOtp']);
 
 Route::get('/prosedur', [ProsedurController::class, 'index']);
 

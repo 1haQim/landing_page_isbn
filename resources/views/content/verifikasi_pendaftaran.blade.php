@@ -134,7 +134,8 @@
     const inputs = document.querySelectorAll('.otp-input input');
           const timerDisplay = document.getElementById('timer');
           const resendButton = document.getElementById('resendButton');
-          let timeLeft = 180; // 3 minutes in seconds
+        //   let timeLeft = 180; // 3 minutes in seconds
+          let timeLeft = "{{ $timeOtp }}" ; // 3 minutes in seconds
           let timerId;
 
           function startTimer() {
@@ -156,7 +157,7 @@
           function resendOTP() {
               // Here you would typically call your backend to resend the OTP
               alert("New OTP sent!");
-              timeLeft = 180;
+              timeLeft = "{{ $timeOtp }}";
               inputs.forEach(input => {
                   input.value = '';
                   input.disabled = false;

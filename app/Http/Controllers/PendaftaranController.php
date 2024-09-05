@@ -360,12 +360,28 @@ class PendaftaranController extends Controller
 
             } else {
                 //index view
+                $timeOtp = $this->timeOtp();
                 $email = $request->input('admin_email');
                 $username = $request->input('user_name');
-                return view('content.verifikasi_pendaftaran', compact('email','username'));
+                return view('content.verifikasi_pendaftaran', compact('email','username','timeOtp'));
             }
         }
-        return view('content.verifikasi_pendaftaran');
+        $timeOtp = $this->timeOtp();
+        return view('content.verifikasi_pendaftaran', compact('timeOtp'));
+    }
+
+    function timeOtp() {
+        try {
+            $filter = [["name"=>'NAME',"Value"=>'LamaWaktuOTP',"SearchType"=>"Tepat"]];
+            $data = kurl('get','getlist', 'SETTINGPARAMETERS', $filter, 'KriteriaFilter');
+
+            if ($data['Status'] == "Success") {
+                $time = $data['Data']['Items'][0]['VALUE'];
+            } 
+            return $time;
+        } catch (Exception $e) {
+            return 'error';
+        }
     }
 
     function update_status_pendaftar($penerbit_id, $valid, $otp = "") {
