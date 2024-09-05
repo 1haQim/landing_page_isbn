@@ -3,9 +3,9 @@
         <div class="custom-block bg-white shadow-lg">
             <div class="d-flex">
                 <div>
-                    <h5 class="mb-2">BIP Online</h5>
+                    <h5 class="mb-4">Katalog Dalam Terbitan & BIP Online</h5>
 
-                    <p class="mb-0">Unduh Book In Print secara online</p>
+                    <p class="mb-5">KDT atau Katalog Dalam Terbitan adalah salah satu layanan untuk penerbit, <br>Unduh Book In Print secara online</p>
                 </div>
                 <span class="badge rounded-pill ms-auto" id="totalRowsBip" style="background-color: #13547a;"></span>
             </div>

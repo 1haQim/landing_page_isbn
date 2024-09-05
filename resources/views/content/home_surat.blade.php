@@ -3,10 +3,8 @@
         <div class="custom-block bg-white shadow-lg">
             <div class="d-flex">
                 <div>
-                    <h5 class="mb-2">Dokumen atau Surat</h5>
-
-                    <p class="mb-0">Unduh dokumen-surat secara online</p>
-
+                    <h5 class="mb-4">Dokumen atau Surat</h5>
+                    <p class="mb-5">Unduh dokumen-surat secara online</p>
                 </div>
                 <span class="badge rounded-pill ms-auto" id="totalRowsSurat" style="background-color: #13547a;"></span>
             </div>
