@@ -15,8 +15,39 @@ use Illuminate\Contracts\Encryption\DecryptException;
 class PendaftaranController extends Controller
 {
     function index() {
+        //get data kategori
+        $kategori = [];
+        $data = kurl('get','getlist', 'PENERBIT_KATEGORI', null , 'KriteriaFilter');
+        
+        // get data provinsi
+        $provinsi = kurl('get','getlist', 'PROPINSI', null, 'KriteriaFilter');
 
-        return view('content.pendaftaran_online');
+        if ($data['Status'] == "Success" && $provinsi['Status'] == "Success") {
+            $kategori = $data['Data']['Items'];
+            $provinsi = $provinsi['Data']['Items'];
+        } 
+
+        return view('content.pendaftaran_online', compact('kategori','provinsi'));
+    }
+
+    function jenis_penerbit(Request $request) {
+        $value = '';
+        if ($request->query('kategori')) {
+            $value = $request->query('kategori');
+        } 
+
+        try {
+            $filter = [["name"=>'KATEGORI_ID',"Value"=>$value,"SearchType"=>"Tepat"]];
+            $data = kurl('get','getlist', 'PENERBIT_JENIS', $filter, 'KriteriaFilter');
+
+            if ($data['Status'] == "Error") {
+                return errorResponseWithContent(message: 'error', content : $data['Message']);
+            } else {
+                return successResponse(content : $data['Data']['Items']);
+            }
+        } catch (Exception $e) {
+            return errorResponseWithContent(content : $e->getMessage());
+        }
     }
 
     private function generateOTP($length = 6) {

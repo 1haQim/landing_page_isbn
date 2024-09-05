@@ -44,6 +44,7 @@ Route::get('serverside_surat', [SuratController::class, 'serverside_surat'])->na
 Route::get('berita', [BeritaController::class, 'index'])->name('berita');
 
 Route::get('/pendaftaran_online', [PendaftaranController::class, 'index']);
+Route::get('/jenis_penerbit', [PendaftaranController::class, 'jenis_penerbit']);
 Route::post('/checking_data_existing', [PendaftaranController::class, 'checking_data_existing']);
 Route::post('/get_wilayah', [PendaftaranController::class, 'get_wilayah']);
 Route::post('/submit_pendaftaran', [PendaftaranController::class, 'submit_pendaftaran']);

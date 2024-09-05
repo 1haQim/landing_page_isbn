@@ -219,17 +219,14 @@
                         <div>
                             <h3>Penerbit</h3>
                             <section>
-                            
                                 <label for="name">Penerbit  *</label> <br>
+                                @foreach ($kategori as $kat)
                                 <label>
-                                    <input type="radio" id="swasta" value="swasta" onclick="kat_penerbit(this)" name="kategori_penerbit" required/>
-                                    <span>Lembaga Swasta</span>
-                                </label><br>
-                                <label>
-                                    <input type="radio" id="pemerintah" value="pemerintah" onclick="kat_penerbit(this)" name="kategori_penerbit" required/>
-                                    <span>Lembaga Pemerintah</span>
+                                    <input type="radio" id="{{ $kat['NAME']}}" value="{{ $kat['ID']}}" onclick="kat_penerbit(this)" name="kategori_penerbit" required/>
+                                    <span>{{ $kat['NAME']}}</span>
                                 </label>
-                                
+                                <br>
+                                @endforeach
                             </section>
                             <h3>Jenis Penerbit</h3>
                             <section>
@@ -239,57 +236,8 @@
                                             <label for="name" style="float: ri">Jenis Penerbit  *</label>
                                         </div>
                                         <div class="col-lg-8 col-md-8 col-12 mb-6 mb-lg-6" id="if_swasta">
-                                            <label>
-                                                <input type="radio" value="7" name="jenis" required/>
-                                                <span>Perseroan Terbatas (PT)</span>
-                                            </label><br>
-                                            <label>
-                                                <input type="radio" value="8" name="jenis" required/>
-                                                <span>Commanditaire Vennontschap (CV)</span>
-                                            </label><br>
-                                            <label>
-                                                <input type="radio" value="9" name="jenis" required/>
-                                                <span>Usaha Dagang (UD)</span>
-                                            </label><br>
-                                            <label>
-                                                <input type="radio" value="10" name="jenis" required/>
-                                                <span>Perguruan Tinggi Swasta</span>
-                                            </label><br>
-                                            <label>
-                                                <input type="radio" value="11" name="jenis" required/>
-                                                <span>Yayasan / Perkumpulan / Asosiasi / LSM / Perhimpunan / Ikatan</span>
-                                            </label><br>
-                                            <label>
-                                                <input type="radio" value="6" name="jenis" required/>
-                                                <span>UPT Penerbitan /Press/Publishing</span>
-                                            </label>
-                                        </div>
-                                        
-                                        <div class="col-lg-8 col-md-8 col-12 mb-6 mb-lg-6" id="if_pemerintah">
-                                            <label>
-                                                <input type="radio" value="1" name="jenis" required/>
-                                                <span>Kementerian dan dinas terkait</span>
-                                            </label><br>
-                                            <label>
-                                                <input type="radio" value="2" name="jenis" required/>
-                                                <span>Lembaga Pemerintah Non Kementerian dan unit terkait</span>
-                                            </label><br>
-                                            <label>
-                                                <input type="radio" value="3" name="jenis" required/>
-                                                <span>Perguruan Tinggi Negeri</span>
-                                            </label><br>
-                                            <label>
-                                                <input type="radio" value="4" name="jenis" required/>
-                                                <span>Pemerintah provinsi/Pemda dan dinas terkait</span>
-                                            </label><br>
-                                            <label>
-                                                <input type="radio" value="5" name="jenis" required/>
-                                                <span>BUMD/BUMN</span>
-                                            </label><br>
-                                            <label>
-                                                <input type="radio" value="6" name="jenis" required/>
-                                                <span>UPT Penerbitan /Press/Publishing</span>
-                                            </label>
+                                            <!-- data diambil dari ajax -->
+                                            <div id="pilihan_jenis_penerbit"></div> 
                                         </div>
                                     </div>
                                 </div>
@@ -377,7 +325,10 @@
                                     <div class="col">
                                         <label for="provinsi" style="color:black">provinsi*</label>
                                         <select id="provinsi" style="width: 100%;" class="form-control select2" name="province_id" onchange="get_wilayah_prov('kab_kot',this.value)" required>
-                                             
+                                            <option value="" disabled="disabled" selected>Pilih Provinsi </option>
+                                            @foreach($provinsi as $prov)
+                                            <option value="{{ $prov['ID']}}"> {{$prov['NAMAPROPINSI']}} </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
@@ -552,54 +503,50 @@
 <script>
     // validasi kategori penerbit
     function kat_penerbit(radio) {
-        if (radio.value == 'pemerintah') {
+        if (radio.value == 1) { //pada master pemerintah adalah id 1
             document.getElementById('form-akta').style.display = 'none';
-            document.getElementById('if_swasta').style.display = 'none';
-            document.getElementById('if_pemerintah').style.display = 'block';
         } else {
             document.getElementById('form-akta').style.display = 'block';
-            document.getElementById('if_pemerintah').style.display = 'none';
-            document.getElementById('if_swasta').style.display = 'block';
         }
-    }
-    //select2 pemilihan wilayah
-    $(function () {
-        $('.select2').select2()
-    })
-    //select2 first load
-    document.addEventListener('DOMContentLoaded', (event) => {
+        //untuk get data jenis penerbit
         $.ajax({
-            url: '/get_wilayah',
-            type: 'POST',
+            url: '/jenis_penerbit',
+            type: 'GET',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             dataType: 'json',
+            data : {
+                'kategori' : radio.value
+            },
             success: function(data) {
-                var selectElement = document.getElementById('provinsi');
-                // Use forEach to loop through each item in the array
-                var defaultOption = document.createElement('option');
-                defaultOption.text = 'Pilih Wilayah';
-                defaultOption.value = ''; 
-                defaultOption.disabled = true; 
-                defaultOption.selected = true; 
-                selectElement.add(defaultOption);
-
-                data.forEach(function(item) {
-                    // Create a new option element
-                    var newOption = document.createElement('option');
-                    newOption.text = item.NAMAPROPINSI;
-                    newOption.value = item.ID;
-
-                    // Add the option to the select element
-                    selectElement.add(newOption);
-                });
+                console.log(data);
+                var htmlJenis = '';
+                if (data.code == 200) {
+                    data.content.forEach(function(item) {
+                        htmlJenis += `
+                            <label>
+                                <input type="radio" value="`+item.ID+`" name="jenis" required/>
+                                <span>`+item.NAME+`</span>
+                            </label><br>
+                        `
+                    });
+                    document.getElementById('pilihan_jenis_penerbit').innerHTML = htmlJenis
+                } else {
+                    alert('error get jenis penerbit')
+                }
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error('AJAX error:', textStatus, errorThrown);
             }
         })
+    }
+
+    //select2 pemilihan wilayah
+    $(function () {
+        $('.select2').select2()
     })
+    
     //get kabupaten -> kec -> kel
     function get_wilayah_prov(name, value) {
         //condition req data 
