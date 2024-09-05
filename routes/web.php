@@ -15,6 +15,8 @@ use App\Http\Controllers\DropzoneController;
 
 use App\Http\Controllers\ProsedurController;
 
+use App\Http\Controllers\StatistikController;
+
 
 
 Route::get('/welcome', function () {
@@ -51,7 +53,10 @@ Route::match(['get', 'post'], '/verifikasi_pendaftaran', [PendaftaranController:
 
 Route::get('/prosedur', [ProsedurController::class, 'index']);
 
-
+Route::get('/statistik', [StatistikController::class, 'index']);
+Route::get('/kota_terbitan_terbanyak', [StatistikController::class, 'kota_terbitan_terbanyak']);
+Route::get('/kota_penerbit_terbanyak', [StatistikController::class, 'kota_penerbit_terbanyak']);
+Route::match(['get', 'post'],'/isbn_periode', [StatistikController::class, 'isbn_periode']);
 
 
 

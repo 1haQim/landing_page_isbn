@@ -62,7 +62,7 @@
             <div class="col-lg-3 col-12">
                 <div class="custom-block custom-block-overlay">
                     <div class="d-flex flex-column h-100">
-                        <img src="{{ asset('template/images/icon_7.png') }}" class="custom-block-image img-fluid" alt="">
+                        <img src="{{ asset('template/images/icon_1.png') }}" class="custom-block-image img-fluid" alt="">
 
                         <div class="custom-block-overlay-text">
                             <h5 class="text-white mt-2">Prosedur</h5> 
@@ -213,7 +213,7 @@
                                                 <!-- <b> 1. Pendahuluan </b><br> -->
                                                 Perpustakaan Nasional RI Sebagai badan yang ditunjuk oleh International ISBN Agency untuk mengelola International Standard Book Number (ISBN) di Indonesia sejak tahun 1986, telah menjalankan tugasnya mengelola dan mendistribusikan penomoran ISBN kepada seluruh penerbit yang ada di wilayah negara kesatuan Republik Indonesia.
                                             </p>
-                                            <a href="detail_statistik.html" class="btn custom-btn mt-2 mt-lg-3" style="background-color: #13547a;">Selengkapnya</a>
+                                            <a href="/statistik" class="btn custom-btn mt-2 mt-lg-3" style="background-color: #13547a;">Selengkapnya</a>
                                         </div>
                                     </div>
                                 </div>
