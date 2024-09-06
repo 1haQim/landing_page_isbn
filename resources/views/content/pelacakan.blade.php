@@ -92,23 +92,35 @@
                             bodyTbl += `
                                 <tr>
                                     <th>No Resi</th>
-                                    <td>`+ data.Items[0].NO_RESI + `</td>
+                                    <td>`+ data.Items[0].NORESI + `</td>
                                 </tr>
                                 <th>Status</th>
                                     <td>`+ data.Items[0].STATUS + ` </td>
                                 </tr>
                                 <tr>
                                     <th>Tanggal Pengajuan</th>
-                                    <td>`+ data.Items[0].CREATEDATE + `</td>
+                                    <td>`+ data.Items[0].MOHON_DATE + `</td>
                                 </tr>
                                 <tr>
-                                <tr>
-                                    <th>Dibuat Oleh</th>
-                                    <td>`+ data.Items[0].CREATEBY + ` </td>
-                                </tr>
                                 <tr>
                                     <th>Diajukan Oleh</th>
-                                    <td>`+ data.Items[0].NAME + ` </td>
+                                    <td> KD_PEMOHON`+ data.Items[0].NAMA_PENERBIT + ` </td>
+                                </tr>
+                                <tr>
+                                    <th>Judul</th>
+                                    <td>`+ data.Items[0].TITLE + `</td>
+                                </tr>
+                                <th>Kepengarangan</th>
+                                    <td>`+ data.Items[0].KEPENG + ` </td>
+                                </tr>
+                                <tr>
+                                    <th>Tempat Terbit</th>
+                                    <td>`+ data.Items[0].TEMPAT_TERBIT + `</td>
+                                </tr>
+                                <tr>
+                                <tr>
+                                    <th>Tahun Terbit</th>
+                                    <td>`+ data.Items[0].TAHUN_TERBIT + ` </td>
                                 </tr>
                             `
                         } else {

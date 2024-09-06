@@ -18,7 +18,20 @@ class PelacakanController extends Controller
 
             $query = "";
             if ($resi) {
-                $query = "SELECT pi.no_resi, pi.status, pi.createby, pi.createdate, p.name FROM penerbit_isbn pi  JOIN penerbit p ON pi.penerbit_id = p.id WHERE pi.no_resi = '".$resi."'";
+                $query = "SELECT
+                    PT.NORESI,
+                    PT.TITLE,
+                    PT.KEPENG,
+                    PT.TEMPAT_TERBIT,
+                    PT.TAHUN_TERBIT,
+                    PT.MOHON_DATE,
+                    PT.STATUS,
+                    P.NAME AS NAMA_PENERBIT
+                FROM
+                    PENERBIT_TERBITAN PT
+                    JOIN PENERBIT P ON PT.PENERBIT_ID = P.ID 
+                WHERE
+                    PT.NORESI = '".$resi."'";
             }
 
             //fetch api
