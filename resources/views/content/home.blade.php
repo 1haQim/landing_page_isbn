@@ -217,7 +217,7 @@
 
             <div class="col-12 text-center mt-5">
                 <p class="text-white">
-                    <a href="#" class="btn custom-btn custom-border-btn ms-3">Pelajari Lebih Lanjut</a>
+                    <a href="{{ url('prosedur') }}" class="btn custom-btn custom-border-btn ms-3">Pelajari Lebih Lanjut</a>
                 </p>
             </div>
         </div>
@@ -379,7 +379,7 @@
                         const pathParts = data.split('/');
                         const filename = pathParts[pathParts.length - 1]; //krn dari server folder ikut tersimpan
                         // var data1 = appUrl + "/template/images/HasilSKMISBN2024Periode1.jpg" 
-                        var data1 = appUrl + "/Images/"+ filename //kalau live dihapus
+                        var data1 = appUrl + "/images/"+ filename //kalau live dihapus
                         showPengumuman(data1)
                     },
                     error: function(jqXHR, textStatus, errorThrown) {

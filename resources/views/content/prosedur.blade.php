@@ -74,7 +74,7 @@
                                     @foreach($group['items'] as $item)
                                         @if(!empty($item['HREF']))
                                         <div class="col-lg-4 col-md-4 col-6" >
-                                            <img src="{{ asset('template/images/maklumat_layanan.jpg ') }}" class="topics-detail-block-image img-fluid">
+                                            <img src="{{ env('APP_URL').'/prosedur/'.$item['HREF']}}" class="topics-detail-block-image img-fluid">
                                             <br>
                                             <center><p>{{ $item['NOMOR']. ' ' }} {{ $item['TITLE'] }}</p></center>
                                         </div>
