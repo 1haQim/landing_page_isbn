@@ -22,4 +22,13 @@ class HomeController extends Controller
         }
     }
 
+    function isbn_info() {
+        $menu = [
+            'Pengertian ISBN','Fungsi ISBN','Struktur ISBN','Terbitan yang dapat diberikam','Terbitan yang tidak dapat diberikan','Pencantuman ISBN','Anggota Baru','Anggota Lama'
+        ];
+        return view('content.isbn_info', compact('menu'));
+    }
+
 }
+
+

@@ -31,6 +31,8 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index']);
 //flyer pengumuman
 Route::post('/flyer', [HomeController::class, 'flyer']);
+//isbn info
+Route::get('/isbn_info', [HomeController::class, 'isbn_info']);
 //pencarian home
 Route::get('/search', [PencarianController::class, 'index'])->name('pencarian.index');
 Route::get('/serverside_search', [PencarianController::class, 'search'])->name('pencarian.search');
