@@ -193,8 +193,11 @@ class PendaftaranController extends Controller
 
             //encript password
             $encryptedPassword = $this->rijndaelEncryptPassword($request->input('password2'));
+            $md5Encrypt = $this->md5Hash($request->input('password'));
+
             $request->merge([
-                'password' => md5($request->input('password')),
+                // 'password' => md5($request->input('password')),
+                'password' => $md5Encrypt,
                 'password2' => $encryptedPassword, //rijndael
                 'code_otp' => $otp, //rijndael
                 'kd_penerbit' => $request->input('user_name'),
@@ -424,5 +427,13 @@ class PendaftaranController extends Controller
         // Combine IV and encrypted data for storage
         return base64_encode($iv . $encrypted);
     }
+
+    function md5Hash($input) {
+        // Compute the MD5 hash
+        $hash = md5($input, true); // true to get raw binary format
+        $hexHash = bin2hex($hash);
+        return $hexHash;
+    }
+
 
 }
