@@ -60,7 +60,8 @@ Route::get('/statistik', [StatistikController::class, 'index']);
 Route::get('/kota_terbitan_terbanyak', [StatistikController::class, 'kota_terbitan_terbanyak']);
 Route::get('/kota_penerbit_terbanyak', [StatistikController::class, 'kota_penerbit_terbanyak']);
 Route::match(['get', 'post'],'/isbn_periode', [StatistikController::class, 'isbn_periode']);
-
+Route::get('/jenis_cetak_isbn', [StatistikController::class, 'jenis_cetak_isbn']);
+Route::get('/berdasarkan_kckr', [StatistikController::class, 'berdasarkan_kckr']);
 
 
 Route::get('/pelacakan', [PelacakanController::class, 'index']);

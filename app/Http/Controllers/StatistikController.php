@@ -7,7 +7,93 @@ use Illuminate\Http\Request;
 class StatistikController extends Controller
 {
     function index() {
+
+
+
         return view('content.statistik');
+    }
+
+    function jenis_cetak_isbn(Request $request) {
+        $tahun = date("Y");
+        if ($request->query('tahun')) {
+            $tahun = $request->query('tahun');
+        }
+        $query = "SELECT * FROM (
+            SELECT (CASE WHEN JENIS_MEDIA = '1' THEN 'Buku' WHEN JENIS_MEDIA = '2' THEN 'Pdf' WHEN JENIS_MEDIA = '3' THEN 'Epub' WHEN JENIS_MEDIA = '4' THEN 'Audio Book' WHEN JENIS_MEDIA = '5' THEN 'Audio Visual' ELSE '-' END) as JenisMedia, COUNT(*) as Jumlah
+            FROM PENERBIT_TERBITAN
+            WHERE 1=1
+            AND TO_CHAR(PENERBIT_TERBITAN.CREATEDATE,'YYYY') = '2023'
+            GROUP BY JENIS_MEDIA
+            ORDER BY Jumlah DESC) a
+            WHERE ROWNUM <= 10";
+
+        try {
+            // API call
+            $data = kurl('get', 'getlistraw', null, $query, 'sql');
+            dd($data);
+            //generate to data grafik
+            $arr_color = [
+                "#cc0000","#ff3300","#ff6600","#ff9933","#ffcc00","#a2c2e4",
+            ];
+            $data_chart = [];
+            foreach ($data['Data']['Items'] as $k => $v) {
+                $color = $arr_color[$k];
+                $data_chart[] = [
+                    'values' => [(int) $v['JUMLAH']],
+                    'background-color' => $color,
+                    'text' => $v['JENISMEDIA'].'<br>Total : '. $v['JUMLAH'] ,
+                ];
+            }
+            //response
+            return successResponse(content : $data_chart);
+        } catch (Exception $e) {
+            return errorResponseWithContent(content : $e->getMessage());
+        }
+    }
+
+    //isbn berdasarkan ss kckr (sudah menyerahkan / belum serah simpan)
+    function berdasarkan_kckr(Request $request) {
+        $tahun = date("Y");
+        if ($request->query('tahun')) {
+            $tahun = $request->query('tahun');
+        }
+        $query = "SELECT
+            ( CASE WHEN RECEIVED_DATE_KCKR IS NOT NULL THEN 'Sudah Menyerahkan KCKR' ELSE 'Belum Menyerahkan KCKR' END ) AS StatusKCKR,
+                COUNT( * ) AS Jumlah 
+            FROM
+                PENERBIT_ISBN 
+            WHERE
+                1 = 1 
+                AND TO_CHAR( PENERBIT_ISBN.CREATEDATE, 'YYYY' ) = '2023' 
+            GROUP BY
+                ( CASE WHEN RECEIVED_DATE_KCKR IS NOT NULL THEN 'Sudah Menyerahkan KCKR' ELSE 'Belum Menyerahkan KCKR' END )";
+
+        try {
+            // API call
+            $data = kurl('get', 'getlistraw', null, $query, 'sql');
+
+            if ($data['Status'] == "Error") {
+                return errorResponseWithContent(message: 'error', content : $data['Message']);
+            } else {
+                //generate to data grafik
+                $arr_color = [
+                    "#cc0000","#ff6600",
+                ];
+                $data_chart = [];
+                foreach ($data['Data']['Items'] as $k => $v) {
+                    $color = $arr_color[$k];
+                    $data_chart[] = [
+                        'values' => [(int) $v['JUMLAH']],
+                        'background-color' => $color,
+                        'text' => $v['STATUSKCKR'].'<br>Total : '. $v['JUMLAH'] ,
+                    ];
+                }
+                //response
+                return successResponse(content : $data_chart);
+            }
+        } catch (Exception $e) {
+            return errorResponseWithContent(content : $e->getMessage());
+        }
     }
 
     function kota_terbitan_terbanyak() {
@@ -93,7 +179,7 @@ class StatistikController extends Controller
                     $data_chart[] = [
                         'values' => [(int) $v['JUMLAH']],
                         'background-color' => $color,
-                        'text' => $v['CITY'].'<br> Total : '. $v['JUMLAH'] ,
+                        'text' => $v['CITY'].'<br>Total : '. $v['JUMLAH'] ,
                     ];
                 }
                 //response
@@ -138,7 +224,7 @@ class StatistikController extends Controller
             // API call
             $data = kurl('get', 'getlistraw', null, $query, 'sql');
 
-            dd($data);
+            // dd($data);
 
             if ($data['Status'] == "Error") {
                 return errorResponseWithContent(message: 'error - get data periode', content : $data['Message']);
