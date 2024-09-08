@@ -8,24 +8,25 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-lg-8 col-12 mx-auto">
+            <div class="col-lg-11 col-12 mx-auto">
                 <h1 class="text-white text-center">ISBN</h1>
+                <h6 class="text-white text-center mb-4">International Standard Book Number</h6>
+                            <div class="input-group input-group-lg">
+                                <select id="provinsi" style="border-radius:100px; max-width: 250px;"  class="form-control select2" name="province_id" onchange="get_wilayah_prov('kab_kot',this.value)" required>
+                                    <option value="" disabled="disabled" selected>filter berdasarkan</option>
+                                    <option value="" >Judul </option>
+                                    <option value="" >Kepengarangan </option>
+                                    <option value="" >Penerbit </option>
+                                    <option value="" >ISBN </option>
+                                </select>
+                                <!-- <i class="bi bi-caret-down-fill"></i> -->
+                                <input style="margin-left:20px" name="keyword" type="search" class="form-control" id="keyword_pencarian" placeholder="Masukan kata untuk mencari Judul, Pengarang, Penerbit, ISBN ..." aria-label="Search">
+                                <button type="submit" class="">
 
-                <h6 class="text-white text-center">International Standard Book Number</h6>
-
-                {{-- <form method="get" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" role="search"> --}}
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-text bi-search" id="basic-addon1">
-                            
-                        </span>
-
-                        <input name="keyword" type="search" class="form-control" id="keyword_pencarian" placeholder="Cari Judul, Pengarang, Penerbit, ISBN ..." aria-label="Search">
-
-                        <button type="submit" class="form-control">
-                            <a class="nav-link click-scroll" onclick="handleClickSearch()">Cari</a>
-                        </button>
-                    </div>
-                {{-- </form> --}}
+                                    
+                                    <a class="nav-link" onclick="handleClickSearch()"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a>
+                                </button>
+                            </div>
             </div>
 
         </div>
@@ -52,10 +53,11 @@
                     </div>
                     <div>
                         <center>
+                            <a href="{{ url('isbn_info') }}" class="btn btn-outline-success mt-2 mt-lg-3" style="padding: 10px 20px; border-radius:100px">Selengkapnya</a>
                             <a href="{{ url('pendaftaran_online') }}" class="btn custom-btn mt-2 mt-lg-3">Daftar Online</a>
                         </center>
                     </div>
-                    <img src="{{ asset('template/images/icon_1.png') }}" class="custom-block-image img-fluid" alt="">
+                    <!-- /<img src="{{ asset('template/images/icon_1.png') }}" class="custom-block-image img-fluid" alt=""> -->
                 </div>
             </div>
 
