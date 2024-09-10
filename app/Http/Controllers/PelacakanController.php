@@ -26,7 +26,8 @@ class PelacakanController extends Controller
                     PT.TAHUN_TERBIT,
                     PT.MOHON_DATE,
                     PT.STATUS,
-                    P.NAME AS NAMA_PENERBIT
+                    P.NAME AS NAMA_PENERBIT,
+                    PT.JILID_VOLUME
                 FROM
                     PENERBIT_TERBITAN PT
                     JOIN PENERBIT P ON PT.PENERBIT_ID = P.ID 

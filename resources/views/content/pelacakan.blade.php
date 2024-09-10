@@ -89,13 +89,18 @@
                     success: function(data) {
                         var bodyTbl = ``;
                         if (data.Items.length > 0) {
+                            if (data.Items[0].STATUS) {
+                                var sts = data.Items[0].STATUS;
+                            } else {
+                                var sts = "Permohanan";
+                            }
                             bodyTbl += `
                                 <tr>
                                     <th>No Resi</th>
                                     <td>`+ data.Items[0].NORESI + `</td>
                                 </tr>
                                 <th>Status</th>
-                                    <td>`+ data.Items[0].STATUS + ` </td>
+                                    <td>`+ sts + ` </td>
                                 </tr>
                                 <tr>
                                     <th>Tanggal Pengajuan</th>
@@ -103,8 +108,8 @@
                                 </tr>
                                 <tr>
                                 <tr>
-                                    <th>Diajukan Oleh</th>
-                                    <td> KD_PEMOHON`+ data.Items[0].NAMA_PENERBIT + ` </td>
+                                    <th>Penerbit</th>
+                                    <td>`+ data.Items[0].NAMA_PENERBIT + ` </td>
                                 </tr>
                                 <tr>
                                     <th>Judul</th>
@@ -121,6 +126,10 @@
                                 <tr>
                                     <th>Tahun Terbit</th>
                                     <td>`+ data.Items[0].TAHUN_TERBIT + ` </td>
+                                </tr>
+                                <tr>
+                                    <th>Jilid Volume</th>
+                                    <td>`+ data.Items[0].JILID_VOLUME + ` </td>
                                 </tr>
                             `
                         } else {
