@@ -80,6 +80,7 @@
                             <h3>OTP Verifikasi</h3>
                             <p>Masukan code 6-digit yang telah dikirimkan ke email {{ isset($email) ? $email : '';  }}</p>
                             <div id="timer">Kirim ulang OTP dalam : 3:00</div>
+                            <div id="alert"></div>
                         </center>
                         <div class="otp-input">
                             <input type="number" min="0" max="9" required>
@@ -92,7 +93,7 @@
                         <center>
                             <div style="margin-top:50px">
                                 <button id="resendButton" onclick="resendOTP()" disabled>Kirim Ulang kode</button>
-                                <button onclick="verifyOTP()">Verifikasi</button>
+                                <button id="btn_verify" onclick="verifyOTP()">Verifikasi</button>
                             </div>
                         </center>
                     </div>    
@@ -107,106 +108,141 @@
 
 
 <script>
-    function submitOtp(params) {
-        if (params == 'generate') { //request kirim ulang otp
-            $('#form-otp').append('<input type="hidden" id="" name="tipe" value="generate">');
-        } else {
-            $('#form-otp').append('<input type="hidden" id="" name="tipe" value="submit">');
-        }
+    const inputs = document.querySelectorAll('.otp-input input');
+    const timerDisplay = document.getElementById('timer');
+    const resendButton = document.getElementById('resendButton');
+    //   let timeLeft = 180; // 3 minutes in seconds
+    let timeLeft = "{{ $timeOtp }}" ; // 3 minutes in seconds
+    let timerId;
+    const username = "{{ $username }}" ; // 3 minutes in seconds
+    const email = "{{ $email }}" ; // 3 minutes in seconds
 
-        $.ajax({
-            url: '/verifikasi_pendaftaran',
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: 'json',
-            data: $('#form-otp').serialize(),
-            success: function(data) {
-                console.log(data, 'hakim data otp')
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('AJAX error:', textStatus, errorThrown);
+    function startTimer() {
+        timerId = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerId);
+                timerDisplay.textContent = "Code expired";
+                resendButton.disabled = false;
+                inputs.forEach(input => input.disabled = true);
+            } else {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerDisplay.textContent = `Kirim ulang OTP dalam : ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                timeLeft--;
             }
-        })
+        }, 1000);
     }
 
-    const inputs = document.querySelectorAll('.otp-input input');
-          const timerDisplay = document.getElementById('timer');
-          const resendButton = document.getElementById('resendButton');
-        //   let timeLeft = 180; // 3 minutes in seconds
-          let timeLeft = "{{ $timeOtp }}" ; // 3 minutes in seconds
-          let timerId;
+    function resendOTP() {
+        // Here you would typically call your backend to resend the OTP
+        alert("New OTP sent!");
+        timeLeft = "{{ $timeOtp }}";
+        inputs.forEach(input => {
+            input.value = '';
+            input.disabled = false;
+        });
+        resendButton.disabled = true;
+        inputs[0].focus();
+        clearInterval(timerId);
+        startTimer();
+    }
 
-          function startTimer() {
-              timerId = setInterval(() => {
-                  if (timeLeft <= 0) {
-                      clearInterval(timerId);
-                      timerDisplay.textContent = "Code expired";
-                      resendButton.disabled = false;
-                      inputs.forEach(input => input.disabled = true);
-                  } else {
-                      const minutes = Math.floor(timeLeft / 60);
-                      const seconds = timeLeft % 60;
-                      timerDisplay.textContent = `Kirim ulang OTP dalam : ${minutes}:${seconds.toString().padStart(2, '0')}`;
-                      timeLeft--;
-                  }
-              }, 1000);
-          }
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+            if (e.target.value.length > 1) {
+                e.target.value = e.target.value.slice(0, 1);
+            }
+            if (e.target.value.length === 1) {
+                if (index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            }
+        });
 
-          function resendOTP() {
-              // Here you would typically call your backend to resend the OTP
-              alert("New OTP sent!");
-              timeLeft = "{{ $timeOtp }}";
-              inputs.forEach(input => {
-                  input.value = '';
-                  input.disabled = false;
-              });
-              resendButton.disabled = true;
-              inputs[0].focus();
-              clearInterval(timerId);
-              startTimer();
-          }
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && !e.target.value) {
+                if (index > 0) {
+                    inputs[index - 1].focus();
+                }
+            }
+            if (e.key === 'e') {
+                e.preventDefault();
+            }
+        });
+    });
 
-          inputs.forEach((input, index) => {
-              input.addEventListener('input', (e) => {
-                  if (e.target.value.length > 1) {
-                      e.target.value = e.target.value.slice(0, 1);
-                  }
-                  if (e.target.value.length === 1) {
-                      if (index < inputs.length - 1) {
-                          inputs[index + 1].focus();
-                      }
-                  }
-              });
+    function verifyOTP() {
+    document.getElementById('btn_verify').disabled = true;
+        const otp = Array.from(inputs).map(input => input.value).join('');
+        if (otp.length === 6) {
+            if (timeLeft > 0) {
+            $.ajax({
+                url: '/verifikasi_pendaftaran',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                // dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    'username' : username,
+                    'admin_email' : email,
+                    'kode_otp' : otp,
+                    'tipe' : 'submit'
+                }),
+                success: function(data) {
+                    if (data.status == 1) {
+                        // Create a form element to perform a POST request
+                        var form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = 'http://demo321.online:8222/page/redirect';
 
-              input.addEventListener('keydown', (e) => {
-                  if (e.key === 'Backspace' && !e.target.value) {
-                      if (index > 0) {
-                          inputs[index - 1].focus();
-                      }
-                  }
-                  if (e.key === 'e') {
-                      e.preventDefault();
-                  }
-              });
-          });
+                        // Create hidden input fields for the required parameters
+                        var pesanInput = document.createElement('input');
+                        pesanInput.type = 'hidden';
+                        pesanInput.name = 'pesan';
+                        pesanInput.value = data.message;  
+                        form.appendChild(pesanInput);
 
-          function verifyOTP() {
-              const otp = Array.from(inputs).map(input => input.value).join('');
-              if (otp.length === 6) {
-                  if (timeLeft > 0) {
-                      alert(`Verifying OTP: ${otp}`);
-                      // Here you would typically send the OTP to your server for verification
-                  } else {
-                      alert('OTP has expired. Please request a new one.');
-                  }
-              } else {
-                  alert('Please enter a 6-digit OTP');
-              }
-          }
+                        var statusInput = document.createElement('input');
+                        statusInput.type = 'hidden';
+                        statusInput.name = 'status';
+                        statusInput.value = 200;  
+                        form.appendChild(statusInput);
 
-          startTimer();
+                        var actionInput = document.createElement('input');
+                        actionInput.type = 'hidden';
+                        actionInput.name = 'action';
+                        actionInput.value = '';  
+                        form.appendChild(actionInput);
 
+                        var tokenInput = document.createElement('input');
+                        tokenInput.type = 'hidden';
+                        tokenInput.name = 'token';
+                        tokenInput.value = 'xYjJgfpor3d87dfcvoklwas';  
+                        form.appendChild(tokenInput);
+
+                        // Append the form to the body and submit it
+                        document.body.appendChild(form);
+                        form.submit(); 
+                        
+                    } else {
+                        document.getElementById('btn_verify').disabled = false;
+                        document.getElementById('alert').innerHTML = '<p>' + data.message + '</p>';
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX error:', textStatus, errorThrown);
+                }
+            })
+        } else {
+            alert('OTP has expired. Please request a new one.');
+        }
+        } else {
+            alert('Please enter a 6-digit OTP');
+        }
+    }
+
+    startTimer();
 </script>
 

@@ -288,7 +288,7 @@ class PendaftaranController extends Controller
     function verifikasi_pendaftaran(Request $request) {
         if ($request->isMethod('post')) {
             $tbl = 'ISBN_REGISTRASI_PENERBIT';
-            if ($request->input('tipe') == 'generate') {
+            if ($request->input('tipe') == 'generate') { //resend otp
                 $otp = $this->generateOTP();
                 //set data OTP
                 $data_send_otp = [
@@ -332,7 +332,7 @@ class PendaftaranController extends Controller
                 ];
                 return $res_data;
 
-            } else if ($request->input('tipe') == 'submit') {
+            } else if ($request->input('tipe') == 'submit') { //submit otp
                 $filter = [
                     ["name"=>"admin_email","Value"=>$request->input('admin_email'),"SearchType"=>"Tepat"],
                     ["name"=>"user_name","Value"=>$request->input('username'),"SearchType"=>"Tepat"],
@@ -361,8 +361,7 @@ class PendaftaranController extends Controller
                 ];
                 return $res_data;
 
-            } else {
-                //index view
+            } else { //index view
                 $timeOtp = $this->timeOtp();
                 $email = $request->input('admin_email');
                 $username = $request->input('user_name');
