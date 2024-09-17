@@ -1,55 +1,44 @@
 @extends('index')
-
 @section('content')
-
-
 
 <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
     <div class="container">
         <div class="row">
-
             <div class="col-lg-11 col-12 mx-auto">
                 <h1 class="text-white text-center">ISBN</h1>
                 <h6 class="text-white text-center mb-4">International Standard Book Number</h6>
-                            <div class="input-group input-group-lg">
-                                <select id="provinsi" style="border-radius:100px; max-width: 250px;"  class="form-control select2" name="province_id" onchange="get_wilayah_prov('kab_kot',this.value)" required>
-                                    <option value="" disabled="disabled" selected>filter berdasarkan</option>
-                                    <option value="" >Judul </option>
-                                    <option value="" >Kepengarangan </option>
-                                    <option value="" >Penerbit </option>
-                                    <option value="" >ISBN </option>
-                                </select>
-                                <!-- <i class="bi bi-caret-down-fill"></i> -->
-                                <input style="margin-left:20px" name="keyword" type="search" class="form-control" id="keyword_pencarian" placeholder="Masukan kata untuk mencari Judul, Pengarang, Penerbit, ISBN ..." aria-label="Search">
-                                <button type="submit" class="">
-
-                                    
-                                    <a class="nav-link" onclick="handleClickSearch()"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a>
-                                </button>
-                            </div>
+                    <div class="input-group input-group-lg">
+                    <select id="filter_search" style="border-radius:100px; max-width: 250px;"  class="form-control select2">
+                        <option value="all" >Semua</option>
+                        <option value="PT.TITLE" >Judul </option>
+                        <option value="PT.KEPENG" >Kepengarangan </option>
+                        <option value="P.NAME" >Penerbit </option>
+                        <option value="PI.ISBN_NO" >ISBN </option>
+                    </select>
+                    <!-- <i class="bi bi-caret-down-fill"></i> -->
+                    <input style="margin-left:20px" name="keyword" type="search" class="form-control" id="keyword_pencarian" placeholder="Masukan kata untuk mencari Judul, Pengarang, Penerbit, ISBN ..." aria-label="Search">
+                    <button type="submit" class="">
+                        <a class="nav-link" onclick="handleClickSearch()"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a>
+                    </button>
+                </div>
             </div>
-
         </div>
     </div>
 </section>
 
-
 <section class="featured-section">
     <div class="container">
         <div class="row justify-content-center">
-
             <div class="col-lg-9 col-12 mb-4 mb-lg-0">
                 <div class="custom-block bg-white shadow-lg">
                     <div class="d-flex">
                         <div>
                             <h5 class="mb-2">ISBN</h5>
-
                             <p class="mb-0">
                                 ISBN (International Standard Book Number) adalah deretan angka 13 digit sebagai pemberi identifikasi unik secara internasional terhadap satu buku maupun produk seperti buku yang diterbitkan oleh penerbit. Setiap nomor memberikan identifikasi unik untuk setiap terbitan buku dari setiap penerbit, sehingga keunikan tersebut memungkinkan pemasaran produk yang 
                                 selengkapnya ...
                             </p>
                         </div>
-                        
                     </div>
                     <div>
                         <center>
@@ -60,12 +49,10 @@
                     <!-- /<img src="{{ asset('template/images/icon_1.png') }}" class="custom-block-image img-fluid" alt=""> -->
                 </div>
             </div>
-
             <div class="col-lg-3 col-12">
                 <div class="custom-block custom-block-overlay">
                     <div class="d-flex flex-column h-100">
                         <img src="{{ asset('template/images/icon_1.png') }}" class="custom-block-image img-fluid" alt="">
-
                         <div class="custom-block-overlay-text">
                             <h5 class="text-white mt-2">Prosedur</h5> 
                             <p class="text-white">
@@ -75,23 +62,19 @@
                                 <a href="{{ url('prosedur') }}" class="btn custom-btn mt-2 mt-lg-3">Selengkapnya</a>
                             </center>
                         </div>
-
                         <div class="section-overlay"></div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
 
 <section class="explore-section section-padding" id="section_2">
     <div class="container">
-
             <div class="col-12 text-center">
                 <h2 class="mb-4">Cari Topik Tentang</h1>
             </div>
-
         </div>
     </div>
 
@@ -104,11 +87,9 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link " id="finance-tab" data-bs-toggle="tab" data-bs-target="#finance-tab-pane" type="button" role="tab" aria-controls="finance-tab-pane" aria-selected="false">Berita</button>
                 </li>
-
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="marketing-tab" data-bs-toggle="tab" data-bs-target="#marketing-tab-pane" type="button" role="tab" aria-controls="marketing-tab-pane" aria-selected="false">BIP</button>
                 </li>
-               
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="music-tab" data-bs-toggle="tab" data-bs-target="#music-tab-pane" type="button" role="tab" aria-controls="music-tab-pane" aria-selected="false">Surat</button>
                 </li>
@@ -118,7 +99,6 @@
 
     <div class="container">
         <div class="row">
-
             <div class="col-12">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="education-tab-pane" role="tabpanel" aria-labelledby="education-tab" tabindex="0">
@@ -129,7 +109,6 @@
                                     <div class="d-flex">
                                         <div>
                                             <h5 class="mb-2">Statistik</h5>
-
                                             <p class="mb-0">
                                                 Informasi tentang penomoran Isbn dan data-data statistik per tahun, per bulan, per provinsi dan data lainnya <br> <br>
                                                 <!-- <b> 1. Pendahuluan </b><br> -->
@@ -152,8 +131,6 @@
                     <div class="tab-pane fade" id="music-tab-pane" role="tabpanel" aria-labelledby="music-tab" tabindex="0">
                         @include('content.home_surat')
                     </div>
-
-                    
                 </div>
             </div>
         </div>
@@ -163,52 +140,34 @@
 <!-- section alur daftar -->
 <section class="timeline-section section-padding" id="section_3">
     <div class="section-overlay"></div>
-
     <div class="container">
         <div class="row">
-
             <div class="col-12 text-center">
                 <h2 class="text-white mb-4">Alur Pendaftaran ISBN Online?</h1>
             </div>
-
             <div class="col-lg-10 col-12 mx-auto">
                 <div class="timeline-container">
                     <ul class="vertical-scrollable-timeline" id="vertical-scrollable-timeline" style="margin-top: 10px;">
                         <div class="list-progress">
                             <div class="inner"></div>
                         </div>
-
                         <li>
                             <h4 class="text-white mb-3">Daftar Online ISBN</h4>
-
-                            <p class="text-white">
-                                Mulai dengan unggah berkas yang akan dimintakan nomornya
-                            </p>
-
+                            <p class="text-white">Mulai dengan unggah berkas yang akan dimintakan nomornya</p>
                             <div class="icon-holder">
                                 <i class="bi-search"></i>
                             </div>
                         </li>
-                        
                         <li>
                             <h4 class="text-white mb-3">Verifikasi Berkas</h4>
-
-                            <p class="text-white">
-                                Berkas akan diverifikasi dan diinput sesuai dengan permintaan penerbit.
-                            </p>
-
+                            <p class="text-white">Berkas akan diverifikasi dan diinput sesuai dengan permintaan penerbit.</p>
                             <div class="icon-holder">
                                 <i class="bi-bookmark"></i>
                             </div>
                         </li>
-
                         <li>
                             <h4 class="text-white mb-3">Nomor ISBN selesai</h4>
-
-                            <p class="text-white">
-                                Nomor ISBN yang diminta akan keluar dan bisa diunduh mandiri di akun penerbit.
-                            </p>
-
+                            <p class="text-white">Nomor ISBN yang diminta akan keluar dan bisa diunduh mandiri di akun penerbit.</p>
                             <div class="icon-holder">
                                 <i class="bi-book"></i>
                             </div>
@@ -216,7 +175,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="col-12 text-center mt-5">
                 <p class="text-white">
                     <a href="{{ url('prosedur') }}" class="btn custom-btn custom-border-btn ms-3">Pelajari Lebih Lanjut</a>
@@ -231,17 +189,13 @@
 <section class="faq-section section-padding" id="section_4">
     <div class="container">
         <div class="row">
-
             <div class="col-lg-6 col-12">
                 <h2 class="mb-4">Pertanyaan yang sering di ajukan</h2>
             </div>
-
             <div class="clearfix"></div>
-
             <div class="col-lg-5 col-12">
                 <img src="{{ asset('template/images/icon_5.png') }}" class="img-fluid" alt="FAQs">
             </div>
-
             <div class="col-lg-6 col-12 m-auto">
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
@@ -250,7 +204,6 @@
                             Bagaimana prosedur pengajuan ISBN?
                             </button>
                         </h2>
-
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 Sejak 1 April 2018 pengajuan ISBN dilakukan secara online di web 
@@ -271,23 +224,18 @@
                                 Jika pendaftaran sudah sukses, langkah apa yang harus dilakukan oleh penerbit selanjutnya?
                             </button>
                         </h2>
-
                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 Sesuai notifikasi pada layar, hubungi Tim ISBN di +6221 3812 136 untuk permohonan validasi kemudian lihat email yang diberikan oleh sistem secara otomatis tentang petunjuk/ langkah selanjutnya.
                             </div>
                         </div>
                     </div>
-
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingThree">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            
                                 Apakah penerbit lama juga harus melakukan Registrasi Penerbit?
-                    
                             </button>
                         </h2>
-
                         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 
@@ -326,7 +274,6 @@
                 <a href="/detail_fnq" class="btn custom-btn mt-2 mt-lg-3" style="background-color: #13547a;">Lihat semua pertanyaan</a>
                 </center>
             </div>
-
         </div>
     </div>
 </section>
@@ -347,10 +294,11 @@
 <script>
     function handleClickSearch() {
         //keyword pencarian
+        var filter_by = $("#filter_search").val();
         var keyword_pencarian = $("#keyword_pencarian").val();
-        
+
         //get data pencarian
-        window.location.assign("/search?keyword="+keyword_pencarian);
+        window.location.assign("/search?keyword="+keyword_pencarian+"&filter="+filter_by);
     }
 </script>
 
@@ -360,7 +308,7 @@
         function EmptyString(value) {
             return value == null || value == undefined || value.trim() == '';
         }
-
+        //flyer
         document.addEventListener('DOMContentLoaded', (event) => {
             var url = window.location.href;
             // Extract the fragment identifier
@@ -390,18 +338,17 @@
                 });
             }
         })
-
         function showPengumuman(imageUrl) {
             // Set the image source
             var imageElement = document.getElementById('modalImage');
             imageElement.src = imageUrl;
-
             // Wait for the image to load before showing the modal
             imageElement.onload = function() {
                 var myModal = new bootstrap.Modal(document.getElementById('imageModalPengumuman'));
                 myModal.show();
             };
         }
+        //end flyer
     </script>
     
 @endpush
