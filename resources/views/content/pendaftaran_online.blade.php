@@ -273,41 +273,9 @@
                             <section>
                                 <div class="form-row row" style="margin-top:90px">
                                     <div class="col">
-                                        <label for="penerbit" style="color:black">Penerbit*</label>
+                                        <label for="penerbit" style="color:black">Nama Penerbit*</label>
                                         <input type="text" placeholder="" class="form-control" id="penerbit" name="nama_penerbit"  required>
                                     </div>
-                                </div>
-                                <div class="form-row row" style="margin-top:108px">
-                                    <div class="col">
-                                        <label for="username" style="color:black">Username*</label>
-                                        <div class="inputcontainer">
-                                            <input type="text" placeholder="Username" class="form-control" onchange="checkDataExisting('username',this.value)" id="username" name="user_name"  required>
-                                            <div class="icon-container">
-                                                <i class="loader" id="loader_username" style="display: none"></i>
-                                                <svg class="checkmark" id="success_username" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                                                </svg>
-                                                <svg class="checkmark1" id="error_username" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                                    <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
-                                                    <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <span id="ket_username" style="font-size:11px; color:red"></span>
-                                    </div>
-                                </div>    
-
-                                <div class="form-row row" style="margin-top:108px">
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="password" style="color:black">Password*</label>
-                                        <input type="password" placeholder="Password" class="form-control" id="password" name="password"  onchange="validasi_password(this.value)" required>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="confirm_password" style="color:black">Confirm Password*</label>
-                                        <input type="password" placeholder="" class="form-control" id="confirm_password" name="password2" required>
-                                    </div>
-                                    <span id="ket_password" style="font-size:11px; color:red"></span>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
@@ -332,7 +300,7 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="kab_kot" style="color:black">Kabupaten / Kota</label>
+                                        <label for="kab_kot" style="color:black">Kabupaten / Kota*</label>
                                         <select id="kab_kot" style="width: 100%;" class="form-control select2" name="city_id" onchange="get_wilayah_prov('kec',this.value)">
                                             
                                         </select>
@@ -340,21 +308,77 @@
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="" style="color:black">Kecamatan</label>
+                                        <label for="" style="color:black">Kecamatan*</label>
                                         <select id="kec" style="width: 100%;" class="form-control select2" name="district_id" onchange="get_wilayah_prov('kel',this.value)">
                                            
                                         </select>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="" style="color:black">Kelurahan</label>
+                                        <label for="" style="color:black">Kelurahan*</label>
                                         <select id="kel" style="width: 100%;" class="form-control select2" name="village_id" >
                                            
                                         </select>
                                         {{-- <input type="text" placeholder="" class="form-control" id="" name="" > --}}
                                     </div>
                                 </div>
-
-                               <div class="form-row row" style="margin-top:108px">
+                                <div class="form-row row" style="margin-top:108px">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <label for="password" style="color:black">Telephone*</label>
+                                        <input type="text" placeholder="" class="form-control" id="" name="admin_phone" >
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <label for="confirm_password" style="color:black">Kode Pos</label>
+                                        <input type="text" placeholder="" class="form-control" id="" name="kodepos">
+                                    </div>
+                                </div>
+                                <div class="form-row row" style="margin-top:108px">
+                                    <div class="col">
+                                        <label for="nm_admin" style="color:black">Nama Admin*</label>
+                                        <input type="text" placeholder="" class="form-control" id="nm_admin" name="admin_contact_name">
+                                    </div>
+                                </div>
+                                <div class="form-row row" style="margin-top:108px">
+                                    <div class="form-holder">
+                                        <label for="" style="color:black">Admin Alternatif*</label>
+                                        <input type="text" placeholder="" class="form-control" id="" name="alternate_contact_name"   >
+                                    </div>
+                                    <div class="form-holder">
+                                        <label for="" style="color:black">Telephone Alternatif</label>
+                                        <input type="" placeholder="" class="form-control" id="" name="alternate_phone"  >
+                                    </div>
+                                </div>
+                                <div class="form-row row" style="margin-top:108px">
+                                    <div class="form-holder form-holder-2">
+                                        <label for="website" style="color:black">Website*</label>
+                                        <input type="text" placeholder="Website" class="form-control" id="website" name="website_url" >
+                                    </div>
+                                </div>
+                                
+                                <p>(*) Mandatory</p>
+                            </section>
+                            <h3>Akun</h3>
+                            <section>
+                                <div class="form-row row" style="margin-top:108px">
+                                    <div class="col">
+                                        <label for="username" style="color:black">Username*</label>
+                                        <div class="inputcontainer">
+                                            <input type="text" placeholder="Username" class="form-control" onchange="checkDataExisting('username',this.value)" id="username" name="user_name"  required>
+                                            <div class="icon-container">
+                                                <i class="loader" id="loader_username" style="display: none"></i>
+                                                <svg class="checkmark" id="success_username" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                                </svg>
+                                                <svg class="checkmark1" id="error_username" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                    <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
+                                                    <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <span id="ket_username" style="font-size:11px; color:red"></span>
+                                    </div>
+                                </div>  
+                                <div class="form-row row" style="margin-top:108px">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="email" style="color:black">Email*</label>
                                         <div class="inputcontainer">
@@ -391,53 +415,31 @@
                                         </div>
                                         <span id="ket_alternatif_email" style="font-size:11px; color:red"></span>
                                     </div>
-                                </div>
-                                <div class="form-row row" style="margin-top:108px">
-                                    <div class="col">
-                                        <label for="nm_admin" style="color:black">Nama Admin</label>
-                                        <input type="text" placeholder="" class="form-control" id="nm_admin" name="admin_contact_name">
-                                    </div>
-                                </div>
+                                </div>  
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="password" style="color:black">Telephone</label>
-                                        <input type="text" placeholder="" class="form-control" id="" name="admin_phone" >
+                                        <label for="password" style="color:black">Password*</label>
+                                        <input type="password" placeholder="Password" class="form-control" id="password" name="password"  onchange="validasi_password(this.value)" required>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="confirm_password" style="color:black">Kode Pos</label>
-                                        <input type="text" placeholder="" class="form-control" id="" name="kodepos">
+                                        <label for="confirm_password" style="color:black">Confirm Password*</label>
+                                        <input type="password" placeholder="" class="form-control" id="confirm_password" name="password2" required>
                                     </div>
+                                    <span id="ket_password" style="font-size:11px; color:red"></span>
                                 </div>
-                                <p>(*) Mandatory</p>
-                            </section>
-                            <h3>Tambahan</h3>
-                            <section>
-                                <div class="form-row">
-                                    <div class="form-holder">
-                                        <label for="" style="color:black">Admin Alternatif</label>
-                                        <input type="text" placeholder="" class="form-control" id="" name="alternate_contact_name"   >
-                                    </div>
-                                    <div class="form-holder">
-                                        <label for="" style="color:black">Telephone Alternatif</label>
-                                        <input type="" placeholder="" class="form-control" id="" name="alternate_phone"  >
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-holder form-holder-2">
-                                        <label for="website" style="color:black">Website</label>
-                                        <input type="text" placeholder="Website" class="form-control" id="website" name="website_url" >
-                                    </div>
-                                </div>
-                                <div id="captcha" >
-                                    <div class="preview"></div>
-                                    <input type="hidden" id="preview_captcha" value="">
-                                    <div class="captcha_form"> 
-                                        <input type="text" id="captcha_form" class="form_input_captcha" placeholder=" " required>
 
-                                        <button class="captcha_refersh" style="display:none"></button>
+                                <div class="form-row row" style="margin-top:108px">
+                                    <div id="captcha" >
+                                        <div class="preview"></div>
+                                        <input type="hidden" id="preview_captcha" value="">
+                                        <div class="captcha_form"> 
+                                            <input type="text" id="captcha_form" class="form_input_captcha" placeholder=" " required>
+
+                                            <button class="captcha_refersh" style="display:none"></button>
+                                        </div>
                                     </div>
+                                    <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms" >I agree with the Terms and Conditions.</label>
                                 </div>
-                                <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms" >I agree with the Terms and Conditions.</label>
                                 <center>
                                     <div id="loading" style="display:none">
                                         <div id="loader"></div>
