@@ -15,14 +15,14 @@ class StatistikController extends Controller
 
     function jenis_cetak_isbn(Request $request) {
         $tahun = date("Y");
-        if ($request->query('tahun')) {
-            $tahun = $request->query('tahun');
+        if ($request->query('year')) {
+            $tahun = $request->query('year');
         }
         $query = "SELECT * FROM (
             SELECT (CASE WHEN JENIS_MEDIA = '1' THEN 'Buku' WHEN JENIS_MEDIA = '2' THEN 'Pdf' WHEN JENIS_MEDIA = '3' THEN 'Epub' WHEN JENIS_MEDIA = '4' THEN 'Audio Book' WHEN JENIS_MEDIA = '5' THEN 'Audio Visual' ELSE '-' END) as JenisMedia, COUNT(*) as Jumlah
             FROM PENERBIT_TERBITAN
             WHERE 1=1
-            AND TO_CHAR(PENERBIT_TERBITAN.CREATEDATE,'YYYY') = '2023'
+            AND TO_CHAR(PENERBIT_TERBITAN.CREATEDATE,'YYYY') = '$tahun'
             GROUP BY JENIS_MEDIA
             ORDER BY Jumlah DESC) a
             WHERE ROWNUM <= 10";
@@ -30,10 +30,9 @@ class StatistikController extends Controller
         try {
             // API call
             $data = kurl('get', 'getlistraw', null, $query, 'sql');
-            dd($data);
             //generate to data grafik
             $arr_color = [
-                "#cc0000","#ff3300","#ff6600","#ff9933","#ffcc00","#a2c2e4",
+                "#cc0000","#ff3300","#ff6600","#ff9933","#ffcc00","#a2c2e4","#cda4d6","#8bb4d9", 
             ];
             $data_chart = [];
             foreach ($data['Data']['Items'] as $k => $v) {
@@ -54,8 +53,8 @@ class StatistikController extends Controller
     //isbn berdasarkan ss kckr (sudah menyerahkan / belum serah simpan)
     function berdasarkan_kckr(Request $request) {
         $tahun = date("Y");
-        if ($request->query('tahun')) {
-            $tahun = $request->query('tahun');
+        if ($request->query('year')) {
+            $tahun = $request->query('year');
         }
         $query = "SELECT
             ( CASE WHEN RECEIVED_DATE_KCKR IS NOT NULL THEN 'Sudah Menyerahkan KCKR' ELSE 'Belum Menyerahkan KCKR' END ) AS StatusKCKR,
@@ -64,7 +63,7 @@ class StatistikController extends Controller
                 PENERBIT_ISBN 
             WHERE
                 1 = 1 
-                AND TO_CHAR( PENERBIT_ISBN.CREATEDATE, 'YYYY' ) = '2023' 
+                AND TO_CHAR( PENERBIT_ISBN.CREATEDATE, 'YYYY' ) = '$tahun' 
             GROUP BY
                 ( CASE WHEN RECEIVED_DATE_KCKR IS NOT NULL THEN 'Sudah Menyerahkan KCKR' ELSE 'Belum Menyerahkan KCKR' END )";
 
@@ -96,7 +95,11 @@ class StatistikController extends Controller
         }
     }
 
-    function kota_terbitan_terbanyak() {
+    function kota_terbitan_terbanyak(Request $request) {
+        $tahun = date("Y");
+        if ($request->query('year')) {
+            $tahun = $request->query('year');
+        }
         $query = "SELECT 
             tempat_terbit, 
             jumlah
@@ -107,7 +110,8 @@ class StatistikController extends Controller
             FROM 
                 penerbit_terbitan 
             WHERE 
-                penerbit_terbitan.tempat_terbit IS NOT NULL
+                penerbit_terbitan.tempat_terbit IS NOT NULL AND
+				penerbit_terbitan.TAHUN_TERBIT = '$tahun'
             GROUP BY 
                 penerbit_terbitan.tempat_terbit 
             ORDER BY 
@@ -123,27 +127,36 @@ class StatistikController extends Controller
             if ($data['Status'] == "Error") {
                 return errorResponseWithContent(message: 'error - kota terbitan', content : $data['Message']);
             } else {
+                 // API call
+                $data = kurl('get', 'getlistraw', null, $query, 'sql');
+                //generate to data grafik
                 $arr_color = [
-                    "#cc0000","#ff3300","#ff6600","#ff9933","#ffcc00","#a2c2e4","#e49382","#8dcf8d","#cda4d6","#8bb4d9",
+                    "#cc0000","#ff3300","#ff6600","#ff9933","#ffcc00","#a2c2e4","#e49382","#8dcf8d","#cda4d6","#8bb4d9", 
                 ];
                 $data_chart = [];
-                foreach ($$data['Data']['Items'] as $k => $v) {
+                foreach ($data['Data']['Items'] as $k => $v) {
                     $color = $arr_color[$k];
                     $data_chart[] = [
                         'values' => [(int) $v['JUMLAH']],
                         'background-color' => $color,
-                        'text' => $v['TEMPAT_TERBIT'].'<br> Total : '. $v['JUMLAH'] ,
+                        'text' => $v['TEMPAT_TERBIT'].'<br>Total : '. $v['JUMLAH'] ,
                     ];
                 }
-
+                //response
                 return successResponse(content : $data_chart);
+
+
             }
         } catch (Exception $e) {
             return errorResponseWithContent(content : $e->getMessage());
         }
     }
 
-    function kota_penerbit_terbanyak() {
+    function kota_penerbit_terbanyak(Request $request) {
+        $tahun = date("Y");
+        if ($request->query('year')) {
+            $tahun = $request->query('year');
+        }
         $query = "SELECT 
             city, 
             jumlah
@@ -154,7 +167,8 @@ class StatistikController extends Controller
             FROM 
                 penerbit 
             WHERE 
-                penerbit.city IS NOT NULL
+                penerbit.city IS NOT NULL AND
+                EXTRACT(YEAR FROM CREATEDATE) = '$tahun'
             GROUP BY 
                 penerbit.city 
             ORDER BY 

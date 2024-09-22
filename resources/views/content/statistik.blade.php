@@ -23,15 +23,17 @@
                             <p class="mb-0">
                                 Informasi tentang Prosedur Pendaftaran Penerbit dan Permohonan ISBN
                             </p>
-                            <p> Perpustakaan Nasional RI Sebagai badan yang ditunjuk oleh International ISBN Agency untuk mengelola International Standard Book Number (ISBN) di Indonesia sejak tahun 1986, telah menjalankan tugasnya mengelola dan mendistribusikan penomoran ISBN kepada seluruh penerbit yang ada di wilayah negara kesatuan Republik Indonesia. 
-                                Indonesia sudah tiga kali menerima Group Identifier, yaitu 979 pada tahun 1985, 602 pada tahun 2003 dan 623 pada tahun 2018. Berikut Struktur ISBN untuk Indonesia
-                                stat_1
-                                Berdasarkan block number tersebut, Perpustakaan Nasional RI sudah mendistribusikan registrant element dan rentang ISBN, sebanyak :
-                                stat_1
-                                Data ini menunjukkan bahwa penerbit Indonesia sudah menggunakan 13.510 registrant elemant pada group identifier 979, dan 24.607 registrant element pada group identifier 602. Sedangkan penggunaan registrant element pada block number 623 belum menjadi hitungan karena masih terus dikembangkan bersamaan dengan kondisi penerbitan di Indonesia. Jika diperhatikan, sejak diterapkannya sistem ISBN di Indonesia sejak tahun 1986, penerbit di Indonesia telah menerbitkan buku sebanyak 2.000.000 judul buku ber-ISBN (diluar hitungan buku berjilid)
-                                Layanan pengurusan ISBN Perpustakaan Nasional RI telah memenuhi persyaratan SNI ISO 9001 : 2015 dan terdaftar dalam MUTU Certification. Berdasarkan Surat edaran Kepala Direktorat Deposit Bahan Pustaka Perpustakaan Nasional RI no. 224/3.1/DBP.05/II.2018, berlaku mulai April 2018 layanan ISBN dinyatakan online dan tidak ada lagi pengajuan ISBN secara onsite.
-                                Perpustakaan Nasional RI berusaha menyediakan informasi hasil layanan ISBN secara terbuka dan real time. Layanan tersebut merupakan pertanggungjawaban lembaga dalam mewujudkan layanan publik yang transparan dan akuntabel.
-                            </p>
+                            <div id="intro" class="space-2-bottom active">
+                                <p>Perpustakaan Nasional RI Sebagai badan yang ditunjuk oleh International ISBN Agency untuk mengelola International Standard Book Number (ISBN) di Indonesia sejak tahun 1986, telah menjalankan tugasnya mengelola dan mendistribusikan penomoran ISBN kepada seluruh penerbit yang ada di wilayah negara kesatuan Republik Indonesia.</p>
+                                <p>Indonesia sudah tiga kali menerima Group Identifier, yaitu 979 pada tahun 1985, 602 pada tahun 2003 dan 623 pada tahun 2018. Berikut Struktur ISBN untuk Indonesia</p>
+                                <img src="{{ asset('template/images/statistik_1.jpg') }}" class="img-responsive img-fluid" alt="stat_1">
+                                <p>Berdasarkan block number tersebut, Perpustakaan Nasional RI sudah mendistribusikan registrant element dan rentang ISBN, sebanyak :</p>
+                                <img src="{{ asset('template/images/statistik_2.jpg') }}" class="img-responsive img-fluid" alt="stat_1">
+                                <br>
+                                <p>Data ini menunjukkan bahwa penerbit Indonesia sudah menggunakan 13.510 registrant elemant pada group identifier 979, dan 24.607 registrant element pada group identifier 602. Sedangkan penggunaan registrant element pada block number 623 belum menjadi hitungan karena masih terus dikembangkan bersamaan dengan kondisi penerbitan di Indonesia. Jika diperhatikan, sejak diterapkannya sistem ISBN di Indonesia sejak tahun 1986, penerbit di Indonesia telah menerbitkan buku sebanyak 2.000.000 judul buku ber-ISBN (diluar hitungan buku berjilid)</p>
+                                <p>Layanan pengurusan ISBN Perpustakaan Nasional RI telah memenuhi persyaratan SNI ISO 9001 : 2015 dan terdaftar dalam MUTU Certification. Berdasarkan Surat edaran Kepala Direktorat Deposit Bahan Pustaka Perpustakaan Nasional RI no. 224/3.1/DBP.05/II.2018, berlaku mulai April 2018 layanan ISBN dinyatakan online dan tidak ada lagi pengajuan ISBN secara onsite.</p>
+                                <p>Perpustakaan Nasional RI berusaha menyediakan informasi hasil layanan ISBN secara terbuka dan real time. Layanan tersebut merupakan pertanggungjawaban lembaga dalam mewujudkan layanan publik yang transparan dan akuntabel.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -56,34 +58,56 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-12 mb-4 mb-lg-0">
                                 <div class="custom-block bg-white shadow-lg">
-                                <div class="d-flex">
                                     <div>
                                         <h5 class="mb-3 text-center">Data Jenis Media </h5>
                                         <p class="mb-0 text-center">
-                                            Statistik jumlah ISBN per Jenis Media tahun 2024 
+                                            Statistik jumlah ISBN per Jenis Media tahun 
                                         </p>
                                     </div>
-                                </div>
-                                <div id='jenis_cetak_isbn'></div>
-                                <p class="mb-0 text-center" >
-                                    data terakhir pada pukul 13.13
-                                </p>
+                                    <center>
+                                        @php
+                                            $currentYear = date('Y'); // Mendapatkan tahun berjalan
+                                            $startYear = $currentYear - 5; // Tahun mulai (5 tahun ke belakang)
+                                        @endphp
+                                        <select id="filter_jenis_cetak_isbn" style="width: 50%;" class="form-control select2 mt-3" onchange="fetctJenisCetak(this.value)">
+                                            @for ($year = $currentYear; $year >= $startYear; $year--)
+                                                <option class="mb-0 text-center" value="{{ $year }}" {{ $year == $currentYear ? 'selected' : '' }} >
+                                                    {{ $year }} 
+                                                </option>
+                                            @endfor
+                                        </select>
+                                    </center>
+                                    <div id='jenis_cetak_isbn'></div>
+                                    <p class="mb-0 text-center" >
+                                        data terakhir pada pukul {{ date('H:i')}}
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-12 mb-4 mb-lg-0">
                                 <div class="custom-block bg-white shadow-lg">
-                                <div class="d-flex">
                                     <div>
                                         <h5 class="mb-3 text-center">Data status KCKR </h5>
                                         <p class="mb-0 text-center">
-                                            Statistik jumlah ISBN per status KCKR tahun 2024
+                                            Statistik jumlah ISBN per status KCKR tahun
                                         </p>
                                     </div>
-                                </div>
-                                <div id='status_kcrk'></div>
-                                <p class="mb-0 text-center">
-                                    Data terakhir pada pukul 13.13
-                                </p>
+                                    <center>
+                                        @php
+                                            $currentYear = date('Y'); // Mendapatkan tahun berjalan
+                                            $startYear = $currentYear - 5; // Tahun mulai (5 tahun ke belakang)
+                                        @endphp
+                                        <select id="filter_status_kcrk" style="width: 50%;" class="form-control select2 mt-3" onchange="fetctStatusKCKR(this.value)">
+                                            @for ($year = $currentYear; $year >= $startYear; $year--)
+                                                <option class="mb-0 text-center" value="{{ $year }}" {{ $year == $currentYear ? 'selected' : '' }} >
+                                                    {{ $year }} 
+                                                </option>
+                                            @endfor
+                                        </select>
+                                    </center>
+                                    <div id='status_kcrk'></div>
+                                    <p class="mb-0 text-center">
+                                        Data terakhir pada pukul {{ date('H:i')}}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +135,7 @@
             </div>
         </div>
     </div>
-    <div class="container mb-4">
+    <!-- <div class="container mb-4">
         <div class="row">
             <div class="col-12">
                 <div class="tab-content" id="myTabContent">
@@ -132,7 +156,7 @@
                                         <h1 class="count text-center" data-count="2426616" id='isbn_perprov'></h1>
 
                                         <p class="mb-0 text-center" >
-                                            data terakhir pada pukul 13.13
+                                            data terakhir pada pukul {{ date('H:i')}}
                                         </p>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12 mb-4 mb-lg-0">
@@ -145,7 +169,7 @@
                                         </div>
                                         <h1 class="count text-center" data-count="2426616" id='isbn_perkota'></h1>
                                         <p class="mb-0 text-center">
-                                            Data terakhir pada pukul 13.13
+                                            Data terakhir pada pukul {{ date('H:i')}}
                                         </p>
                                     </div>
                                 </div>
@@ -156,7 +180,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- terbitan isbn -->
     <div class="container mb-4">
         <div class="row">
@@ -166,34 +190,58 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-12 mb-4 mb-lg-0">
                                 <div class="custom-block bg-white shadow-lg">
-                                <div class="d-flex">
                                     <div>
                                         <h5 class="mb-3 text-center">Data Terbitan terbanyak </h5>
                                         <p class="mb-0 text-center">
-                                            Daftar 10 kota teratas Data Terbitan terbanyak. Dengan total data 80.000 dari 10 kota teratas
+                                            Daftar 10 kota teratas Data Terbitan terbanyak tahun. 
+                                            <!-- Dengan total data 80.000 dari 10 kota teratas -->
+                                            <center>
+                                                @php
+                                                    $currentYear = date('Y'); // Mendapatkan tahun berjalan
+                                                    $startYear = $currentYear - 5; // Tahun mulai (5 tahun ke belakang)
+                                                @endphp
+                                                <select id="filter_status_kcrk" style="width: 50%;" class="form-control select2 mt-3" onchange="fetchTerbitan(this.value)">
+                                                    @for ($year = $currentYear; $year >= $startYear; $year--)
+                                                        <option class="mb-0 text-center" value="{{ $year }}" {{ $year == $currentYear ? 'selected' : '' }} >
+                                                            {{ $year }} 
+                                                        </option>
+                                                    @endfor
+                                                </select>
+                                            </center>
                                         </p>
                                     </div>
-                                </div>
-                                <div id='terbitan_terbanyak'></div>
-                                <p class="mb-0 text-center" >
-                                    data terakhir pada pukul 13.13
-                                </p>
+                                    <div id='terbitan_terbanyak'></div>
+                                    <p class="mb-0 text-center" >
+                                        data terakhir pada pukul {{ date('H:i')}}
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-12 mb-4 mb-lg-0">
                                 <div class="custom-block bg-white shadow-lg">
-                                <div class="d-flex">
                                     <div>
                                         <h5 class="mb-3 text-center">Data Kota penerbit terbanyak </h5>
                                         <p class="mb-0 text-center">
-                                            Daftar 10 kota teratas Data kota penerbit terbanyak. Dengan total data 80.000 dari 10 kota teratas
+                                            Daftar 10 kota teratas Data kota penerbit terbanyak tahun. 
+                                            <center>
+                                                @php
+                                                    $currentYear = date('Y'); // Mendapatkan tahun berjalan
+                                                    $startYear = $currentYear - 5; // Tahun mulai (5 tahun ke belakang)
+                                                @endphp
+                                                <select id="filter_status_kcrk" style="width: 50%;" class="form-control select2 mt-3" onchange="fetctKotaPenerbit(this.value)">
+                                                    @for ($year = $currentYear; $year >= $startYear; $year--)
+                                                        <option class="mb-0 text-center" value="{{ $year }}" {{ $year == $currentYear ? 'selected' : '' }} >
+                                                            {{ $year }} 
+                                                        </option>
+                                                    @endfor
+                                                </select>
+                                            </center>
+                                            <!-- Dengan total data 80.000 dari 10 kota teratas -->
                                         </p>
                                     </div>
-                                </div>
-                                <div id='kota_penerbit_terbanyak'></div>
-                                <p class="mb-0 text-center">
-                                    Data terakhir pada pukul 13.13
-                                </p>
+                                    <div id='kota_penerbit_terbanyak'></div>
+                                    <p class="mb-0 text-center">
+                                        Data terakhir pada pukul {{ date('H:i')}}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -222,13 +270,16 @@
 
     })
 
-    function fetctJenisCetak() {
+    function fetctJenisCetak(params = null) {
         $.ajax({
             url: '/jenis_cetak_isbn', // Replace with your API endpoint
             type: 'GET', // Or 'POST' depending on your API
             dataType: 'json',
             processing: true, // Show processing indicator
             serverSide: true, // Enable server-side proces
+            data: {
+                year: params, // Kirim nilai dari dropdown
+            },
             success: function(response) {
                 jenisCetak(response.content);
             },
@@ -313,13 +364,16 @@
         });
     }   
 
-    function fetctStatusKCKR() {
+    function fetctStatusKCKR(params = null) {
         $.ajax({
             url: '/berdasarkan_kckr', // Replace with your API endpoint
             type: 'GET', // Or 'POST' depending on your API
             dataType: 'json',
             processing: true, // Show processing indicator
             serverSide: true, // Enable server-side proces
+            data: {
+                year: params, // Kirim nilai dari dropdown
+            },
             success: function(response) {
                 statusKckr(response.content);
             },
@@ -404,13 +458,16 @@
         });
     }   
 
-    function fetchTerbitan() {
+    function fetchTerbitan(params = null) {
         $.ajax({
             url: '/kota_terbitan_terbanyak', // Replace with your API endpoint
             type: 'GET', // Or 'POST' depending on your API
             dataType: 'json',
             processing: true, // Show processing indicator
             serverSide: true, // Enable server-side proces
+            data: {
+                year: params, // Kirim nilai dari dropdown
+            },
             success: function(response) {
                 updateChart(response.content);
             },
@@ -494,13 +551,16 @@
         });
     }
 
-    function fetctKotaPenerbit() {
+    function fetctKotaPenerbit(params = null) {
         $.ajax({
             url: '/kota_penerbit_terbanyak', // Replace with your API endpoint
             type: 'GET', // Or 'POST' depending on your API
             dataType: 'json',
             processing: true, // Show processing indicator
             serverSide: true, // Enable server-side proces
+            data: {
+                year: params, // Kirim nilai dari dropdown
+            },
             success: function(response) {
                 kotaPenerbit(response.content);
             },
