@@ -249,7 +249,11 @@ class PendaftaranController extends Controller
                     'password2' => $encryptedPassword, //rijndael
                     'code_otp' => $otp, //rijndael
                     'kd_penerbit' => $request->input('user_name'),
-                    'registrasi_valid' => 0
+                    'registrasi_valid' => 0,
+                    'createdate' => date('Y-m-d H:i:s'),
+                    'jenis_id' => $request->input('jenis'),
+                    'kategori_id' => $request->input('kategori_penerbit'),
+                    'createby' => 'pendaftaran_online',
                 ]);
 
                 $dataset = $request->all();
@@ -265,7 +269,6 @@ class PendaftaranController extends Controller
 
                 $params = [
                     'CreateBy' => 'pendaftaran_online',
-                    'CreateDate' => date('Y-m-d H:i:s'),
                     'terminal' => $request->ip()
                 ];
 
