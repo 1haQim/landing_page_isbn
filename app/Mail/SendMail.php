@@ -29,7 +29,7 @@ class SendMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Send Mail',
+            subject: 'Verifikasi registrasi penerbit ISBN',
         );
     }
 
@@ -57,7 +57,8 @@ class SendMail extends Mailable
     {
         return $this->from('hakim.arzaq@gmail.com')
                     ->subject('Verifikasi Pendaftaran Penerbit ISBN')
-                    ->view('emails.verification')
-                    ->with('data', $this->data);
+                    ->html($this->data); 
+                    // ->view('emails.verification')
+                    // ->with('data', $this->data);
     }
 }

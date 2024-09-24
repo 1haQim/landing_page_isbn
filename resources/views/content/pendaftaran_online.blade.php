@@ -274,19 +274,19 @@
                                 <div class="form-row row" style="margin-top:90px">
                                     <div class="col">
                                         <label for="penerbit" style="color:black">Nama Penerbit*</label>
-                                        <input type="text" placeholder="" class="form-control" id="penerbit" name="nama_penerbit"  required>
+                                        <input type="text" placeholder="Nama Penerbit" class="form-control" id="penerbit" name="nama_penerbit"  required>
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="nm_gedung" style="color:black">Nama Gedung (jika ada)</label>
-                                        <input type="text" placeholder="" class="form-control" id="nm_gedung" name="nama_gedung"  >
+                                        <input type="text" placeholder="Nama Gedung" class="form-control" id="nm_gedung" name="nama_gedung"  >
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="nm_jalan" style="color:black">Nama Jalan*</label>
-                                        <input type="text" placeholder="" class="form-control" id="nm_jalan" name="alamat_penerbit" required >
+                                        <input type="text" placeholder="Nama Jalan" class="form-control" id="nm_jalan" name="alamat_penerbit" required >
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
@@ -324,27 +324,27 @@
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="password" style="color:black">Telephone*</label>
-                                        <input type="text" placeholder="" class="form-control" id="" name="admin_phone" >
+                                        <input type="number" placeholder="Telephone" class="form-control" id="" name="admin_phone" >
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="confirm_password" style="color:black">Kode Pos</label>
-                                        <input type="text" placeholder="" class="form-control" id="" name="kodepos">
+                                        <input type="number" placeholder="Kode Pos" class="form-control" id="" name="kodepos">
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="nm_admin" style="color:black">Nama Admin*</label>
-                                        <input type="text" placeholder="" class="form-control" id="nm_admin" name="admin_contact_name">
+                                        <input type="text" placeholder="Nama Admin" class="form-control" id="nm_admin" name="admin_contact_name">
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="form-holder">
                                         <label for="" style="color:black">Admin Alternatif*</label>
-                                        <input type="text" placeholder="" class="form-control" id="" name="alternate_contact_name"   >
+                                        <input type="text" placeholder="Admin Alternatif" class="form-control" id="" name="alternate_contact_name"   >
                                     </div>
                                     <div class="form-holder">
                                         <label for="" style="color:black">Telephone Alternatif</label>
-                                        <input type="" placeholder="" class="form-control" id="" name="alternate_phone"  >
+                                        <input type="number" placeholder="Telephone Alternatif" class="form-control" id="" name="alternate_phone"  >
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
@@ -382,7 +382,7 @@
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="email" style="color:black">Email*</label>
                                         <div class="inputcontainer">
-                                            <input type="text" placeholder="Your Email" class="form-control" id="email" name="admin_email" onchange="checkDataExisting('admin_email',this.value)" required>
+                                            <input type="text" placeholder="Email" class="form-control" id="email" name="admin_email" onchange="checkDataExisting('admin_email',this.value)" required>
                                             <div class="icon-container">
                                                 <i class="loader" id="loader_admin_email" style="display: none"></i>
                                                 <svg class="checkmark" id="success_admin_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -400,7 +400,7 @@
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="email" style="color:black">Email Alternatif*</label>
                                         <div class="inputcontainer">
-                                            <input type="text" placeholder="Your Email" class="form-control" id="email_alternatif" name="alternate_email" onchange="checkDataExisting('alternatif_email',this.value)" required>
+                                            <input type="text" placeholder="Email Alternatif" class="form-control" id="email_alternatif" name="alternate_email" onchange="checkDataExisting('alternatif_email',this.value)" required>
                                             <div class="icon-container">
                                                 <i class="loader" id="loader_alternatif_email" style="display: none"></i>
                                                 <svg class="checkmark" id="success_alternatif_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -423,7 +423,7 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="confirm_password" style="color:black">Confirm Password*</label>
-                                        <input type="password" placeholder="" class="form-control" id="confirm_password" name="password2" required>
+                                        <input type="password" placeholder="Confirm Password" class="form-control" id="confirm_password" name="password2" required>
                                     </div>
                                     <span id="ket_password" style="font-size:11px; color:red"></span>
                                 </div>
@@ -438,14 +438,17 @@
                                             <button class="captcha_refersh" style="display:none"></button>
                                         </div>
                                     </div>
-                                    <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms" >I agree with the Terms and Conditions.</label>
                                 </div>
+                                <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms" >I agree with the Terms and Conditions.</label>
                                 <center>
                                     <div id="loading" style="display:none">
                                         <div id="loader"></div>
                                         <span>Mohon Tunggu..</span>
                                     </div>
                                 </center>
+                                <div id="text_error" style="margin-top:20px; display:none ">
+
+                                </div>
                             <section>
                         </div>
                     </form>
@@ -735,7 +738,16 @@
                     dataType: 'json',
                     data: $('#contact').serialize(),
                     success: function(data) {
-                        openNewWindowWithParams() //redirect halaman otp
+                        console.log(data, 'hakim1234 submit')
+                        if(data.status != "error"){
+                            openNewWindowWithParams() //redirect halaman otp
+                        }else{
+                            const textError = document.getElementById('text_error');
+                            textError.style.display = 'block';
+                            const loader = document.getElementById('loading');
+                            loader.style.display = 'none';
+                            document.getElementById('text_error').innerHTML = data.message;
+                        }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.log(textStatus, errorThrown)

@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
 
+use Illuminate\Support\Facades\Validator;
+
 class PendaftaranController extends Controller
 {
     function index() {
@@ -178,94 +180,142 @@ class PendaftaranController extends Controller
     function submit_pendaftaran(Request $request) {
         if ($request->isMethod('post')) {
             //validate
-            // $request->validate([
-            //     'file_pernyataan' => 'required|mimes:jpg,jpeg,pdf|max:5048',
-            //     'file_akte' => 'required|mimes:jpg,jpeg,pdf|max:5048',
-            // ]);
-
-            $ip = $request->ip();
-            $file = [
-                'file_pernyataan' => $request->input('file_surat_pernyataan') ?? null,
-                'file_akte' => $request->input('file_akte_notaris') ?? null
-            ];
-            //generate OTP
-            $otp = $this->generateOTP();
-
-            //encript password
-            $encryptedPassword = $this->rijndaelEncryptPassword($request->input('password2'));
-            $md5Encrypt = $this->md5Hash($request->input('password'));
-
-            $request->merge([
-                // 'password' => md5($request->input('password')),
-                'password' => $md5Encrypt,
-                'password2' => $encryptedPassword, //rijndael
-                'code_otp' => $otp, //rijndael
-                'kd_penerbit' => $request->input('user_name'),
-                'registrasi_valid' => 0
-            ]);
-
-            $dataset = $request->all();
-            unset($dataset['acceptTerms']);
-
-            $send_data = [];
-            foreach ($dataset as $k => $v) {
-                $send_data[] = [
-                    'name' => $k,
-                    'Value' => $v,
-                ];
-            };
-
-            $params = [
-                'CreateBy' => 'pendaftaran_online',
-                'terminal' => $request->ip()
-            ];
-
-            $data = kurl('post','add', 'ISBN_REGISTRASI_PENERBIT', $send_data, 'ListAddItem', $params);
-
-            if (!empty($data['Data'])) {
-                $id = $data['Data']['ID'];
-                $call_func = $this->upload_file($file, $id, $ip);
-                //jika upload doc gagal maka akan rollback (hapus data)
-                if ($call_func['status'] == 0 ) {
-                    $hapus_data = $this->rollback_pendaftaran($id);
-                    $sts_ket = 'error';
-                    $ket = 'gagal upload file';
-                    //masukkan kedalam log untuk kegunaan tracking data
+            $messages = [];
+            if ($request->input('kategori_penerbit') == 1) {
+                $validator = Validator::make($request->all(), [
+                    'file_surat_pernyataan' => 'required|max:5048'
+                    // 'file_surat_pernyataan' => 'required|mimes:jpg,jpeg,pdf|max:5048'
+                ]);
+                if ($validator->fails()) {
+                    $messages = array_merge($messages, $validator->errors()->all());
                 }
+            } else {
+                $validator = Validator::make($request->all(), [
+                    'file_akte_notaris' => 'required|max:5048',
+                    // 'file_akte_notaris' => 'required|mimes:jpg,jpeg,pdf|max:5048'
+                ]);
+                if ($validator->fails()) {
+                    $messages = array_merge($messages, $validator->errors()->all());
+                }
+            }
 
-                // dd()
+            $validator = Validator::make($request->all(), [
+                'kategori_penerbit' => 'required',
+                'jenis' => 'required',
+                'alamat_penerbit' => 'required',
+                'province_id' => 'required',
+                'city_id' => 'required',
+                'district_id' => 'required',
+                'village_id' => 'required',
+                'admin_phone' => 'required',
+                'admin_contact_name' => 'required',
+                'alternate_contact_name' => 'required',
 
-                $data_send_otp = [
-                    'email_admin' => $request->input('admin_email'),
-                    'username'    => $request->input('user_name'),
-                    'kode_otp'    => $otp
+                'user_name' => 'required|string|max:50',
+                'admin_email' => 'required|string|email|max:50',
+                'alternate_email' => 'required|string|email|max:50',
+                'password' => 'required|string|min:8',
+            ]);
+            if ($validator->fails()) {
+                $messages = array_merge($messages, $validator->errors()->all());
+            }
+
+            if (!empty($messages)) {
+                $mesStr = '';
+                foreach ($messages as $v) {
+                    $mesStr .= '<span style="color:red">'. $v . '<span color="red"><br>';
+                }
+                $res_data = [
+                    'status' => 'error',
+                    'message' => $mesStr
+                ];
+                return $res_data;
+            } else {
+                $ip = $request->ip();
+                $file = [
+                    'file_pernyataan' => $request->input('file_surat_pernyataan') ?? null,
+                    'file_akte' => $request->input('file_akte_notaris') ?? null
+                ];
+                //generate OTP
+                $otp = $this->generateOTP();
+
+                //encript password
+                $encryptedPassword = $this->rijndaelEncryptPassword($request->input('password2'));
+                $md5Encrypt = $this->md5Hash($request->input('password'));
+
+                $request->merge([
+                    // 'password' => md5($request->input('password')),
+                    'password' => $md5Encrypt,
+                    'password2' => $encryptedPassword, //rijndael
+                    'code_otp' => $otp, //rijndael
+                    'kd_penerbit' => $request->input('user_name'),
+                    'registrasi_valid' => 0
+                ]);
+
+                $dataset = $request->all();
+                unset($dataset['acceptTerms']);
+
+                $send_data = [];
+                foreach ($dataset as $k => $v) {
+                    $send_data[] = [
+                        'name' => $k,
+                        'Value' => $v,
+                    ];
+                };
+
+                $params = [
+                    'CreateBy' => 'pendaftaran_online',
+                    'CreateDate' => date('Y-m-d H:i:s'),
+                    'terminal' => $request->ip()
                 ];
 
-                $res_otp = $this->send_email($data_send_otp);
-                if ($res_otp) {
-                    //return json berhasil
-                    $sts_ket = 'success';
-                    $ket = 'berhasil pendaftaran silahkan check email anda untuk verifikasi';
-                } else {
-                    $sts_ket = 'error';
-                    $ket = 'Gagal mengirim email klik kirim ulang kode OTP';
+                $data = kurl('post','add', 'ISBN_REGISTRASI_PENERBIT', $send_data, 'ListAddItem', $params);
+
+                if (!empty($data['Data'])) {
+                    $id = $data['Data']['ID'];
+                    $call_func = $this->upload_file($file, $id, $ip);
+                    //jika upload doc gagal maka akan rollback (hapus data)
+                    if ($call_func['status'] == 0 ) {
+                        $hapus_data = $this->rollback_pendaftaran($id);
+                        $sts_ket = 'error';
+                        $ket = 'gagal upload file';
+                        //masukkan kedalam log untuk kegunaan tracking data
+                    }
+
+                    // dd()
+
+                    $data_send_otp = [
+                        'email_admin' => $request->input('admin_email'),
+                        'username'    => $request->input('user_name'),
+                        'kode_otp'    => $otp
+                    ];
+
+                    $res_otp = $this->send_email($data_send_otp);
+                    if ($res_otp) {
+                        //return json berhasil
+                        $sts_ket = 'success';
+                        $ket = 'berhasil pendaftaran silahkan check email anda untuk verifikasi';
+                    } else {
+                        $sts_ket = 'error';
+                        $ket = 'Gagal mengirim email klik kirim ulang kode OTP';
+                    }
+
+                    $res_data = [
+                        'status' => $sts_ket,
+                        'message' => $ket
+                    ];
+
+                    // dd($res_data);
+
+                    return $res_data;
                 }
 
                 $res_data = [
-                    'status' => $sts_ket,
-                    'message' => $ket
+                    'status' => 'error',
+                    'message' => 'Data gagal ter input'
                 ];
-
-                // dd($res_data);
-
                 return $res_data;
             }
-
-            $res_data = [
-                'status' => 'error',
-                'message' => 'Data gagal ter input'
-            ];
-
         }
     }
 
@@ -280,7 +330,27 @@ class PendaftaranController extends Controller
     //send email verifikasi
     function send_email($res_data) {
         if (filter_var($res_data['email_admin'], FILTER_VALIDATE_EMAIL)) {
-            Mail::to($res_data['email_admin'])->send(new SendMail($res_data));
+            $waktu = date('d F Y H:i');
+            $username = $res_data['username'];
+            $email = $res_data['email_admin'];
+            $otp = $res_data['kode_otp'];
+
+            $query = "SELECT isi FROM ISBN_MAIL_TEMPLATE WHERE ID = '16'";
+            $data = kurl('get', 'getlistraw', null, $query, 'sql');
+
+            $html = "";
+            if ($data['Data']['Items']) {
+                $html .= $data['Data']['Items'][0]['ISI'];
+            }
+
+            //replace karakter {}
+            $htmlOutput = str_replace(
+                ['{waktu}', '{username}', '{email}', '{otp}'],  // placeholders
+                [$waktu, $username, $email, $otp],              // corresponding PHP values
+                $html                                   // the original HTML template
+            );
+
+            Mail::to($res_data['email_admin'])->send(new SendMail($htmlOutput));
             return 'success';
         }
     }
