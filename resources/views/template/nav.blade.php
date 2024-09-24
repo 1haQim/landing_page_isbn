@@ -22,18 +22,22 @@
                     <!-- <a class="nav-link " href="#" onclick="openModal(this)">Panduan Layanan</a> -->
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="/home#section_2">Browse Topics</a>
+                    <a class="nav-link click-scroll text-center" href="/home#section_2">BIP/Surat/ <br>Berita</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="/home#section_3">How it works</a>
+                    <a class="nav-link click-scroll" href="/home#section_3">Info</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="/statistik">Statistik</a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="/detail_fnq">FAQs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="/pelacakan">Lacak Pengajuan</a>
+                    <a class="nav-link click-scroll text-center" href="/pelacakan">Lacak Pengajuan</a>
                 </li>
                 
             </ul>
