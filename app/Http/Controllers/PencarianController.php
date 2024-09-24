@@ -28,9 +28,10 @@ class PencarianController extends Controller
 
         $where = '';
         if ($filter_by == 'all') {
-            $where = "WHERE PI.ISBN_NO LIKE '%".$keyword."%' OR PT.TITLE LIKE '%".$keyword."%' OR PT.KEPENG LIKE '%".$keyword."%' OR P.NAME LIKE '%".$keyword."%'";
+            $keyword = strtoupper($keyword); //upper
+            $where = "WHERE UPPER(PI.ISBN_NO) LIKE '%".$keyword."%' OR UPPER(PT.TITLE) LIKE '%".$keyword."%' OR UPPER(PT.KEPENG) LIKE '%".$keyword."%' OR UPPER(P.NAME) LIKE '%".$keyword."%'";
         } else if($filter_by) {
-            $where = "WHERE $filter_by LIKE '%".$keyword."%'"; //filterby ambil dari params filter dihome
+            $where = "WHERE UPPER($filter_by) LIKE '%".$keyword."%'"; //filterby ambil dari params filter dihome
         } else {
             $where = '';
         }
