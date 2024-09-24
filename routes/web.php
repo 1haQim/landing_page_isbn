@@ -69,6 +69,8 @@ Route::POST('/request_pelacakan', [PelacakanController::class, 'serverside_pelac
 
 
 Route::get('/detail_fnq', [FnQsController::class, 'index']);
+Route::get('/faq_detail', [FnQsController::class, 'getData'])->name('faq.get');
+
 Route::get('/panduan_layanan', [PanduanLayananController::class, 'index']);
 
  /** General Controller for dropzone **/
