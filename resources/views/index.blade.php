@@ -12,7 +12,7 @@
 		<meta property="og:locale" content="en_ID" />
 		<meta property="og:type" content="article" />
 		<meta property="og:title" content="ISBN" />
-		<meta property="og:url" content="{{ env(APP_URL) }}" />
+		<meta property="og:url" content="{{ config('app.url') }}" />
 		<meta property="og:site_name" content="ISBN PERPUSNAS" />
 
         <meta name="author" content="tim isbn, pemerintah">
