@@ -6,8 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="images/logo_aja.png" type="image/x-icon">
 
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description" content="aplikasi tentang seputar isbn dan tracking pengajuan isbn, free, perpusnas" />
+		<meta name="keywords" content="isbn, ISBN, perpusnas,buku, pemerintah, tracking isbn, lacak isbn, prosedur pengajuan isbn, isbn prosedur, bip isbn, pencarian isbn, buku isbn, terbitan isbn, statistik isbn, penerbit, buku penerbit, penerbit buku, " />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta property="og:locale" content="en_ID" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="ISBN" />
+		<meta property="og:url" content="{{ env(APP_URL) }}" />
+		<meta property="og:site_name" content="ISBN PERPUSNAS" />
+
+        <meta name="author" content="tim isbn, pemerintah">
 
         <title>ISBN</title>
 
