@@ -40,17 +40,18 @@ class PencarianController extends Controller
         $by_penerbit = $request->input('by_penerbit');
         $by_kota = $request->input('by_kota');
         //validasi 
+        $operator = $where != "" ? "AND " : "WHERE ";
         if ($by_penerbit && $by_kota) {
-            $where = $where . " AND P.NAME ='$by_penerbit' AND PT.TEMPAT_TERBIT = '$by_kota'";
+            $where = $where . "$operator P.NAME ='$by_penerbit' AND PT.TEMPAT_TERBIT = '$by_kota'";
         } else if ($by_penerbit){
-            $where = $where . " AND P.NAME ='$by_penerbit'";
+            $where = $where . " $operator P.NAME ='$by_penerbit'";
         } else if ($by_kota){
-            $where = $where . " AND PT.TEMPAT_TERBIT = '$by_kota'";
+            $where = $where . " $operator PT.TEMPAT_TERBIT = '$by_kota'";
         } else {
             $where;
         }
 
-        // dd($where);
+        dd($where);
         //query
         $query = "SELECT *
             FROM (
