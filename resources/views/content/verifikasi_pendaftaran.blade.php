@@ -177,7 +177,7 @@
         if (otp.length === 6) {
             if (timeLeft > 0) {
             $.ajax({
-                url: '/verifikasi_pendaftaran',
+                url: "{{ route('verifikasi_pendaftaran') }}",
                 type: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

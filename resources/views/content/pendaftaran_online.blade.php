@@ -515,7 +515,7 @@
         }
         //untuk get data jenis penerbit
         $.ajax({
-            url: '/jenis_penerbit',
+            url: "{{ route('jenis_penerbit') }}",
             type: 'GET',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -570,7 +570,7 @@
         }
         //get api data berdasarkan filter req
         $.ajax({
-            url: '/get_wilayah',
+            url: "{{ route('get_wilayah') }}",
             type: 'POST',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -625,7 +625,7 @@
 
         if (validate != 'error') {
             $.ajax({
-                url: '/checking_data_existing',
+                url: "{{ route('checking_data_existing') }}",
                 type: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -730,7 +730,7 @@
                 // swal("","Log in","success");
                 $('#contact').append('<input type="hidden" id="" name="nama_kota" value="' + $('#kab_kot option:selected').text() + '">');
                 $.ajax({
-                    url: '/submit_pendaftaran',
+                    url: "{{ route('submit_pendaftaran') }}",
                     type: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -768,7 +768,7 @@
     }
     function openNewWindowWithParams() {
         // URL of the new window
-        const url = "/verifikasi_pendaftaran";
+        const url = "{{ route('verifikasi_pendaftaran') }}";
 
         // Create a form element
         const form = document.createElement("form");
@@ -816,7 +816,7 @@
     //upload file  file_pernyataan
     Dropzone.autoDiscover = false;
     var dropzone1 = new Dropzone("#dropzone1", {
-        url: '/projects/media-one',
+        url: "{{ route('media-one') }}",
         paramName: "file",
         maxFiles: 1,
         maxFilesize: 2, // MB
@@ -883,7 +883,7 @@
     });
     //upload file  file_akta
     var dropzone2 = new Dropzone("#dropzone2", {
-        url: '/projects/media-one',
+        url: "{{ route('media-one') }}",
         paramName: "file",
         maxFiles: 1,
         maxFilesize: 2, // MB
@@ -922,7 +922,7 @@
             this.on("removedfile", function(file) {
                 if (file.serverFileName) {
                     $.ajax({
-                        url: '/projects/media/delete',
+                        url: "{{ route('media-one-delete') }}",
                         type: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

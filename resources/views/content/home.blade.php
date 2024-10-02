@@ -318,7 +318,7 @@
             const appUrl = @json(env('APP_URL'));
             if (EmptyString(section)) {
                 $.ajax({
-                    url: '/flyer',
+                    url: "{{ route('flyer') }}",
                     type: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

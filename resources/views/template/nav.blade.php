@@ -15,29 +15,29 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-lg-5 me-lg-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
+                    <a class="nav-link {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="/panduan_layanan">Panduan Layanan</a>
+                    <a class="nav-link {{ Request::is('panduan_layanan') ? 'active' : '' }}" href="{{ url('panduan_layanan') }}">Panduan Layanan</a>
                     <!-- <a class="nav-link " href="#" onclick="openModal(this)">Panduan Layanan</a> -->
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll text-center" href="/home#section_2">BIP/Surat/ <br>Berita</a>
+                    <a class="nav-link {{ Request::is('home#section_2') ? 'active' : '' }} click-scroll text-center" href="{{ url('home#section_2') }}">BIP/Surat/ <br>Berita</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="/home#section_3">Info</a>
+                    <a class="nav-link {{ Request::is('home#section_3') ? 'active' : '' }} click-scroll" href="{{ url('home#section_3') }}">Info</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="/statistik">Statistik</a>
+                    <a class="nav-link {{ Request::is('statistik') ? 'active' : '' }}" href="{{ url('statistik') }}">Statistik</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="/detail_fnq">FAQs</a>
+                    <a class="nav-link {{ Request::is('detail_fnq') ? 'active' : '' }}" href="{{ url('detail_fnq') }}">FAQs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll text-center" href="/pelacakan">Lacak Pengajuan</a>
+                    <a class="nav-link {{ Request::is('pelacakan') ? 'active' : '' }}" href="{{ url('pelacakan') }}">Lacak Pengajuan</a>
                 </li>
                 
             </ul>

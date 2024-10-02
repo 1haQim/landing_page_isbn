@@ -30,7 +30,7 @@ Route::get('/welcome', function () {
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index']);
 //flyer pengumuman
-Route::post('/flyer', [HomeController::class, 'flyer']);
+Route::post('/flyer', [HomeController::class, 'flyer'])->name('flyer');
 //isbn info
 Route::get('/isbn_info', [HomeController::class, 'isbn_info']);
 //pencarian home
@@ -46,22 +46,22 @@ Route::get('serverside_surat', [SuratController::class, 'serverside_surat'])->na
 Route::get('berita', [BeritaController::class, 'index'])->name('berita');
 
 Route::get('/pendaftaran_online', [PendaftaranController::class, 'index']);
-Route::get('/jenis_penerbit', [PendaftaranController::class, 'jenis_penerbit']);
-Route::post('/checking_data_existing', [PendaftaranController::class, 'checking_data_existing']);
-Route::post('/get_wilayah', [PendaftaranController::class, 'get_wilayah']);
-Route::post('/submit_pendaftaran', [PendaftaranController::class, 'submit_pendaftaran']);
+Route::get('/jenis_penerbit', [PendaftaranController::class, 'jenis_penerbit'])->name('jenis_penerbit');
+Route::post('/checking_data_existing', [PendaftaranController::class, 'checking_data_existing'])->name('checking_data_existing');
+Route::post('/get_wilayah', [PendaftaranController::class, 'get_wilayah'])->name('get_wilayah');
+Route::post('/submit_pendaftaran', [PendaftaranController::class, 'submit_pendaftaran'])->name('submit_pendaftaran');
 Route::get('/send_email_verification', [PendaftaranController::class, 'send_email']);
-Route::match(['get', 'post'], '/verifikasi_pendaftaran', [PendaftaranController::class, 'verifikasi_pendaftaran']);
+Route::match(['get', 'post'], '/verifikasi_pendaftaran', [PendaftaranController::class, 'verifikasi_pendaftaran'])->name('verifikasi_pendaftaran');
 Route::get('/timeOtp', [PendaftaranController::class, 'timeOtp']);
 
 Route::get('/prosedur', [ProsedurController::class, 'index']);
 
 Route::get('/statistik', [StatistikController::class, 'index']);
-Route::get('/kota_terbitan_terbanyak', [StatistikController::class, 'kota_terbitan_terbanyak']);
-Route::get('/kota_penerbit_terbanyak', [StatistikController::class, 'kota_penerbit_terbanyak']);
-Route::match(['get', 'post'],'/isbn_periode', [StatistikController::class, 'isbn_periode']);
-Route::get('/jenis_cetak_isbn', [StatistikController::class, 'jenis_cetak_isbn']);
-Route::get('/berdasarkan_kckr', [StatistikController::class, 'berdasarkan_kckr']);
+Route::get('/kota_terbitan_terbanyak', [StatistikController::class, 'kota_terbitan_terbanyak'])->name('kota_terbitan_terbanyak');
+Route::get('/kota_penerbit_terbanyak', [StatistikController::class, 'kota_penerbit_terbanyak'])->name('kota_penerbit_terbanyak');
+Route::match(['get', 'post'],'/isbn_periode', [StatistikController::class, 'isbn_periode'])->name('isbn_periode');
+Route::get('/jenis_cetak_isbn', [StatistikController::class, 'jenis_cetak_isbn'])->name('jenis_cetak_isbn');
+Route::get('/berdasarkan_kckr', [StatistikController::class, 'berdasarkan_kckr'])->name('berdasarkan_kckr');
 
 
 Route::get('/pelacakan', [PelacakanController::class, 'index']);
@@ -74,7 +74,7 @@ Route::get('/faq_detail', [FnQsController::class, 'getData'])->name('faq.get');
 Route::get('/panduan_layanan', [PanduanLayananController::class, 'index']);
 
  /** General Controller for dropzone **/
- Route::post('/projects/media-one', [DropzoneController::class, 'storeMediaOne']);
- Route::post('/projects/media/delete', [DropzoneController::class, 'deleteMedia']);
+ Route::post('/projects/media-one', [DropzoneController::class, 'storeMediaOne'])->name('media-one');
+ Route::post('/projects/media/delete', [DropzoneController::class, 'deleteMedia'])->name('media-one-delete');
 
 

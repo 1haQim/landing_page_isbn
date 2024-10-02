@@ -272,7 +272,7 @@
 
     function fetctJenisCetak(params = null) {
         $.ajax({
-            url: '/jenis_cetak_isbn', // Replace with your API endpoint
+            url: "{{ route('jenis_cetak_isbn') }}", // Replace with your API endpoint
             type: 'GET', // Or 'POST' depending on your API
             dataType: 'json',
             processing: true, // Show processing indicator
@@ -366,7 +366,7 @@
 
     function fetctStatusKCKR(params = null) {
         $.ajax({
-            url: '/berdasarkan_kckr', // Replace with your API endpoint
+            url: "{{ route('berdasarkan_kckr') }}", // Replace with your API endpoint
             type: 'GET', // Or 'POST' depending on your API
             dataType: 'json',
             processing: true, // Show processing indicator
@@ -460,7 +460,7 @@
 
     function fetchTerbitan(params = null) {
         $.ajax({
-            url: '/kota_terbitan_terbanyak', // Replace with your API endpoint
+            url: "{{ route('kota_terbitan_terbanyak') }}", // Replace with your API endpoint
             type: 'GET', // Or 'POST' depending on your API
             dataType: 'json',
             processing: true, // Show processing indicator
@@ -647,7 +647,7 @@
 
     function fetchDataIsbn(params) {
         $.ajax({
-            url: '/isbn_periode', // Replace with your API endpoint
+            url: "{{ route('isbn_periode') }}", // Replace with your API endpoint
             type: 'GET', // Or 'POST' depending on your API
             dataType: 'json',
             processing: true, // Show processing indicator

@@ -68,7 +68,7 @@
                     <div class="card-body">
                         <div class="input-group input-group-lg" >
                             <select id="filter_search" style=" max-width: 250px;"  class="form-control select2 ">
-                                <option value="all" >Semua</option>
+                                <option value="all">Semua</option>
                                 <option value="PT.TITLE" >Judul </option>
                                 <option value="PT.KEPENG" >Kepengarangan </option>
                                 <option value="P.NAME" >Penerbit </option>
@@ -132,13 +132,16 @@ $('#customSearchField').on('keyup', function() {
             if (clickedLink.classList.contains('active')) { //klik di aktif yang sama
                 clickedLink.classList.remove('active');
                 document.getElementById('penerbit_filter').value = ""; //set value untuk filter by
-                dataTables(); //load data table
+                // document.getElementById('filter_search').value;
+                // console.log();
+                // dataTables(document.getElementById('filter_search').value); //load data table
             } else {
                 removeActiveClass();
                  // filter data table
                 const nm_penerbit = clickedLink.textContent;
                 document.getElementById('penerbit_filter').value = nm_penerbit; //set value untuk filter by
-                dataTables(); //load data table
+                // console.log(document.getElementById('filter_search').value);
+                dataTables(document.getElementById('filter_search').value); //load data table
                 clickedLink.classList.add('active');
             }
         }
@@ -165,8 +168,8 @@ $('#customSearchField').on('keyup', function() {
             const clickedLinkKota = navLinksKota[index];
             if (clickedLinkKota.classList.contains('active')) { //klik di aktif yang sama
                 clickedLinkKota.classList.remove('active');
-                document.getElementById('kota_filter').value = ""; //set value untuk filter by
-                dataTables(); //load data table
+                // document.getElementById('kota_filter').value = ""; //set value untuk filter by
+                // dataTables(document.getElementById('filter_search').value); //load data table
             } else {
                 removeActiveClassKota(); //remove aktif
                 clickedLinkKota.classList.add('active'); // add new aktif
@@ -174,7 +177,7 @@ $('#customSearchField').on('keyup', function() {
                 const listItem = document.querySelector('#navbar-kota .nav-link.active .list-group-item ');
                 const nm_kota = listItem.childNodes[0].textContent.trim();
                 document.getElementById('kota_filter').value = nm_kota; //set value untuk filter by
-                dataTables(); //load data table
+                dataTables(document.getElementById('filter_search').value); //load data table
             }
         }
 
@@ -188,10 +191,19 @@ $('#customSearchField').on('keyup', function() {
         });
     })
 
-    function dataTables() {
+    function dataTables(params = null) {
         const urlParams = new URLSearchParams(window.location.search);
         const keyword_pencarian = urlParams.get('keyword');
         const filter_by = urlParams.get('filter');
+
+        console.log(filter_by);
+
+        if (filter_by) {
+            var filter_by1 = document.getElementById('filter_search').value
+            // var keyword1 = document.getElementById('keyword_pencarian').value
+        } else {
+            var filter_by1 = params
+        }
 
         document.getElementById('keyword_pencarian').value = keyword_pencarian;
         document.getElementById('filter_search').value = filter_by;
@@ -213,7 +225,7 @@ $('#customSearchField').on('keyup', function() {
                     d.page = (d.start / d.length) + 1; // Current page (1-based)
                     d.pageSize = d.length; // Number of records per page
                     d.search = document.getElementById('keyword_pencarian').value; // Pencarian global
-                    d.filter_by = document.getElementById('filter_search').value;
+                    d.filter_by = filter_by1;
                     d.by_penerbit = document.getElementById('penerbit_filter').value;
                     d.by_kota = document.getElementById('kota_filter').value;
                 }
@@ -231,7 +243,7 @@ $('#customSearchField').on('keyup', function() {
                 { data: 'LINK_BUKU' }
             ],
             search: {
-                search: keyword_pencarian 
+                search: document.getElementById('keyword_pencarian') 
             },
             drawCallback: function(settings) {
                 // document.getElementById('totalRowsSurat').innerHTML = settings._iRecordsTotal;
