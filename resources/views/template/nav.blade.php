@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/home') git a}} ">
+        <a class="navbar-brand" href="{{ url('/home') }} ">
             <img src="{{ asset('template/images/logo.png') }}" class="" alt="" style="width: 65%;">
         </a>
 
