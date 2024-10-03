@@ -553,7 +553,7 @@
 
     function fetctKotaPenerbit(params = null) {
         $.ajax({
-            url: '/kota_penerbit_terbanyak', // Replace with your API endpoint
+            url: "{{ route('kota_penerbit_terbanyak') }}", // Replace with your API endpoint
             type: 'GET', // Or 'POST' depending on your API
             dataType: 'json',
             processing: true, // Show processing indicator
