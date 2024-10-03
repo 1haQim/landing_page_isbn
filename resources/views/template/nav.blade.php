@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="{{ url('/home') }} ">
             <img src="{{ asset('template/images/logo.png') }}" class="" alt="" style="width: 65%;">
         </a>
 
@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-lg-5 me-lg-auto">
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/') }}">Home</a>
+                    <a class="nav-link {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/home') }}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('panduan_layanan') ? 'active' : '' }}" href="{{ url('panduan_layanan') }}">Panduan Layanan</a>
