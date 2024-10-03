@@ -51,7 +51,7 @@ class PencarianController extends Controller
             $where;
         }
 
-        dd($where);
+        // dd($where);
         //query
         $query = "SELECT *
             FROM (

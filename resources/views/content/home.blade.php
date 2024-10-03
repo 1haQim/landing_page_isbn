@@ -298,7 +298,12 @@
         var keyword_pencarian = $("#keyword_pencarian").val();
 
         //get data pencarian
-        window.location.assign("/search?keyword="+keyword_pencarian+"&filter="+filter_by);
+        let url = "{{ route('pencarian.index') }}" + "?keyword=" + encodeURIComponent(keyword_pencarian) + "&filter=" + encodeURIComponent(filter_by);
+
+        // Redirect ke URL yang dihasilkan
+        window.location.assign(url);
+
+        // window.location.assign("/search?keyword="+keyword_pencarian+"&filter="+filter_by);
     }
 </script>
 
