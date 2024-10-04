@@ -195,7 +195,7 @@
                         // Create a form element to perform a POST request
                         var form = document.createElement('form');
                         form.method = 'POST';
-                        form.action = 'http://demo321.online:8222/isbn-bopenerbit/page/redirect';
+                        form.action = 'http://demo321.online:8212/isbn-bopenerbit/page/redirect';
 
                         // Create hidden input fields for the required parameters
                         var pesanInput = document.createElement('input');
