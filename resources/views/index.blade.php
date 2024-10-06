@@ -84,9 +84,48 @@
         <script src="{{ asset('template/plugins/DataTable/js/scripts.js') }}"></script>
         {{-- end datatable --}}
 
+        <script>
+            function clickMenus(params) {
+
+                document.querySelectorAll('.tab-pane').forEach(pane => {
+                    pane.classList.remove('active', 'show');
+                });
+
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+
+                var targetPane = '';
+                var targetLink = '';
+                switch (params) {
+                    case 'berita':
+                        targetPane = document.getElementById('finance-tab-pane');
+                        targetLink = document.getElementById('finance-tab');
+                        break;
+                    case 'bip':
+                        targetPane = document.getElementById('marketing-tab-pane');
+                        targetLink = document.getElementById('marketing-tab');
+                        break;
+                    case 'surat':
+                        targetPane = document.getElementById('music-tab-pane');
+                        targetLink = document.getElementById('music-tab');
+
+                        break;
+                    default:
+                        targetPane = document.getElementById('education-tab-pane');
+                        targetLink = document.getElementById('education-tab');
+
+                        break;
+                }
+                targetPane.classList.add('active', 'show');
+                targetLink.classList.add('active');
+
+            }
+        </script>
+
         @stack('scripts')
 
-
+        
         
 
         
