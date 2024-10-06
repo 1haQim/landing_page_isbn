@@ -48,7 +48,7 @@
     <div class="container" style="margin-top: -200px">
         <div class="row justify-content-center">
   
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-4 col-md-6 col-12">
                 <div class="card bg-white shadow-lg" style=" position: -webkit-sticky; position: sticky; top: 20px; z-index: 1000;">
                     <div class="card-body">
                         <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end">
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 col-6">
+            <div class="col-lg-8 col-md-6 col-12">
                 <div class="card bg-white shadow-lg">
                     <div class="card-body">
                         <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example-2" tabindex="0">
@@ -73,7 +73,7 @@
                                     <hr>
                                     @foreach($group['items'] as $item)
                                         @if(!empty($item['HREF']))
-                                        <div class="col-lg-4 col-md-4 col-6" >
+                                        <div class="col-lg-4 col-md-6 col-12" >
                                             <img src="{{ env('APP_URL').'/prosedur/'.$item['HREF']}}" class="topics-detail-block-image img-fluid">
                                             <br>
                                             <center><p>{{ $item['NOMOR']. ' ' }} {{ $item['TITLE'] }}</p></center>

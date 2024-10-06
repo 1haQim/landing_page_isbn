@@ -621,7 +621,19 @@
         } else {
             var req_data = { 'alternatif_email' : value }
         }
-        
+
+        if (name == 'admin_email' || name == 'alternatif_email' ) {
+            var email = document.getElementById('email').value
+            var email_alternatif = document.getElementById('email_alternatif').value
+
+            if (email == email_alternatif) {
+                document.getElementById('loader_'+ name).style.display = 'none';
+                document.getElementById('error_'+ name).style.display = 'block';
+                document.getElementById('ket_'+ name).innerHTML = 'Email utama dan email alternatif tidak boleh sama';
+                validate = 'error';
+            }
+        }
+
 
         if (validate != 'error') {
             $.ajax({
