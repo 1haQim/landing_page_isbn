@@ -6,21 +6,23 @@
         <div class="row">
             <div class="col-lg-11 col-12 mx-auto">
                 <h1 class="text-white text-center">ISBN</h1>
-                <h6 class="text-white text-center mb-4">International Standard Book Number</h6>
-                    <div class="input-group input-group-lg">
-                    <select id="filter_search" style="border-radius:100px; max-width: 250px;"  class="form-control select2">
-                        <option value="all" >Semua</option>
-                        <option value="PT.TITLE" >Judul </option>
-                        <option value="PT.KEPENG" >Kepengarangan </option>
-                        <option value="P.NAME" >Penerbit </option>
-                        <option value="PI.ISBN_NO" >ISBN </option>
-                    </select>
-                    <!-- <i class="bi bi-caret-down-fill"></i> -->
-                    <input style="margin-left:20px" name="keyword" type="search" class="form-control" id="keyword_pencarian" placeholder="Masukan kata untuk mencari Judul, Pengarang, Penerbit, ISBN ..." aria-label="Search">
-                    <button type="submit" class="">
-                        <a class="nav-link" onclick="handleClickSearch()"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a>
-                    </button>
-                </div>
+                <form action="">
+                    <h6 class="text-white text-center mb-4">International Standard Book Number</h6>
+                        <div class="input-group input-group-lg">
+                        <select id="filter_search" style="border-radius:100px; max-width: 250px;"  class="form-control select2">
+                            <option value="all" >Semua</option>
+                            <option value="PT.TITLE" >Judul </option>
+                            <option value="PT.KEPENG" >Kepengarangan </option>
+                            <option value="P.NAME" >Penerbit </option>
+                            <option value="PI.ISBN_NO" >ISBN </option>
+                        </select>
+                        <!-- <i class="bi bi-caret-down-fill"></i> -->
+                        <input style="margin-left:20px" name="keyword" type="search" class="form-control" id="keyword_pencarian" placeholder="Masukan kata untuk mencari Judul, Pengarang, Penerbit, ISBN ..." aria-label="Search">
+                        <button type="submit" class="">
+                            <a class="nav-link" onclick="handleClickSearch()"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -302,9 +304,15 @@
 
         // Redirect ke URL yang dihasilkan
         window.location.assign(url);
-
-        // window.location.assign("/search?keyword="+keyword_pencarian+"&filter="+filter_by);
     }
+
+    // Menambahkan event listener untuk menangani tombol Enter
+    document.getElementById('keyword_pencarian').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Mencegah form disubmit secara default
+            handleClickSearch(); // Memanggil fungsi handleClickSearch
+        }
+    });
 </script>
 
 @push('scripts')

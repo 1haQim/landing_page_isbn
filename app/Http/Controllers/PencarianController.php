@@ -31,10 +31,13 @@ class PencarianController extends Controller
             $keyword = strtoupper($keyword); //upper
             $where = "WHERE UPPER(PI.ISBN_NO) LIKE '%".$keyword."%' OR UPPER(PT.TITLE) LIKE '%".$keyword."%' OR UPPER(PT.KEPENG) LIKE '%".$keyword."%' OR UPPER(P.NAME) LIKE '%".$keyword."%'";
         } else if($filter_by) {
+            $keyword = strtoupper($keyword); //upper
             $where = "WHERE UPPER($filter_by) LIKE '%".$keyword."%'"; //filterby ambil dari params filter dihome
         } else {
             $where = '';
         }
+
+        // dd($where);
         
         //filter dari halaman pencarian 
         $by_penerbit = $request->input('by_penerbit');
@@ -87,6 +90,7 @@ class PencarianController extends Controller
             JOIN PENERBIT P ON PI.PENERBIT_ID = P.ID
             $where
         ";
+
         $totalData = kurl('get', 'getlistraw', null, $totalQuery, 'sql');
         $totalRecords = $totalData['Data']['Items'][0]['TOTAL'];
 

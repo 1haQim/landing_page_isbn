@@ -75,7 +75,7 @@
                                 <option value="PI.ISBN_NO" >ISBN </option>
                             </select>
                             <!-- <i class="bi bi-caret-down-fill"></i> -->
-                            <input style="margin-left:20px" id="keyword_pencarian" name="" type="search" class="form-control" id="keyword_pencarian" placeholder="Masukan kata untuk mencari " aria-label="Search">
+                            <input style="margin-left:20px" id="keyword_pencarian" name="" type="search" class="form-control"  placeholder="Masukan kata untuk mencari " aria-label="Search">
                             <button type="button" class="" id="searchButton" style="background-color:rgb(1, 34, 105);border:none; border-radius:0px 10px 10px 0px">
                                 <span class="input-group-text bi-search" id="basic-addon1" style="background-color: rgb(1, 34, 105); color:white; border:none"></span>
                             </button>
@@ -191,22 +191,34 @@ $('#customSearchField').on('keyup', function() {
         });
     })
 
-    function dataTables(params = null) {
+    function dataTables(params = null, keyword = null) {
         const urlParams = new URLSearchParams(window.location.search);
         const keyword_pencarian = urlParams.get('keyword');
         const filter_by = urlParams.get('filter');
 
-        console.log(filter_by);
+        // console.log(filter_by);
 
         if (filter_by) {
             var filter_by1 = document.getElementById('filter_search').value
             // var keyword1 = document.getElementById('keyword_pencarian').value
         } else {
-            var filter_by1 = params
+            if (params) {
+                var filter_by1 = params;
+            } else {
+                var filter_by1 = 'all';
+            }
         }
 
-        document.getElementById('keyword_pencarian').value = keyword_pencarian;
-        document.getElementById('filter_search').value = filter_by;
+        // console.log(filter_by1,'filter');
+
+        if (keyword_pencarian) {
+            document.getElementById('keyword_pencarian').value = keyword_pencarian;
+        } else {
+            document.getElementById('keyword_pencarian').value = keyword;
+        }
+
+        
+        document.getElementById('filter_search').value = filter_by1;
        
         window.history.replaceState({}, document.title, window.location.pathname);
 
@@ -256,6 +268,21 @@ $('#customSearchField').on('keyup', function() {
 
     }
 
+    // Menambahkan event listener untuk menangani tombol Enter
+    document.getElementById('keyword_pencarian').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Mencegah form disubmit secara default
+
+            var filter_by = document.getElementById('filter_search').value;
+
+            if (filter_by == null || filter_by == '') {
+                filter_by = 'all';
+            }
+                
+            dataTables(filter_by, document.getElementById('keyword_pencarian').value); //load data table
+            // handleClickSearch(); // Memanggil fungsi handleClickSearch
+        }
+    });
     
 </script>
 
