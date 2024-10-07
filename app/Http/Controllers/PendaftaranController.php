@@ -71,18 +71,21 @@ class PendaftaranController extends Controller
     function checking_data_existing(Request $request) {
         if ($request->isMethod('post')) {
             if ($request->input('username')) {
-                $col = 'USER_NAME';
                 $value = $request->input('username');
+                $where = "WHERE USER_NAME = '$value'";
             } else if($request->input('admin_email')) {
-                $col = 'ADMIN_EMAIL';
                 $value = $request->input('admin_email');
-            } else {
-                $col = 'ALTERNATE_EMAIL';
+                $where = "WHERE ADMIN_EMAIL = '$value' AND ADMIN_EMAIL = '$value'";
+            } else if($request->input('alternatif_email')) {
                 $value = $request->input('alternatif_email');
+                $where = "WHERE ALTERNATE_EMAIL = '$value' AND ALTERNATE_EMAIL = '$value'";
+            } else {
+                $value = '';
+                $where = '';
             }
+            $query = "SELECT 'USER_NAME','ADMIN_EMAIL', 'ALTERNATE_EMAIL' FROM ISBN_REGISTRASI_PENERBIT $where";
+            $data = kurl('get', 'getlistraw', null, $query, 'sql');
 
-            $filter = [["name"=>$col,"Value"=>$value,"SearchType"=>"Tepat"]];
-            $data = kurl('get','getlist', 'ISBN_REGISTRASI_PENERBIT', $filter, 'KriteriaFilter');
             return json_encode($data['Data']['Items']);
         } else {
             return errorResponse();
