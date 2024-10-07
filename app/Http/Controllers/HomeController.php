@@ -8,7 +8,28 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     function index() {
-        return view('content.home');
+        $query = "SELECT NOMOR_URUT, JUDUL, ISI
+            FROM (
+                SELECT NOMOR_URUT, JUDUL, ISI, ROWNUM AS RN
+                FROM (
+                    SELECT NOMOR_URUT, JUDUL, ISI
+                    FROM ISBN_FAQ
+                    WHERE IS_VISIBLE = '1'
+                    ORDER BY NOMOR_URUT
+                )
+                WHERE ROWNUM <= 4
+            )
+        WHERE RN >= 1";
+
+        // API call
+        $data = kurl('get', 'getlistraw', null, $query, 'sql');
+        
+        $dataFaq = [];
+        if ($data['Data']['Items']) {
+            $dataFaq = $data['Data']['Items'];
+        }
+
+        return view('content.home', compact('dataFaq'));
     }
 
     //ambil data untuk popup modal home first load

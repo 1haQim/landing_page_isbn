@@ -201,77 +201,25 @@
             </div>
             <div class="col-lg-6 col-12 m-auto">
                 <div class="accordion" id="accordionExample">
+                    @php $no = 1; @endphp
+                    @foreach($dataFaq as $v)
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Bagaimana prosedur pengajuan ISBN?
+                        <h2 class="accordion-header" id="heading{{$no}}">
+                            <button class="accordion-button @if($no > 1) collapsed @endif"  type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$no}}" aria-expanded="true" aria-controls="collapse{{$no}}">
+                            {!! $v['JUDUL'] !!}
                             </button>
                         </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div id="collapse{{$no}}" class="accordion-collapse collapse @if($no == 1) show @endif" aria-labelledby="heading{{$no}}" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                Sejak 1 April 2018 pengajuan ISBN dilakukan secara online di web 
+                            {!! $v['ISI'] !!}
                                 
-                                Berkas apa saja yang harus disiapkan? 
-
-                                Ikuti tahapan registrasi. Registrasi adalah Registrasi Penerbit.
-                                Pada tahap ini penerbit menyiapkan Surat Pernyataan (unduh di halaman registrasi) yang sudah diisi dengan benar dan lengkap
-                                serta menyiapkan legalitas (bentuk legalitas, seperti : akta notaris, SK Rektor atau MoU, dapat dilihat contohnya
-                                pada beranda)
                             </div>
                         </div>
                     </div>
+                    @php $no++; @endphp
+                    @endforeach
 
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Jika pendaftaran sudah sukses, langkah apa yang harus dilakukan oleh penerbit selanjutnya?
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                Sesuai notifikasi pada layar, hubungi Tim ISBN di +6221 3812 136 untuk permohonan validasi kemudian lihat email yang diberikan oleh sistem secara otomatis tentang petunjuk/ langkah selanjutnya.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Apakah penerbit lama juga harus melakukan Registrasi Penerbit?
-                            </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                
-                                Ya. Semua penerbit (baik lama maupun baru) harus melakukan tahap ini untuk mendapatkan akun agar bisa log in pada tahap registrasi ISBN.
-                                
-                                Bagaimana dengan legalitas penerbit, jika penerbit lama tidak/belum memiliki payung hukum?
-                                
-                                Legalitas harus tetap dipenuhi untuk kelengkapan administrasi penerbit dan akan memberi kekuatan hukum untuk penerbit itu sendiri.
-                            
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingFour">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                            
-                                Bagaimana jika nama penerbit yang didaftarkan tidak sesuai dengan nama pada legalitas?
-
-                            </button>
-                        </h2>
-
-                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                Penerbit baru, nama yang didaftarkan harus sesuai dengan yang termaktub pada legalitas. Namun untuk penerbit lama yang sudah terdaftar dan sudah memiliki element publisher, boleh menggunakan nama lama meskipun tidak sesuai dengan legalitasnya (pemutihan) 
-                                
-                                Bagaimana cara mendaftarkan lini atau imprint dari penerbitan? 
-                                
-                                Lini penerbitan atau imprint harus didaftarkan terpisah dari penerbit induknya, maksudnya supaya lini atau imprint tersebut mempunyai akun sendiri. Caranya daftarkan dengan mengisi surat pernyataan atas nama lini/imprint tersebut dan lampirkan legalitas perusahaan induk yang diperkuat dengan pernyataan keberadaan lini/imprint tersebut yang termaktub di dalam pasal kegiatan usaha (lihat contoh pendaftaran lini penerbit pada beranda).
-                            
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
                 <center>
                 <a href="{{ url('detail_fnq') }}" class="btn custom-btn mt-2 mt-lg-3" style="background-color: #13547a;">Lihat semua pertanyaan</a>

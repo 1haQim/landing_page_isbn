@@ -19,12 +19,15 @@
                 </li>
                 
                 <li class="nav-item dropdown">
-                    <a class="nav-link {{ Request::is('home#section_2') ? 'active' : '' }} text-center" href="{{ url('home#section_2') }}" onclick="clickMenus('statistik')">Info</a>
+                    <a class="nav-link {{ Request::is('home#section_2') ? 'active' : '' }} text-center" href="{{ url('home#section_2') }}" onclick="clickMenus('statistik')">Topik</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="{{ url('home#section_2') }}" onclick="clickMenus('berita')">Berita</a></li>
                         <li><a class="dropdown-item" href="{{ url('home#section_2') }}"  onclick="clickMenus('bip')">BIP</a></li>
                         <li><a class="dropdown-item" href="{{ url('home#section_2') }}"  onclick="clickMenus('surat')">Surat</a></li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('isbn_info') ? 'active' : '' }} text-center" href="{{ url('isbn_info') }}">Info</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('statistik') ? 'active' : '' }} text-center" href="{{ url('statistik') }}">Statistik</a>
