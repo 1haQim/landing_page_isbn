@@ -63,6 +63,7 @@ class PencarianController extends Controller
                     PT.TITLE,
                     PT.KEPENG,
                     PT.TEMPAT_TERBIT,
+                    PT.JML_JILID,
                     PT.TAHUN_TERBIT,
                     PT.SERI,
                     PT.LINK_BUKU,

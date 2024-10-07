@@ -32,7 +32,7 @@
 <section class="explore-section section-padding" id="section_pencarian">
     <div class="container" style="margin-top: -200px">
         <div class="row justify-content-center">
-            <div class="col-lg-3 col-12">
+            <div class="col-lg-3 col-12" style="margin-bottom:20px">
                 <div class="card bg-white shadow-lg" style=" position: -webkit-sticky; position: sticky; top: 100px; z-index: 1;">
                     <div class="card-body">
                         <center><p>Top 5 Penerbit</p></center>
@@ -90,6 +90,7 @@
                                         <th>ISBN</th>
                                         <th>Tempat Terbit</th>
                                         <th>Penerbit</th>
+                                        <th>Jumlah Jilid</th>
                                         <th>Seri</th>
                                         <th>Link Buku</th>
                                     </tr>
@@ -251,6 +252,7 @@ $('#customSearchField').on('keyup', function() {
                 { data: 'ISBN_NO' },
                 { data: 'TEMPAT_TERBIT' },
                 { data: 'NAMA_PENERBIT' },
+                { data: 'JML_JILID' },
                 { data: 'SERI' },
                 { data: 'LINK_BUKU' }
             ],
