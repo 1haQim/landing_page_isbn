@@ -291,7 +291,7 @@
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
-                                        <label for="provinsi" style="color:black">provinsi*</label>
+                                        <label for="provinsi" style="color:black">Provinsi*</label>
                                         <select id="provinsi" style="width: 100%;" class="form-control select2" name="province_id" onchange="get_wilayah_prov('kab_kot',this.value)" required>
                                             <option value="" disabled="disabled" selected>Pilih Provinsi </option>
                                             @foreach($provinsi as $prov)
@@ -501,6 +501,39 @@
         }
         initCaptcha();
     })();
+
+    // Fungsi untuk mengubah huruf pertama menjadi kapital
+    function capitalizeFirstLetter(input) {
+        // Jika input tidak kosong
+        if (input.length > 0) {
+            // Mengubah huruf pertama menjadi kapital dan menggabungkan dengan sisa string
+            return input.charAt(0).toUpperCase() + input.slice(1);
+        }
+        return input; // Mengembalikan input asli jika kosong
+    }
+
+    // Event listener untuk memastikan DOM telah dimuat sepenuhnya
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mendapatkan semua elemen input dengan kelas 'form-control'
+        const inputElements = document.querySelectorAll('.form-control');
+
+        // Menambahkan event listener untuk setiap input dengan onkeyup
+        inputElements.forEach(function(inputElement) {
+            // Cek apakah input bukan bertipe number
+            if (inputElement.type !== 'number' &&
+                inputElement.id !== 'email' &&
+                inputElement.id !== 'email_alternatif' && 
+                inputElement.id !== 'username' && 
+                inputElement.id !== 'confirm_password' && 
+                inputElement.id !== 'website' && 
+                inputElement.id !== 'password') {
+                inputElement.addEventListener('keyup', function() {
+                    this.value = capitalizeFirstLetter(this.value); // Mengubah huruf pertama menjadi kapital
+                });
+            }
+        });
+    });
+
 </script>
 
 <!-- Select2 JS -->
@@ -552,6 +585,19 @@
         $('.select2').select2()
     })
     
+    //huruf besar diawal dan setelah spasi
+    function toTitleCase(str) {
+        let words = str.toLowerCase().trim().split(/\s+/); // Ubah ke huruf kecil, hapus spasi di awal/akhir, dan pisahkan berdasarkan spasi
+        let result = ''; // Tempat untuk menyimpan hasil
+
+        words.forEach(function(word) {
+            if (word.length > 0) { // Pastikan kata tidak kosong
+                result += word.charAt(0).toUpperCase() + word.slice(1) + ' '; // Ubah huruf pertama menjadi besar dan tambahkan ke hasil
+            }
+        });
+
+        return result.trim();
+    }
     //get kabupaten -> kec -> kel
     function get_wilayah_prov(name, value) {
         //condition req data 
@@ -592,7 +638,7 @@
                 data.forEach(function(item) {
                     // Create a new option element
                     var newOption = document.createElement('option');
-                    newOption.text = item[item_var];
+                    newOption.text = toTitleCase(item[item_var]);
                     newOption.value = item.ID;
                     // Add the option to the select element
                     selectElement.add(newOption);
@@ -706,6 +752,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
 <script>
+    
+    //form data pendaftaran
     var form = $("#contact");
     form.validate({
         errorPlacement: function errorPlacement(error, element) { element.before(error); },
@@ -773,6 +821,7 @@
             }
         }
     });
+
 
     //redirect verifikasi halaman input otp
     function getCsrfToken() {

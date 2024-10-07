@@ -115,6 +115,7 @@ class PendaftaranController extends Controller
 
             $filter = [["name"=>$col,"Value"=>$value,"SearchType"=>"Tepat"]];
             $data = kurl('get','getlist', $tbl, $filter, 'KriteriaFilter');
+
             return json_encode($data['Data']['Items']);
         } else {
             return errorResponse();
@@ -341,6 +342,7 @@ class PendaftaranController extends Controller
             $email = $res_data['email_admin'];
             $otp = $res_data['kode_otp'];
 
+            //templat email
             $query = "SELECT isi FROM ISBN_MAIL_TEMPLATE WHERE ID = '16'";
             $data = kurl('get', 'getlistraw', null, $query, 'sql');
 
@@ -348,6 +350,16 @@ class PendaftaranController extends Controller
             if ($data['Data']['Items']) {
                 $html .= $data['Data']['Items'][0]['ISI'];
             }
+            //end template email
+
+            //ambil email cc untuk pendaftara
+            $filterCC = [["name"=>'NAME',"Value"=>"CCEmailPendaftaranPenerbit","SearchType"=>"Tepat"]];
+            $get_data_cc_mail = kurl('get','getlist', 'SETTINGPARAMETERS', $filterCC, 'KriteriaFilter');
+            $email_cc = "";
+            if ($get_data_cc_mail['Status'] == "Success") {
+                $email_cc = $get_data_cc_mail['Data']['Items'][0]['VALUE'];
+            } 
+            //end cc pendaftaran
 
             //replace karakter {}
             $htmlOutput = str_replace(
@@ -356,7 +368,7 @@ class PendaftaranController extends Controller
                 $html                                   // the original HTML template
             );
 
-            Mail::to($res_data['email_admin'])->send(new SendMail($htmlOutput));
+            Mail::to($res_data['email_admin'])->cc($email_cc)->send(new SendMail($htmlOutput));
             return 'success';
         }
     }
