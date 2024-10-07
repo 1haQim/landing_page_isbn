@@ -19,20 +19,24 @@
                 <div class="custom-block bg-white shadow-lg">
                     <div class="d-flex">
                         <div>
-                            <h5 class="mb-2">Pendahuluan</h5>
-                            <p class="mb-0">
+                            <h5 class="mb-20">Pendahuluan</h5>
+                            <p class="copyright-text" style="margin-top:30px">
                                 Informasi tentang Prosedur Pendaftaran Penerbit dan Permohonan ISBN
                             </p>
                             <div id="intro" class="space-2-bottom active">
-                                <p>Perpustakaan Nasional RI Sebagai badan yang ditunjuk oleh International ISBN Agency untuk mengelola International Standard Book Number (ISBN) di Indonesia sejak tahun 1986, telah menjalankan tugasnya mengelola dan mendistribusikan penomoran ISBN kepada seluruh penerbit yang ada di wilayah negara kesatuan Republik Indonesia.</p>
-                                <p>Indonesia sudah tiga kali menerima Group Identifier, yaitu 979 pada tahun 1985, 602 pada tahun 2003 dan 623 pada tahun 2018. Berikut Struktur ISBN untuk Indonesia</p>
+                                <p class="copyright-text">Perpustakaan Nasional RI Sebagai badan yang ditunjuk oleh International ISBN Agency untuk mengelola International Standard Book Number (ISBN) di Indonesia sejak tahun 1986, telah menjalankan tugasnya mengelola dan mendistribusikan penomoran ISBN kepada seluruh penerbit yang ada di wilayah negara kesatuan Republik Indonesia.</p>
+                                <p class="copyright-text">Indonesia sudah tiga kali menerima Group Identifier, yaitu 979 pada tahun 1985, 602 pada tahun 2003 dan 623 pada tahun 2018. Berikut Struktur ISBN untuk Indonesia</p>
                                 <img src="{{ asset('template/images/statistik_1.jpg') }}" class="img-responsive img-fluid" alt="stat_1">
-                                <p>Berdasarkan block number tersebut, Perpustakaan Nasional RI sudah mendistribusikan registrant element dan rentang ISBN, sebanyak :</p>
+                                <br><br>
+                                <p class="copyright-text">Berdasarkan block number tersebut, Perpustakaan Nasional RI sudah mendistribusikan registrant element dan rentang ISBN, sebanyak :</p>
+                                <br>
                                 <img src="{{ asset('template/images/statistik_2.jpg') }}" class="img-responsive img-fluid" alt="stat_1">
                                 <br>
-                                <p>Data ini menunjukkan bahwa penerbit Indonesia sudah menggunakan 13.510 registrant elemant pada group identifier 979, dan 24.607 registrant element pada group identifier 602. Sedangkan penggunaan registrant element pada block number 623 belum menjadi hitungan karena masih terus dikembangkan bersamaan dengan kondisi penerbitan di Indonesia. Jika diperhatikan, sejak diterapkannya sistem ISBN di Indonesia sejak tahun 1986, penerbit di Indonesia telah menerbitkan buku sebanyak 2.000.000 judul buku ber-ISBN (diluar hitungan buku berjilid)</p>
-                                <p>Layanan pengurusan ISBN Perpustakaan Nasional RI telah memenuhi persyaratan SNI ISO 9001 : 2015 dan terdaftar dalam MUTU Certification. Berdasarkan Surat edaran Kepala Direktorat Deposit Bahan Pustaka Perpustakaan Nasional RI no. 224/3.1/DBP.05/II.2018, berlaku mulai April 2018 layanan ISBN dinyatakan online dan tidak ada lagi pengajuan ISBN secara onsite.</p>
-                                <p>Perpustakaan Nasional RI berusaha menyediakan informasi hasil layanan ISBN secara terbuka dan real time. Layanan tersebut merupakan pertanggungjawaban lembaga dalam mewujudkan layanan publik yang transparan dan akuntabel.</p>
+                                <br>
+                                <br>
+                                <p class="copyright-text">Data ini menunjukkan bahwa penerbit Indonesia sudah menggunakan 13.510 registrant elemant pada group identifier 979, dan 24.607 registrant element pada group identifier 602. Sedangkan penggunaan registrant element pada block number 623 belum menjadi hitungan karena masih terus dikembangkan bersamaan dengan kondisi penerbitan di Indonesia. Jika diperhatikan, sejak diterapkannya sistem ISBN di Indonesia sejak tahun 1986, penerbit di Indonesia telah menerbitkan buku sebanyak 2.000.000 judul buku ber-ISBN (diluar hitungan buku berjilid)</p>
+                                <p class="copyright-text">Layanan pengurusan ISBN Perpustakaan Nasional RI telah memenuhi persyaratan SNI ISO 9001 : 2015 dan terdaftar dalam MUTU Certification. Berdasarkan Surat edaran Kepala Direktorat Deposit Bahan Pustaka Perpustakaan Nasional RI no. 224/3.1/DBP.05/II.2018, berlaku mulai April 2018 layanan ISBN dinyatakan online dan tidak ada lagi pengajuan ISBN secara onsite.</p>
+                                <p class="copyright-text">Perpustakaan Nasional RI berusaha menyediakan informasi hasil layanan ISBN secara terbuka dan real time. Layanan tersebut merupakan pertanggungjawaban lembaga dalam mewujudkan layanan publik yang transparan dan akuntabel.</p>
                             </div>
                         </div>
                     </div>
@@ -60,7 +64,7 @@
                                 <div class="custom-block bg-white shadow-lg">
                                     <div>
                                         <h5 class="mb-3 text-center">Data Jenis Media </h5>
-                                        <p class="mb-0 text-center">
+                                        <p class="mb-0 copyright-text text-center">
                                             Statistik jumlah ISBN per Jenis Media tahun 
                                         </p>
                                     </div>
@@ -78,7 +82,7 @@
                                         </select>
                                     </center>
                                     <div id='jenis_cetak_isbn'></div>
-                                    <p class="mb-0 text-center" >
+                                    <p class="mb-0 copyright-text text-center" >
                                         data terakhir pada pukul {{ date('H:i')}}
                                     </p>
                                 </div>
@@ -87,7 +91,7 @@
                                 <div class="custom-block bg-white shadow-lg">
                                     <div>
                                         <h5 class="mb-3 text-center">Data status KCKR </h5>
-                                        <p class="mb-0 text-center">
+                                        <p class="mb-0 copyright-text text-center">
                                             Statistik jumlah ISBN per status KCKR tahun
                                         </p>
                                     </div>
@@ -105,7 +109,7 @@
                                         </select>
                                     </center>
                                     <div id='status_kcrk'></div>
-                                    <p class="mb-0 text-center">
+                                    <p class="mb-0 text-center copyright-text">
                                         Data terakhir pada pukul {{ date('H:i')}}
                                     </p>
                                 </div>
@@ -125,7 +129,7 @@
                     <div>
                         <div>
                             <h5 class="mb-3 text-center">Data ISBN </h5>
-                            <p class="mb-3 text-center">
+                            <p class="mb-3 text-center copyright-text">
                                 Informasi tentang Data ISBN yang sudah didaftaran berdasarkan <span id="ket_dt_isbn"></span>
                             </p>
                         </div>
@@ -192,7 +196,7 @@
                                 <div class="custom-block bg-white shadow-lg">
                                     <div>
                                         <h5 class="mb-3 text-center">Data Terbitan terbanyak </h5>
-                                        <p class="mb-0 text-center">
+                                        <p class="mb-0 text-center copyright-text">
                                             Daftar 10 kota teratas Data Terbitan terbanyak tahun. 
                                             <!-- Dengan total data 80.000 dari 10 kota teratas -->
                                             <center>
@@ -211,7 +215,7 @@
                                         </p>
                                     </div>
                                     <div id='terbitan_terbanyak'></div>
-                                    <p class="mb-0 text-center" >
+                                    <p class="mb-0 text-center copyright-text" >
                                         data terakhir pada pukul {{ date('H:i')}}
                                     </p>
                                 </div>
@@ -220,7 +224,7 @@
                                 <div class="custom-block bg-white shadow-lg">
                                     <div>
                                         <h5 class="mb-3 text-center">Data Kota penerbit terbanyak </h5>
-                                        <p class="mb-0 text-center">
+                                        <p class="mb-0 text-center copyright-text">
                                             Daftar 10 kota teratas Data kota penerbit terbanyak tahun. 
                                             <center>
                                                 @php
@@ -239,7 +243,7 @@
                                         </p>
                                     </div>
                                     <div id='kota_penerbit_terbanyak'></div>
-                                    <p class="mb-0 text-center">
+                                    <p class="mb-0 text-center copyright-text">
                                         Data terakhir pada pukul {{ date('H:i')}}
                                     </p>
                                 </div>

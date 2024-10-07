@@ -49,8 +49,8 @@
     <div class="container" style="margin-top: -200px">
         <div class="row justify-content-center">
   
-            <div class="col-lg-4 col-6">
-                <div class="card bg-white shadow-lg" style=" position: -webkit-sticky; position: sticky; top: 20px; z-index: 1000;">
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="card bg-white shadow-lg" style=" position: -webkit-sticky; position: sticky; top: 20px; z-index: 1000; margin-bottom:20px">
                     <div class="card-body">
                         <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end">
                             <nav class="nav nav-pills flex-column">
@@ -63,141 +63,141 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 col-6">
+            <div class="col-lg-8 col-md-6 col-12">
                 <div class="card bg-white shadow-lg">
                     <div class="card-body">
                         <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example-2" tabindex="0">
                             <!-- nomer 1 -->
-                            <div class="content-section" id="item-0">
+                            <div class="content-section" id="item-0" style="padding: 0px 50px 0px 50px">
                                 <center><h5 class="mb-3">Pengertian ISBN?</h5></center>
                                 <div class="row my-4">
                                 <hr>
                                     <ol>
-                                        <p>ISBN (International Standard Book Number) adalah kode pengidentifikasian buku yang bersifat unik. Informasi tentang judul, penerbit, dan kelompok penerbit tercakup dalam ISBN. ISBN terdiri dari deretan angka 13 digit, sebagai pemberi identifikasi terhadap satu judul buku yang diterbitkan oleh penerbit. Oleh karena itu satu nomor ISBN untuk satu buku akan berbeda dengan nomor ISBN untuk buku yang lain.</p>
-                                        <p>ISBN diberikan oleh Badan Internasional ISBN yan berkedudukan di London. Di Indonesia, Perpustakaan Nasional RI merupakan Badan Nasional ISBN yang berhak memberikan ISBN kepada penerbit yang berada di wilayah Indonesia. Perpustakaan Naasional RI mempunyai fungsi memberikan informasi, bimbingan dan penerapan pencantuman ISBN serta KDT (Katalog Dalam Terbitan). KDT merupakan deskripsi bibliografis yang dihasilkan dari pengolahan data yang diberikan penerbit untuk dicantumkan di halaman balik judul sebagai kelengkapan penerbit.</p>
+                                        <p class="copyright-text">ISBN (International Standard Book Number) adalah kode pengidentifikasian buku yang bersifat unik. Informasi tentang judul, penerbit, dan kelompok penerbit tercakup dalam ISBN. ISBN terdiri dari deretan angka 13 digit, sebagai pemberi identifikasi terhadap satu judul buku yang diterbitkan oleh penerbit. Oleh karena itu satu nomor ISBN untuk satu buku akan berbeda dengan nomor ISBN untuk buku yang lain.</p>
+                                        <p class="copyright-text">ISBN diberikan oleh Badan Internasional ISBN yan berkedudukan di London. Di Indonesia, Perpustakaan Nasional RI merupakan Badan Nasional ISBN yang berhak memberikan ISBN kepada penerbit yang berada di wilayah Indonesia. Perpustakaan Naasional RI mempunyai fungsi memberikan informasi, bimbingan dan penerapan pencantuman ISBN serta KDT (Katalog Dalam Terbitan). KDT merupakan deskripsi bibliografis yang dihasilkan dari pengolahan data yang diberikan penerbit untuk dicantumkan di halaman balik judul sebagai kelengkapan penerbit.</p>
                                     <ol>
                                     </div>
                             </div>
                             <!-- nomer 2 -->
-                            <div class="content-section" id="item-1">
+                            <div class="content-section" id="item-1" style="padding: 0px 50px 0px 50px">
                                 <center><h5 class="mb-3">Fungsi ISBN?</h5></center>
                                 <div class="row my-4">
                                 <hr>
-                                    <p>
+                                    <p class="copyright-text">
                                         <ol>
-                                            <li>Memberikan identitas terhadap satu judul buku yang diterbitkan oleh penerbit</li>
-                                            <li>Membantu memperlancar arus distribusi buku karena dapat mencegah terjadinya kekeliruan dalam pemesanan buku</li>
-                                            <li>Sarana promosi bagi penerbit karena informasi pencantuman ISBN disebarkan oleh Badan Nasional ISBN Indonesia di Jakarta, maupun Badan Internasional yang berkedudukan di London</li>
+                                            <li><p class="copyright-text">Memberikan identitas terhadap satu judul buku yang diterbitkan oleh penerbit </p></li>
+                                            <li><p class="copyright-text">Membantu memperlancar arus distribusi buku karena dapat mencegah terjadinya kekeliruan dalam pemesanan buku </p></li>
+                                            <li><p class="copyright-text">Sarana promosi bagi penerbit karena informasi pencantuman ISBN disebarkan oleh Badan Nasional ISBN Indonesia di Jakarta, maupun Badan Internasional yang berkedudukan di London </p></li>
                                         </ol>
                                     </p>
                                 </div>
                             </div>
                             <!-- nomer 3 -->
-                            <div class="content-section" id="item-2">
+                            <div class="content-section" id="item-2" style="padding: 0px 50px 0px 50px">
                                 <center><h5 class="mb-3">Struktur ISBN?</h5></center>
                                 <div class="row my-4">
                                 <hr>
-                                    <p>Nomor ISBN terdiri dari 13 digit dan dibubuhi huruf ISBN didepannya. Nomor tersebut terdiri atas 5 (lima) bagian. Masing-masing bagian dicetak dengan 
+                                    <p class="copyright-text">Nomor ISBN terdiri dari 13 digit dan dibubuhi huruf ISBN didepannya. Nomor tersebut terdiri atas 5 (lima) bagian. Masing-masing bagian dicetak dengan 
                                         dipisahkan dengan tanda hyphen (-). Kelompok pembagian nomor ISBN ditentukan dengan struktur sebagai berikut:<br/>
                                         Contoh : <b class="style5">ISBN 978-602-8519-93-9</b></p>
-                                    <p>
+                                    <p class="copyright-text">
                                         <ul>
-                                            <li>Angka pengenal produk terbitan buku dari EAN (Prefix identifier) = <b>978</b></li>
-                                            <li>Kode kelompok (group identifier) = <b>602</b> (Default)</li>
-                                            <li>Kode penerbit (publisher prefix) = <b>8519</b></li>
-                                            <li>Kode Judul (title identifier) = <b>93</b></li>
-                                            <li>Angka pemeriksa (check digit) = <b>9</b></li>
+                                            <li><p class="copyright-text">Angka pengenal produk terbitan buku dari EAN (Prefix identifier) = <b>978</b></p></li>
+                                            <li><p class="copyright-text">Kode kelompok (group identifier) = <b>602</b> (Default)</p></li>
+                                            <li><p class="copyright-text">Kode penerbit (publisher prefix) = <b>8519</b></p></li>
+                                            <li><p class="copyright-text">Kode Judul (title identifier) = <b>93</b></p></li>
+                                            <li><p class="copyright-text">Angka pemeriksa (check digit) = <b>9</b></p></li>
                                         </ul>
                                     </p>
                                 </div>
                             </div>
                             <!-- nomer 4 -->
-                            <div class="content-section" id="item-3">
+                            <div class="content-section" id="item-3" style="padding: 0px 50px 0px 50px">
                                 <center><h5 class="mb-3">Terbitan yang dapat diberikan ISBN</h5></center>
                                 <div class="row my-4">
                                 <hr>
-                                    <p>
+                                    <p class="copyright-text">
                                         <ol>
-                                            <li>Buku tercetak (monografi) dan pamphlet</li>
-                                            <li>Terbitan Braille</li>
-                                            <li>Buku peta</li>
-                                            <li>Film, video, dan transparansi yang bersifat edukatif</li>
-                                            <li>Audiobooks pada kaset, CD, atau DVD</li>
-                                            <li>Terbitan elektronik (misalnya machine-readable tapes, disket, CD-ROM dan publikasi di Internet)</li>
-                                            <li>Salinan digital dari cetakan monograf</li>
-                                            <li>Terbitan microform</li>
-                                            <li>Software edukatif</li>
-                                            <li>Mixed-media publications yang mengandung teks</li>
+                                            <li><p class="copyright-text">Buku tercetak (monografi) dan pamphlet</p></li>
+                                            <li><p class="copyright-text">Terbitan Braille</p></li>
+                                            <li><p class="copyright-text">Buku peta</p></li>
+                                            <li><p class="copyright-text">Film, video, dan transparansi yang bersifat edukatif</p></li>
+                                            <li><p class="copyright-text">Audiobooks pada kaset, CD, atau DVD</p></li>
+                                            <li><p class="copyright-text">Terbitan elektronik (misalnya machine-readable tapes, disket, CD-ROM dan publikasi di Internet)</p></li>
+                                            <li><p class="copyright-text">Salinan digital dari cetakan monograf</p></li>
+                                            <li><p class="copyright-text">Terbitan microform</p></li>
+                                            <li><p class="copyright-text">Software edukatif</p></li>
+                                            <li><p class="copyright-text">Mixed-media publications yang mengandung teks</p></li>
                                         </ol>
                                     </p>
                                 </div>
                             </div>
                             <!-- nomer 5 -->
-                            <div class="content-section" id="item-4">
+                            <div class="content-section" id="item-4" style="padding: 0px 50px 0px 50px">
                                 <center><h5 class="mb-3">Terbitan yang tidak dapat diberikan ISBN</h5></center>
                                 <div class="row my-4">
                                 <hr>
-                                    <p>
+                                    <p class="copyright-text">
                                         <ol>
-                                            <li>Terbitan yang terbit secara tetap (majalah, bulletin, dsb.)</li>
-                                            <li>Iklan</li>
-                                            <li>Printed music</li>
-                                            <li>Dokumen pribadi (seperti biodata atau profil personal elektronik)</li>
-                                            <li>Kartu ucapan</li>
-                                            <li>Rekaman musik</li>
-                                            <li>Software selain untuk edukasi termasuk game</li>
-                                            <li>Buletin elektronik</li>
-                                            <li>Surat elektronik</li>
-                                            <li>Permainan</li>
+                                            <li><p class="copyright-text">Terbitan yang terbit secara tetap (majalah, bulletin, dsb.) </p></li>
+                                            <li><p class="copyright-text">Iklan </p></li>
+                                            <li><p class="copyright-text">Printed music </p></li>
+                                            <li><p class="copyright-text">Dokumen pribadi (seperti biodata atau profil personal elektronik) </p></li>
+                                            <li><p class="copyright-text">Kartu ucapan </p></li>
+                                            <li><p class="copyright-text">Rekaman musik </p></li>
+                                            <li><p class="copyright-text">Software selain untuk edukasi termasuk game </p></li>
+                                            <li><p class="copyright-text">Buletin elektronik </p></li>
+                                            <li><p class="copyright-text">Surat elektronik </p></li>
+                                            <li><p class="copyright-text">Permainan </p></li>
                                         </ol>
                                     </p>
                                 </div>
                             </div>
                             <!-- nomer 6 -->
-                            <div class="content-section" id="item-5">
+                            <div class="content-section" id="item-5" style="padding: 0px 50px 0px 50px">
                                 <center><h5 class="mb-3">Pencantuman ISBN</h5></center>
                                 <div class="row my-4">
                                 <hr>
-                                    <p>ISBN ditulis dengan huruf cetak yang jelas dan mudah dibaca. Singkatan ISBN ditulis dengan huruf besar mendahului penulisan angka pengenal kelompok, pengenal penerbit, pengenal judul dan angka pemeriksa. Penulisan antara setiap bagian pengenal dibatasi oleh tanda penghubung, seperti contoh berikut:</p>
-                                    <p>
+                                    <p class="copyright-text">ISBN ditulis dengan huruf cetak yang jelas dan mudah dibaca. Singkatan ISBN ditulis dengan huruf besar mendahului penulisan angka pengenal kelompok, pengenal penerbit, pengenal judul dan angka pemeriksa. Penulisan antara setiap bagian pengenal dibatasi oleh tanda penghubung, seperti contoh berikut:</p>
+                                    <p class="copyright-text">
                                         <b>ISBN 978-602-8519-93-9</b>
                                     </p>
-                                    <p>Untuk terbitan cetak, ISBN dicantumkan pada:</p>
-                                    <p>
+                                    <p class="copyright-text">Untuk terbitan cetak, ISBN dicantumkan pada:</p>
+                                    <p class="copyright-text">
                                         <ol type="a">
-                                            <li>Bagian bawah pada sampul belakang (back cover)</li>
-                                            <li>Verso (dibalik halaman judul) (halaman copyright)</li>
-                                            <li>Punggung buku (spine) untuk buku tebal , bila keadaan memungkinkan</li>
+                                            <li><p class="copyright-text">Bagian bawah pada sampul belakang (back cover)</p></li>
+                                            <li><p class="copyright-text">Verso (dibalik halaman judul) (halaman copyright)</p></li>
+                                            <li><p class="copyright-text">Punggung buku (spine) untuk buku tebal , bila keadaan memungkinkan</p></li>
                                         </ol>
                                     </p>
                                 </div>
                             </div>
                             <!-- nomer 7 -->
-                            <div class="content-section" id="item-6">
+                            <div class="content-section" id="item-6" style="padding: 0px 50px 0px 50px">
                                 <center><h5 class="mb-3">Persyaratan permohonan ISBN, KDT dan barcode anggota baru</h5></center>
                                 <div class="row my-4">
                                 <hr>
-                                    <p>Permohonan dapat dilakukan secara online atau manual dengan melengkapi persyaratan<br /></p>
+                                    <p class="copyright-text">Permohonan dapat dilakukan secara online atau manual dengan melengkapi persyaratan<br /></p>
                                     <ol>
-                                        <li>Mengisi formulir surat pernyataan disertai dengan stempel penerbit dengan menunjukkan bukti legalitas penerbit atau lembaga yang bertanggung jawab (akta notaris)</li>
-                                        <li>Membuat surat permohonan atas nama penerbit (berstempel) untuk buku yang akan diterbitkan</li>
-                                        <li>Mengirimkan atau melampirkan fotokopi :
+                                        <li><p class="copyright-text">Mengisi formulir surat pernyataan disertai dengan stempel penerbit dengan menunjukkan bukti legalitas penerbit atau lembaga yang bertanggung jawab (akta notaris)</p></li>
+                                        <li><p class="copyright-text">Membuat surat permohonan atas nama penerbit (berstempel) untuk buku yang akan diterbitkan</p></li>
+                                        <li><p class="copyright-text">Mengirimkan atau melampirkan fotokopi :
                                             <ol>
-                                                <li>Halaman Judul</li>
-                                                <li>Balik Hal Judul</li>
-                                                <li>Kata Pengantar</li>
-                                                <li>Daftar Isi</li>
+                                                <li><p class="copyright-text">Halaman Judul</p></li>
+                                                <li><p class="copyright-text">Balik Hal Judul</p></li>
+                                                <li><p class="copyright-text">Kata Pengantar</p></li>
+                                                <li><p class="copyright-text">Daftar Isi</p></li>
                                             </ol>
                                         </li>
                                     </ol>
                                 </div>
                             </div>
                             <!-- nomer 8 -->
-                            <div class="content-section" id="item-7">
+                            <div class="content-section" id="item-7" style="padding: 0px 50px 0px 50px">
                                 <center><h5 class="mb-3">Persyaratan permohonan ISBN, KDT dan barcode anggota lama</h5></center>
                                 <div class="row my-4">
                                 <hr>
-                                    <p>Hanya nomor 2 dan 3 saja yang perlu dikirimkan ke Tim ISBN & KDT</p>
+                                    <p class="copyright-text">Hanya nomor 2 dan 3 saja yang perlu dikirimkan ke Tim ISBN & KDT</p>
                                 </div>
                             </div>
                         </div>
