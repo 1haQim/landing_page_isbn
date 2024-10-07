@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-11 col-12 mx-auto">
                 <h1 class="text-white text-center">ISBN</h1>
-                <form action="">
+                <!-- <form> -->
                     <h6 class="text-white text-center mb-4">International Standard Book Number</h6>
                         <div class="input-group input-group-lg">
                         <select id="filter_search" style="border-radius:100px; max-width: 250px;"  class="form-control select2">
@@ -19,10 +19,11 @@
                         <!-- <i class="bi bi-caret-down-fill"></i> -->
                         <input style="margin-left:20px" name="keyword" type="search" class="form-control" id="keyword_pencarian" placeholder="Masukan kata untuk mencari Judul, Pengarang, Penerbit, ISBN ..." aria-label="Search">
                         <button type="submit" class="">
+                        <!-- <a  class="btn custom-btn mt-2 mt-lg-3" style="background-color: #13547a;" onclick="handleClickSearch()"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a> -->
                             <a class="nav-link" onclick="handleClickSearch()"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a>
                         </button>
                     </div>
-                </form>
+                <!-- </form> -->
             </div>
         </div>
     </div>
