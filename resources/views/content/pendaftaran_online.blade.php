@@ -273,7 +273,7 @@
                             <section>
                                 <div class="form-row row" style="margin-top:90px">
                                     <div class="col">
-                                        <label for="penerbit" style="color:black">Nama Penerbit*</label>
+                                        <label for="username" style="color:black">Nama Penerbit*</label>
                                         <input type="text" placeholder="Nama Penerbit" class="form-control" id="penerbit" name="nama_penerbit"  required>
                                     </div>
                                 </div>
@@ -301,7 +301,7 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="kab_kot" style="color:black">Kabupaten / Kota*</label>
-                                        <select id="kab_kot" style="width: 100%;" class="form-control select2" name="city_id" onchange="get_wilayah_prov('kec',this.value)">
+                                        <select id="kab_kot" style="width: 100%;" class="form-control select2" name="city_id" onchange="get_wilayah_prov('kec',this.value)" required>
                                             
                                         </select>
                                     </div>
@@ -309,13 +309,13 @@
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="" style="color:black">Kecamatan*</label>
-                                        <select id="kec" style="width: 100%;" class="form-control select2" name="district_id" onchange="get_wilayah_prov('kel',this.value)">
+                                        <select id="kec" style="width: 100%;" class="form-control select2" name="district_id" onchange="get_wilayah_prov('kel',this.value)" required>
                                            
                                         </select>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="" style="color:black">Kelurahan*</label>
-                                        <select id="kel" style="width: 100%;" class="form-control select2" name="village_id" >
+                                        <select id="kel" style="width: 100%;" class="form-control select2" name="village_id" required>
                                            
                                         </select>
                                         {{-- <input type="text" placeholder="" class="form-control" id="" name="" > --}}
@@ -323,8 +323,8 @@
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="password" style="color:black">Telephone*</label>
-                                        <input type="number" placeholder="Telephone" class="form-control" id="" name="admin_phone" >
+                                        <label for="Telephone" style="color:black">Telephone*</label>
+                                        <input type="number" placeholder="Telephone" class="form-control" id="" name="admin_phone" required>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="confirm_password" style="color:black">Kode Pos</label>
@@ -334,13 +334,13 @@
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
                                         <label for="nm_admin" style="color:black">Nama Admin*</label>
-                                        <input type="text" placeholder="Nama Admin" class="form-control" id="nm_admin" name="admin_contact_name">
+                                        <input type="text" placeholder="Nama Admin" class="form-control" id="nm_admin" name="admin_contact_name" required>
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="form-holder">
                                         <label for="" style="color:black">Admin Alternatif*</label>
-                                        <input type="text" placeholder="Admin Alternatif" class="form-control" id="" name="alternate_contact_name"   >
+                                        <input type="text" placeholder="Admin Alternatif" class="form-control" id="" name="alternate_contact_name"  required>
                                     </div>
                                     <div class="form-holder">
                                         <label for="" style="color:black">Telephone Alternatif</label>
@@ -349,7 +349,7 @@
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="form-holder form-holder-2">
-                                        <label for="website" style="color:black">Website*</label>
+                                        <label for="website" style="color:black">Website</label>
                                         <input type="text" placeholder="Website" class="form-control" id="website" name="website_url" >
                                     </div>
                                 </div>
@@ -539,10 +539,12 @@
 <!-- Select2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+    var kategoriPenerbitGlobal = 0; // 0 adalah penerbit swasta
     // validasi kategori penerbit
     function kat_penerbit(radio) {
         if (radio.value == 1) { //pada master pemerintah adalah id 1
             document.getElementById('form-akta').style.display = 'none';
+            kategoriPenerbitGlobal = 1;
         } else {
             document.getElementById('form-akta').style.display = 'block';
         }
@@ -558,7 +560,6 @@
                 'kategori' : radio.value
             },
             success: function(data) {
-                console.log(data);
                 var htmlJenis = '';
                 if (data.code == 200) {
                     data.content.forEach(function(item) {
@@ -770,6 +771,18 @@
         onStepChanging: function (event, currentIndex, newIndex)
         {
             form.validate().settings.ignore = ":disabled,:hidden";
+            // Check if it's moving to the next step
+            if (currentIndex == 1 && newIndex > currentIndex) {
+                // Add custom validation for Dropzone (image upload)
+                if (!uploadedImages1) {
+                    alert("Upload surat pernyataan terlebih dahulu");
+                    return false; // Prevent moving to the next step
+                }
+                if (!uploadedImages2 && kategoriPenerbitGlobal != 1) { // != 1 adalah bukan pemerintah
+                    alert("Upload surat akta terlebih dahulu");
+                    return false; // Prevent moving to the next step
+                }
+            }
             return form.valid();
         },
         onFinishing: function (event, currentIndex)
@@ -875,6 +888,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
 <script>
     //upload file  file_pernyataan
+    var uploadedImages1 = false;
     Dropzone.autoDiscover = false;
     var dropzone1 = new Dropzone("#dropzone1", {
         url: "{{ route('media-one') }}",
@@ -888,7 +902,9 @@
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token for Laravel
         },
         init: function() {
+            var dropzone1 = this;
             this.on("addedfile", function(file) {
+                uploadedImages1 = true;
                 // Automatically process the file when it is added
                 if (this.files.length > 1) {
                     this.removeFile(this.files[0]);
@@ -896,12 +912,18 @@
                 
                 dropzone1.processFile(file);
             });
+            this.on("removedfile", function() {
+                if (this.files.length === 0) {
+                    uploadedImages1 = false;
+                    dropzone1.options.maxFiles = 1;
+                }
+            });
             this.on("sending", function(file, xhr, formData) {
                 // Additional data can be sent here if required
                 console.log('Sending file:', file);
             });
             this.on("success", function(file, response) {
-                $('#contact').append('<input type="hidden" id="file_pernyataan" name="file_surat_pernyataan" value="' + response[0]['name'] + '">');
+                $('#contact').append('<input type="hidden" id="file_pernyataan" name="file_surat_pernyataan" value="' + response[0]['name'] + '" required>');
                 // Handle the response from the server after the file is uploaded
                 console.log('File uploaded successfully', response);
             });
@@ -917,7 +939,7 @@
                 console.log(file, 'hakim delete', file.serverFileName)
                 if (file.serverFileName) {
                     $.ajax({
-                        url: '/projects/media/delete',
+                        url: "{{ route('media-one-delete') }}",
                         type: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -943,6 +965,7 @@
        
     });
     //upload file  file_akta
+    var uploadedImages2 = false;
     var dropzone2 = new Dropzone("#dropzone2", {
         url: "{{ route('media-one') }}",
         paramName: "file",
@@ -955,20 +978,28 @@
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token for Laravel
         },
         init: function() {
+            var dropzone2 = this;
             this.on("addedfile", function(file) {
                 // Automatically process the file when it is added
+                uploadedImages2 = true;
                 if (this.files.length > 1) {
                     this.removeFile(this.files[0]);
                 }
                 
                 dropzone2.processFile(file);
             });
+            this.on("removedfile", function() {
+                if (this.files.length === 0) {
+                    uploadedImages2 = false; // Set to false if no files
+                    dropzone2.options.maxFiles = 1;
+                }
+            });
             this.on("sending", function(file, xhr, formData) {
                 // Additional data can be sent here if required
                 console.log('Sending file:', file);
             });
             this.on("success", function(file, response) {
-                $('#contact').append('<input type="hidden" id="file_akta" name="file_akte_notaris" value="' + response[0]['name'] + '">');
+                $('#contact').append('<input type="hidden" id="file_akta" name="file_akte_notaris" value="' + response[0]['name'] + '" required>');
                 // Handle the response from the server after the file is uploaded
                 console.log('File uploaded successfully', response);
             });
