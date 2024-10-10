@@ -277,7 +277,7 @@
             var fragment = window.location.hash;
             // You can also remove the '#' character if needed
             var section = fragment.substring(1);
-            const appUrl = @json(env('APP_URL'));
+            const appUrl = @json(config('app.url'));
             if (EmptyString(section)) {
                 $.ajax({
                     url: "{{ route('flyer') }}",

@@ -126,5 +126,6 @@ return [
     ],
 
     'penerbit' => env('APP_PENERBIT'),
+    'doc_path' => env('APP_DOC'),
 
 ];

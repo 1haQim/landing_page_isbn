@@ -27,7 +27,7 @@
 <!-- js data table BIP-->
     <script>
         $(document).ready(function() {
-            var downloadBaseUrl = "{{ env('APP_DOC') }}";
+            var downloadBaseUrl = "{{ config('app.doc_path') }}";
             $('#doc_surat').DataTable({
                 processing: true,
                 serverSide: true,

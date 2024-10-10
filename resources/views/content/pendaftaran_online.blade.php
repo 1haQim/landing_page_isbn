@@ -251,7 +251,7 @@
                                         </div>
                                         <span style="font-size: 11px; margin: 1%">Dibubuhi materai, ditanda tangani, distempel, dan dipindai (scan) ke dalam bentuk file pdf dengan ukuran tidak lebih dari 2MB. Setelah diunduh, diisi dan discan lakukan unggah surat pernyataan  </span>
                                         <button type="button" class="btn btn-outline-danger btn-sm" style="float: right; margin: 1%; border-radius: 10px; color:white">
-                                            <!-- <a id="pernyataan_1" href="{{  env('APP_URL').'/dokumen_surat/Surat Pernyataan Penerbit - 20220813.docx'}}" class="u-label u-label--xs u-label--primary float-right">Unduh Formulir disini»</a> -->
+                                            <!-- <a id="pernyataan_1" href="{{  config('app.url').'/dokumen_surat/Surat Pernyataan Penerbit - 20220813.docx'}}" class="u-label u-label--xs u-label--primary float-right">Unduh Formulir disini»</a> -->
                                             <a id="pernyataan_1" href="{{  asset('sp/Surat Pernyataan Penerbit - 20220813.docx') }}" class="u-label u-label--xs u-label--primary float-right">Unduh Formulir disini»</a>
                                         </button>
                                     </div>
