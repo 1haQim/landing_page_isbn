@@ -40,18 +40,18 @@ class PencarianController extends Controller
         // dd($where);
         
         //filter dari halaman pencarian 
-        $by_penerbit = $request->input('by_penerbit');
-        $by_kota = $request->input('by_kota');
+        $by_penerbit = strtoupper($request->input('by_penerbit'));
+        $by_kota = strtoupper($request->input('by_kota'));
         //validasi 
         $operator = $where != "" ? "AND " : "WHERE ";
         if ($by_penerbit && $by_kota) {
-            $where = $where . "$operator P.NAME ='$by_penerbit' AND PT.TEMPAT_TERBIT = '$by_kota'";
+            $where = $where . "$operator UPPER(P.NAME) ='$by_penerbit' AND UPPER(PT.TEMPAT_TERBIT) = '$by_kota'";
         } else if ($by_penerbit){
-            $where = $where . " $operator P.NAME ='$by_penerbit'";
+            $where = $where . " $operator UPPER(P.NAME) ='$by_penerbit'";
         } else if ($by_kota){
-            $where = $where . " $operator PT.TEMPAT_TERBIT = '$by_kota'";
+            $where = $where . " $operator UPPER(PT.TEMPAT_TERBIT) = '$by_kota'";
         } else {
-            $where;
+            $where; //hanya mengambil filter
         }
 
         // dd($where);
@@ -84,8 +84,7 @@ class PencarianController extends Controller
 
 
         // Fetch all data for total count
-        $totalQuery = "
-            SELECT COUNT(*) as total
+        $totalQuery = "SELECT COUNT(*) as total
             FROM PENERBIT_ISBN PI
             JOIN PENERBIT_TERBITAN PT ON PI.PENERBIT_TERBITAN_ID = PT.ID
             JOIN PENERBIT P ON PI.PENERBIT_ID = P.ID

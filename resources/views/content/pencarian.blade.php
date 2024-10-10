@@ -76,7 +76,7 @@
                             </select>
                             <!-- <i class="bi bi-caret-down-fill"></i> -->
                             <input style="margin-left:20px" id="keyword_pencarian" name="" type="search" class="form-control"  placeholder="Masukan kata untuk mencari " aria-label="Search">
-                            <button type="button" class="" id="searchButton" style="background-color:rgb(1, 34, 105);border:none; border-radius:0px 10px 10px 0px">
+                            <button type="button" class="" id="searchButton" onclick="handleClickSearch()" style="background-color:rgb(1, 34, 105);border:none; border-radius:0px 10px 10px 0px">
                                 <span class="input-group-text bi-search" id="basic-addon1" style="background-color: rgb(1, 34, 105); color:white; border:none"></span>
                             </button>
                         </div>
@@ -119,88 +119,102 @@ $('#customSearchField').on('keyup', function() {
         //load datatable
         dataTables();
         //end loaddata
-
-        //link aktif untuk menu penerbit
-        const navLinksPenerbit = document.querySelectorAll('#navbar-penerbit .nav-link');
-        // Function to remove active class from all nav links
-        function removeActiveClass() {
-            navLinksPenerbit.forEach(link => link.classList.remove('active'));
-        }
-
-        // Function to add active class to the clicked nav link
-        function setActiveLink(index) {
-            const clickedLink = navLinksPenerbit[index];
-            if (clickedLink.classList.contains('active')) { //klik di aktif yang sama
-                clickedLink.classList.remove('active');
-                document.getElementById('penerbit_filter').value = ""; //set value untuk filter by
-                // document.getElementById('filter_search').value;
-                // console.log();
-                // dataTables(document.getElementById('filter_search').value); //load data table
-            } else {
-                removeActiveClass();
-                 // filter data table
-                const nm_penerbit = clickedLink.textContent;
-                document.getElementById('penerbit_filter').value = nm_penerbit; //set value untuk filter by
-                // console.log(document.getElementById('filter_search').value);
-                dataTables(document.getElementById('filter_search').value); //load data table
-                clickedLink.classList.add('active');
-            }
-        }
-
-        navLinksPenerbit.forEach((link, index) => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault(); // Prevent default anchor behavior
-                // Update the active link
-                setActiveLink(index);
-            });
-        });
-
-
-        
-        //link aktif untuk menu kota 
-        const navLinksKota = document.querySelectorAll('#navbar-kota .nav-link');
-        // Function to remove active class from all nav links
-        function removeActiveClassKota() {
-            navLinksKota.forEach(link => link.classList.remove('active'));
-        }
-
-        // Function to add active class to the clicked nav link
-        function setActiveLinkKota(index) {
-            const clickedLinkKota = navLinksKota[index];
-            if (clickedLinkKota.classList.contains('active')) { //klik di aktif yang sama
-                clickedLinkKota.classList.remove('active');
-                // document.getElementById('kota_filter').value = ""; //set value untuk filter by
-                // dataTables(document.getElementById('filter_search').value); //load data table
-            } else {
-                removeActiveClassKota(); //remove aktif
-                clickedLinkKota.classList.add('active'); // add new aktif
-
-                const listItem = document.querySelector('#navbar-kota .nav-link.active .list-group-item ');
-                const nm_kota = listItem.childNodes[0].textContent.trim();
-                document.getElementById('kota_filter').value = nm_kota; //set value untuk filter by
-                dataTables(document.getElementById('filter_search').value); //load data table
-            }
-        }
-
-        navLinksKota.forEach((link, index) => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault(); // Prevent default anchor behavior
-
-                // Update the active link
-                setActiveLinkKota(index);
-            });
-        });
     })
+
+    //link aktif untuk menu penerbit
+    const navLinksPenerbit = document.querySelectorAll('#navbar-penerbit .nav-link');
+    // Function to remove active class from all nav links
+    function removeActiveClass() {
+        navLinksPenerbit.forEach(link => link.classList.remove('active'));
+    }
+
+    // Function to add active class to the clicked nav link
+    function setActiveLink(index) {
+        const clickedLink = navLinksPenerbit[index];
+        if (clickedLink.classList.contains('active')) { //klik di aktif yang sama
+            clickedLink.classList.remove('active');
+            document.getElementById('penerbit_filter').value = ""; //set value untuk filter by
+
+            var filter2 = document.getElementById('filter_search').value
+            var keyword2 = document.getElementById('keyword_pencarian').value
+            
+            dataTables(filter2, keyword2); //load data table
+            
+        } else {
+            removeActiveClass();
+                // filter data table
+            const nm_penerbit = clickedLink.textContent;
+            document.getElementById('penerbit_filter').value = nm_penerbit; //set value untuk filter by
+            var filter2 = document.getElementById('filter_search').value
+            var keyword2 = document.getElementById('keyword_pencarian').value
+            
+            dataTables(filter2, keyword2); //load data table
+
+            
+            clickedLink.classList.add('active');
+        }
+    }
+
+    navLinksPenerbit.forEach((link, index) => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default anchor behavior
+            // Update the active link
+            setActiveLink(index);
+        });
+    });
+
+
+    
+    //link aktif untuk menu kota 
+    const navLinksKota = document.querySelectorAll('#navbar-kota .nav-link');
+    // Function to remove active class from all nav links
+    function removeActiveClassKota() {
+        navLinksKota.forEach(link => link.classList.remove('active'));
+    }
+
+    // Function to add active class to the clicked nav link
+    function setActiveLinkKota(index) {
+        const clickedLinkKota = navLinksKota[index];
+        if (clickedLinkKota.classList.contains('active')) { //klik di aktif yang sama
+            clickedLinkKota.classList.remove('active');
+            document.getElementById('kota_filter').value = ""; //set value untuk filter by
+            var filter1 = document.getElementById('filter_search').value
+            var keyword1 = document.getElementById('keyword_pencarian').value
+            
+            dataTables(filter1, keyword1); //load data table
+        } else {
+            removeActiveClassKota(); //remove aktif
+            clickedLinkKota.classList.add('active'); // add new aktif
+
+            const listItem = document.querySelector('#navbar-kota .nav-link.active .list-group-item ');
+            const nm_kota = listItem.childNodes[0].textContent.trim();
+            document.getElementById('kota_filter').value = nm_kota; //set value untuk filter by
+
+            var filter1 = document.getElementById('filter_search').value
+            var keyword1 = document.getElementById('keyword_pencarian').value
+            
+            dataTables(filter1, keyword1); //load data table
+        }
+    }
+
+    navLinksKota.forEach((link, index) => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default anchor behavior
+
+            // Update the active link
+            setActiveLinkKota(index);
+        });
+    });
 
     function dataTables(params = null, keyword = null) {
         const urlParams = new URLSearchParams(window.location.search);
         const keyword_pencarian = urlParams.get('keyword');
         const filter_by = urlParams.get('filter');
 
-        // console.log(filter_by);
+        var setFilter = document.getElementById('filter_search').value
 
         if (filter_by) {
-            var filter_by1 = document.getElementById('filter_search').value
+            var filter_by1 = filter_by
             // var keyword1 = document.getElementById('keyword_pencarian').value
         } else {
             if (params) {
@@ -285,6 +299,18 @@ $('#customSearchField').on('keyup', function() {
             // handleClickSearch(); // Memanggil fungsi handleClickSearch
         }
     });
+
+    function handleClickSearch() {
+        //keyword pencarian
+        var filter_by = document.getElementById('filter_search').value;
+        if (filter_by == null || filter_by == '') {
+            filter_by = 'all';
+        }
+        var keyword_pencarian = document.getElementById('keyword_pencarian').value;
+
+        dataTables(filter_by, keyword_pencarian); //load data table
+       
+    }
     
 </script>
 
