@@ -27,6 +27,7 @@
 <!-- js data table BIP-->
     <script>
         $(document).ready(function() {
+            var downloadBaseUrl = "{{ env('APP_DOC') }}";
             $('#doc_bip').DataTable({
                 processing: true,
                 serverSide: true,
@@ -46,7 +47,13 @@
                     { data: 'DESKRIPSI', name: 'DESKRIPSI' },
                     {
                         data: null,
-                        defaultContent: '<button type="submit" class="form-control"><a class="nav-link click-scroll" href="#">Download</a></button>', // Tombol aksi
+                        render: function (data, type, row) {
+                            var docSts = row.LINK_DATA_PDF ?? '-';
+                            var fullUrl = downloadBaseUrl + '/bip/' + docSts;
+                            return '<button class="form-control">' +
+                                '<a class="nav-link click-scroll" href="' + fullUrl + '" target="_blank">Download</a>' +
+                                '</button>';
+                        },
                         orderable: false
                     }
                 ],

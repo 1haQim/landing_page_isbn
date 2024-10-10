@@ -251,7 +251,8 @@
                                         </div>
                                         <span style="font-size: 11px; margin: 1%">Dibubuhi materai, ditanda tangani, distempel, dan dipindai (scan) ke dalam bentuk file pdf dengan ukuran tidak lebih dari 2MB. Setelah diunduh, diisi dan discan lakukan unggah surat pernyataan  </span>
                                         <button type="button" class="btn btn-outline-danger btn-sm" style="float: right; margin: 1%; border-radius: 10px; color:white">
-                                            <a id="pernyataan_1" href="/docsurat/Surat Pernyataan Penerbit - 20220813.docx" class="u-label u-label--xs u-label--primary float-right">Unduh Formulir disini»</a>
+                                            <!-- <a id="pernyataan_1" href="{{  env('APP_URL').'/dokumen_surat/Surat Pernyataan Penerbit - 20220813.docx'}}" class="u-label u-label--xs u-label--primary float-right">Unduh Formulir disini»</a> -->
+                                            <a id="pernyataan_1" href="{{  asset('sp/Surat Pernyataan Penerbit - 20220813.docx') }}" class="u-label u-label--xs u-label--primary float-right">Unduh Formulir disini»</a>
                                         </button>
                                     </div>
                                 </div>
@@ -273,8 +274,23 @@
                             <section>
                                 <div class="form-row row" style="margin-top:90px">
                                     <div class="col">
-                                        <label for="username" style="color:black">Nama Penerbit*</label>
-                                        <input type="text" placeholder="Nama Penerbit" class="form-control" id="penerbit" name="nama_penerbit"  required>
+                                        <label for="nama_penerbit" style="color:black">Nama Penerbit*</label>
+                                        <div class="inputcontainer">
+                                            <input type="text" placeholder="Nama Penerbit" class="form-control" onchange="checkDataExisting('nama_penerbit',this.value)" id="nama_penerbit" name="nama_penerbit"  required>
+                                            <div class="icon-container">
+                                                <i class="loader" id="loader_nama_penerbit" style="display: none"></i>
+                                                <svg class="checkmark" id="success_nama_penerbit" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                                </svg>
+                                                <svg class="checkmark1" id="error_nama_penerbit" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                    <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
+                                                    <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <span id="ket_nama_penerbit" style="font-size:11px; color:red"></span>
+                                        <!-- <input type="text" placeholder="Nama Penerbit" class="form-control" id="penerbit" name="nama_penerbit"  required> -->
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
@@ -423,7 +439,7 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="confirm_password" style="color:black">Confirm Password*</label>
-                                        <input type="password" placeholder="Confirm Password" class="form-control" id="confirm_password" name="password2" required>
+                                        <input type="password" placeholder="Confirm Password" class="form-control" id="confirm_password" name="password2" onchange="confirm_password_onchange(this.value)" required>
                                     </div>
                                     <span id="ket_password" style="font-size:11px; color:red"></span>
                                 </div>
@@ -540,6 +556,9 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     var kategoriPenerbitGlobal = 0; // 0 adalah penerbit swasta
+    var nextStep = true; // validasi next step
+    var finishValidate = true; // validasi finish
+
     // validasi kategori penerbit
     function kat_penerbit(radio) {
         if (radio.value == 1) { //pada master pemerintah adalah id 1
@@ -665,6 +684,8 @@
             validate = validasi_username(value)
         } else if (name == 'admin_email') {
             var req_data = { 'admin_email' : value }
+        } else if (name == 'nama_penerbit') {
+            var req_data = { 'nama_penerbit' : value }
         } else {
             var req_data = { 'alternatif_email' : value }
         }
@@ -674,11 +695,24 @@
             var email_alternatif = document.getElementById('email_alternatif').value
 
             if (email == email_alternatif) {
+                document.getElementById('ket_'+ name).innerHTML = ' Email utama dan email alternatif tidak boleh sama';
                 document.getElementById('loader_'+ name).style.display = 'none';
                 document.getElementById('error_'+ name).style.display = 'block';
-                document.getElementById('ket_'+ name).innerHTML = 'Email utama dan email alternatif tidak boleh sama';
                 validate = 'error';
-            }
+                nextStep = false;
+                finishValidate = false;
+            } 
+        }
+
+        if (name == 'nama_penerbit') {
+            var nama_penerbit_id = document.getElementById('nama_penerbit').value
+            if (nama_penerbit_id.length < 8) {
+                document.getElementById('ket_'+ name).innerHTML = ' Nama Penerbit Harus melebihi 8 karakter';
+                document.getElementById('loader_'+ name).style.display = 'none';
+                document.getElementById('error_'+ name).style.display = 'block';
+                validate = 'error';
+                nextStep = false;
+            } 
         }
 
 
@@ -696,14 +730,19 @@
                     if (data.length > 0) {
                         document.getElementById('loader_'+ name).style.display = 'none';
                         document.getElementById('error_'+ name).style.display = 'block';
-                        document.getElementById('ket_'+ name).innerHTML = name +'sudah digunakan'
+                        document.getElementById('ket_'+ name).innerHTML = name +' sudah digunakan'
+                        nextStep = false;
+                        finishValidate = false;
                         // alert( name +'sudah digunakan')
                         //nanti harus dikasih validasi tidak bisa next jika sudah digunakan
                     } else {
                         // alert('bisa digunakan')
                         document.getElementById('loader_'+ name).style.display = 'none';
                         document.getElementById('success_'+ name).style.display = 'block';
+                        document.getElementById('ket_'+ name).innerHTML = '';
                         document.getElementById('ket_'+ name).style.display = 'none';
+                        nextStep = true;
+                        finishValidate = true;
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -730,8 +769,10 @@
             document.getElementById('loader_username').style.display = 'none';
             document.getElementById('error_username').style.display = 'block';
             document.getElementById('ket_username').innerHTML = errorMessage;
+            finishValidate = false;
             return 'error';
         } else {
+            finishValidate = true;
             return 'success';
         }        
     }
@@ -740,10 +781,26 @@
     function validasi_password(value) {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
         if (passwordRegex.test(value)) {
+            finishValidate = true;
             document.getElementById('ket_password').style.display = 'none';
+            document.getElementById('ket_password').innerHTML = '';
         } else {
+            finishValidate = false;
             document.getElementById('ket_password').style.display = 'block';
             document.getElementById('ket_password').innerHTML = 'Password harus terdiri dari setidaknya 8 karakter, mengandung huruf besar dan kecil, angka, dan karakter khusus.';
+        }
+    }
+    function confirm_password_onchange(pass2) {
+        pass1 = document.getElementById('password').value;
+        console.log(pass1, pass2)
+        if (pass1 == pass2) {
+            finishValidate = true;
+            document.getElementById('ket_password').innerHTML = '';
+            document.getElementById('ket_password').style.display = 'none';
+        } else {
+            finishValidate = false;
+            document.getElementById('ket_password').style.display = 'block';
+            document.getElementById('ket_password').innerHTML = 'password tidak sama';
         }
     }
     //end validasi password
@@ -783,10 +840,17 @@
                     return false; // Prevent moving to the next step
                 }
             }
+            if (newIndex > currentIndex) {
+                if (nextStep == false) { // != 1 adalah bukan pemerintah
+                    alert("Harap lengkapi dan periksa semua kolom sebelum melanjutkan.");
+                    return false; // Prevent moving to the next step
+                }
+            }
             return form.valid();
         },
         onFinishing: function (event, currentIndex)
         {
+
             form.validate().settings.ignore = ":disabled";
             return form.valid();
         },
@@ -795,10 +859,10 @@
             const loader = document.getElementById('loading');
             loader.style.display = 'block'; // Show the loader
 
-            let inputcaptchavalue = document.querySelector("#captcha input").value;
+            let inputcaptchavalue = document.getElementById("captcha_form").value;
             let captchaValue = document.getElementById('preview_captcha').value;
 
-            if (inputcaptchavalue === captchaValue) 
+            if (inputcaptchavalue === captchaValue && finishValidate == true) 
             {
                 // swal("","Log in","success");
                 $('#contact').append('<input type="hidden" id="" name="nama_kota" value="' + $('#kab_kot option:selected').text() + '">');
@@ -830,7 +894,8 @@
             }
             else
             {
-                alert("Invalid Captcha");
+                alert("Invalid Captcha atau periksa data anda kembali");
+                loader.style.display = 'none';
             }
         }
     });

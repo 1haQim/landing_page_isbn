@@ -59,7 +59,7 @@
                     </a>
                 </p>
                     <p class="text-white d-flex">
-                    <a href="isbn.perpusnas.go.id" class="site-footer-link">
+                    <a href="https://isbn.perpusnas.go.id/" class="site-footer-link">
                         isbn.perpusnas.go.id
                     </a>
                 </p>
@@ -69,23 +69,23 @@
                 <h6 class="site-footer-title mb-3">Link Terkait</h6>
 
                 <p class="text-white d-flex">
-                    <a href="tel: 305-240-9671" class="site-footer-link">
+                    <a href="https://perpusnas.go.id/" class="site-footer-link">
                         Perpusnas
                     </a>
                 </p>
 
                 <p class="text-white d-flex">
-                    <a href="mailto:isbn@mail.perpusnas.go.id" class="site-footer-link">
+                    <a href="https://deposit.perpusnas.go.id/" class="site-footer-link">
                         Deposit perpusnas
                     </a>
                 </p>
                     <p class="text-white d-flex">
-                    <a href="isbn.perpusnas.go.id" class="site-footer-link">
+                    <a href="https://bni.perpusnas.go.id/" class="site-footer-link">
                         Bibliografi Nasional RI
                     </a>
                 </p>
                     <p class="text-white d-flex">
-                    <a href="isbn.perpusnas.go.id" class="site-footer-link">
+                    <a href="https://pusbangkol.perpusnas.go.id/" class="site-footer-link">
                         Pusbangkol
                     </a>
                 </p>

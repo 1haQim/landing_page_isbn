@@ -76,6 +76,10 @@ class PendaftaranController extends Controller
             } else if($request->input('admin_email')) {
                 $value = $request->input('admin_email');
                 $where = "WHERE ADMIN_EMAIL = '$value' AND ADMIN_EMAIL = '$value'";
+            } else if($request->input('nama_penerbit')) {
+                $value = $request->input('nama_penerbit');
+                $input_params = strtoupper($value);
+                $where = "WHERE UPPER(NAMA_PENERBIT) = '$input_params'";
             } else if($request->input('alternatif_email')) {
                 $value = $request->input('alternatif_email');
                 $where = "WHERE ALTERNATE_EMAIL = '$value' AND ALTERNATE_EMAIL = '$value'";
@@ -456,8 +460,10 @@ class PendaftaranController extends Controller
                 return view('content.verifikasi_pendaftaran', compact('email','username','timeOtp'));
             }
         }
+        $username = '';
+        $email = '';
         $timeOtp = $this->timeOtp();
-        return view('content.verifikasi_pendaftaran', compact('timeOtp'));
+        return view('content.verifikasi_pendaftaran', compact('timeOtp','username','email'));
     }
 
     function timeOtp() {

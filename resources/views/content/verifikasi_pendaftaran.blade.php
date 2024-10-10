@@ -105,17 +105,41 @@
 </section>
 
 
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        console.log(123)
+        // Initial push to the history
+        window.history.pushState(null, null, window.location.href);
 
+        // Function to handle popstate event
+        function preventBackForward() {
+            // Push state again to prevent going back
+            window.history.pushState(null, null, window.location.href);
+        }
+
+        // Bind popstate event to prevent back navigation
+        $(window).on('popstate', preventBackForward);
+
+        // Prevent back and forward navigation
+        $(window).on('beforeunload', function() {
+            // This triggers the popstate event if you refresh or navigate away
+            preventBackForward();
+        });
+    });
+</script>
+@endpush
 
 <script>
+    
     const inputs = document.querySelectorAll('.otp-input input');
     const timerDisplay = document.getElementById('timer');
     const resendButton = document.getElementById('resendButton');
     //   let timeLeft = 180; // 3 minutes in seconds
     let timeLeft = "{{ $timeOtp }}" ; // 3 minutes in seconds
     let timerId;
-    const username = "{{ $username }}" ; // 3 minutes in seconds
-    const email = "{{ $email }}" ; // 3 minutes in seconds
+    const username = "{{ $username }}" ; 
+    const email = "{{ $email }}" ;
 
     function startTimer() {
         timerId = setInterval(() => {
@@ -144,6 +168,33 @@
         resendButton.disabled = true;
         inputs[0].focus();
         clearInterval(timerId);
+        $.ajax({
+            url: "{{ route('verifikasi_pendaftaran') }}",
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            // dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                'username' : username,
+                'admin_email' : email,
+                'tipe' : 'generate'
+            }),
+            success: function(data) {
+                if (data.status == 1) {
+                    // Create a form element to perform a POST request
+                    alert('Kode OTP baru Telah dikirim ke email Anda')
+                    document.getElementById('btn_verify').disabled = false;
+                } else {
+                    document.getElementById('btn_verify').disabled = true;
+                    document.getElementById('alert').innerHTML = '<p>' + data.message + '</p>';
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('AJAX error:', textStatus, errorThrown);
+            }
+        })
         startTimer();
     }
 
