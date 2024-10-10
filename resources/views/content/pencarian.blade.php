@@ -52,7 +52,7 @@
                                     <a class="nav-link" href="">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         {{ $v['CITY'] }}
-                                        <span class="badge badge-primary badge-pill" style="color:red">{{ number_format($v['JUMLAH']) }}</span>
+                                        <!-- <span class="badge badge-primary badge-pill" style="color:red">{{ number_format($v['JUMLAH']) }}</span> -->
                                     </li>
                                     </a>
                                 @endforeach
