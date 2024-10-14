@@ -4,6 +4,7 @@
     <link href="{{ asset('template/css/pendaftaran.css') }}" rel="stylesheet">
     <link href="{{ asset('template/css/pendaftaran_styling.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
         #captcha .preview{
             color: #555;
@@ -190,9 +191,13 @@
             }
         }
 
-
-
     </style>
+    
+    <script>
+        function reloadSuggestions() {
+            location.reload(); // Reload the page to generate new suggestions
+        }
+    </script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
 
@@ -237,6 +242,12 @@
                                         </div>
                                         <div class="col-lg-8 col-md-8 col-12 mb-6 mb-lg-6" id="if_swasta">
                                             <!-- data diambil dari ajax -->
+                                            <center>
+                                                <div id="loading" style="display:none">
+                                                    <div id="loader"></div>
+                                                    <span>Mohon Tunggu..</span>
+                                                </div>
+                                            </center>
                                             <div id="pilihan_jenis_penerbit"></div> 
                                         </div>
                                     </div>
@@ -435,11 +446,22 @@
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="password" style="color:black">Password*</label>
-                                        <input type="password" placeholder="Password" class="form-control" id="password" name="password"  onchange="validasi_password(this.value)" required>
+                                        <div class="input-group mb-3">
+                                            <input type="password" placeholder="Password" class="form-control" id="password" name="password"  onchange="validasi_password(this.value)" required>
+                                            <span class="input-group-text">
+                                                <i class="bi-eye-slash" id="togglePassword" onclick="passwordShowHide('password')" style="cursor: pointer;"></i>
+                                            </span>
+                                        </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="confirm_password" style="color:black">Confirm Password*</label>
+                                        <div class="input-group mb-3">
                                         <input type="password" placeholder="Confirm Password" class="form-control" id="confirm_password" name="password2" onchange="confirm_password_onchange(this.value)" required>
+                                            <span class="input-group-text">
+                                                <i class="bi-eye-slash" id="togglePassword1" onclick="passwordShowHide('confirm_password')" style="cursor: pointer;"></i>
+                                            </span>
+                                        </div>
+                                        
                                     </div>
                                     <span id="ket_password" style="font-size:11px; color:red"></span>
                                 </div>
@@ -476,6 +498,29 @@
 
 <!-- Form container -->
 @push('scripts')
+
+<!-- hide and show password -->
+<script>
+    function passwordShowHide(value){
+        var passwordInput = document.getElementById('confirm_password');
+        var eyeIcon = document.getElementById('togglePassword1');
+        if (value == "password") {
+            passwordInput = document.getElementById('password');
+            eyeIcon = document.getElementById('togglePassword');
+        } 
+
+        // Toggle the type attribute
+        if (passwordInput.type === 'password') {
+            passwordInput.type = ''; // Show the password
+            eyeIcon.classList.remove('bi-eye'); // Remove eye icon
+            eyeIcon.classList.add('bi-eye-slash'); // Add eye-slash icon
+        } else {
+            passwordInput.type = 'password'; // Hide the password
+            eyeIcon.classList.remove('bi-eye-slash'); // Remove eye-slash icon
+            eyeIcon.classList.add('bi-eye'); // Add eye icon
+        }
+    }
+</script>
 
 <script>
     (function(){
@@ -578,9 +623,16 @@
             data : {
                 'kategori' : radio.value
             },
+            beforeSend: function() {
+                // Tampilkan loader saat request dimulai
+                const loader = document.getElementById('loading');
+                loader.style.display = 'block';
+            },
             success: function(data) {
                 var htmlJenis = '';
                 if (data.code == 200) {
+                    const loader = document.getElementById('loading');
+                    loader.style.display = 'none';
                     data.content.forEach(function(item) {
                         htmlJenis += `
                             <label>
@@ -595,6 +647,10 @@
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
+                const userConfirmed = confirm('Koneksi Anda tidak terhubung ke internet. Apakah Anda ingin memuat ulang halaman?');
+                if (userConfirmed) {
+                    location.reload(); // Reload the page if user clicks "Yes"
+                }
                 console.error('AJAX error:', textStatus, errorThrown);
             }
         })
@@ -665,6 +721,10 @@
                 });
             },
             error: function(jqXHR, textStatus, errorThrown) {
+                const userConfirmed = confirm('Koneksi Anda tidak terhubung ke internet. Apakah Anda ingin memuat ulang halaman?');
+                if (userConfirmed) {
+                    location.reload(); // Reload the page if user clicks "Yes"
+                }
                 console.error('AJAX error:', textStatus, errorThrown);
             }
         })
@@ -864,7 +924,6 @@
 
             if (inputcaptchavalue === captchaValue && finishValidate == true) 
             {
-                // swal("","Log in","success");
                 $('#contact').append('<input type="hidden" id="" name="nama_kota" value="' + $('#kab_kot option:selected').text() + '">');
                 $.ajax({
                     url: "{{ route('submit_pendaftaran') }}",
@@ -874,6 +933,11 @@
                     },
                     dataType: 'json',
                     data: $('#contact').serialize(),
+                    beforeSend: function() {
+                        // Tampilkan loader saat request dimulai
+                        const loader = document.getElementById('loading');
+                        loader.style.display = 'block';
+                    },
                     success: function(data) {
                         console.log(data, 'hakim1234 submit')
                         if(data.status != "error"){

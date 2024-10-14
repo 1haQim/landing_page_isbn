@@ -244,6 +244,7 @@ class PendaftaranController extends Controller
                     'file_pernyataan' => $request->input('file_surat_pernyataan') ?? null,
                     'file_akte' => $request->input('file_akte_notaris') ?? null
                 ];
+                $pass_untuk_send_email = $request->input('password');
                 //generate OTP
                 $otp = $this->generateOTP();
 
@@ -296,7 +297,9 @@ class PendaftaranController extends Controller
                     // dd()
 
                     $data_send_otp = [
-                        'email_admin' => $request->input('admin_email'),
+                        'email_admin'       => $request->input('admin_email'),
+                        'email_alternatif'  => $request->input('alternate_email'),
+                        'password'          => $pass_untuk_send_email,
                         'username'    => $request->input('user_name'),
                         'kode_otp'    => $otp
                     ];
@@ -343,8 +346,9 @@ class PendaftaranController extends Controller
         if (filter_var($res_data['email_admin'], FILTER_VALIDATE_EMAIL)) {
             $waktu = date('d F Y H:i');
             $username = $res_data['username'];
-            $email = $res_data['email_admin'];
+            $email = $res_data['email_admin'] ?? '';
             $otp = $res_data['kode_otp'];
+            $password = $res_data['password'] ?? '';
 
             //templat email
             $query = "SELECT isi FROM ISBN_MAIL_TEMPLATE WHERE ID = '16'";
@@ -367,12 +371,12 @@ class PendaftaranController extends Controller
 
             //replace karakter {}
             $htmlOutput = str_replace(
-                ['{waktu}', '{username}', '{email}', '{otp}'],  // placeholders
-                [$waktu, $username, $email, $otp],              // corresponding PHP values
+                ['{waktu}', '{username}', '{email}', '{otp}', '{password}'],  // placeholders
+                [$waktu, $username, $email, $otp, $password],              // corresponding PHP values
                 $html                                   // the original HTML template
             );
 
-            Mail::to($res_data['email_admin'])->cc($email_cc)->send(new SendMail($htmlOutput));
+            Mail::to($res_data['email_admin'])->cc([$email_cc, $res_data['email_alternatif']])->send(new SendMail($htmlOutput));
             return 'success';
         }
     }
