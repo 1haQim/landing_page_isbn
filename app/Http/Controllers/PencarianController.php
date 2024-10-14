@@ -27,21 +27,20 @@ class PencarianController extends Controller
         $filter_by = $request->input('filter_by'); // Search filter
 
         $where = '';
-        if ($filter_by == 'all') {
+        if ($filter_by == 'all' && $keyword != "") {
             $keyword = strtoupper($keyword); //upper
             $where = "WHERE UPPER(PI.ISBN_NO) LIKE '%".$keyword."%' OR UPPER(PT.TITLE) LIKE '%".$keyword."%' OR UPPER(PT.KEPENG) LIKE '%".$keyword."%' OR UPPER(P.NAME) LIKE '%".$keyword."%'";
-        } else if($filter_by) {
+        } else if($filter_by && $keyword != "") {
             $keyword = strtoupper($keyword); //upper
             $where = "WHERE UPPER($filter_by) LIKE '%".$keyword."%'"; //filterby ambil dari params filter dihome
         } else {
             $where = '';
         }
 
-        // dd($where);
-        
         //filter dari halaman pencarian 
         $by_penerbit = strtoupper($request->input('by_penerbit'));
         $by_kota = strtoupper($request->input('by_kota'));
+
         //validasi 
         $operator = $where != "" ? "AND " : "WHERE ";
         if ($by_penerbit && $by_kota) {
@@ -54,12 +53,12 @@ class PencarianController extends Controller
             $where; //hanya mengambil filter
         }
 
-        // dd($where);
         //query
         $query = "SELECT *
             FROM (
                 SELECT 
-                    PI.ISBN_NO,
+                    (prefix_element || '-' || publisher_element || '-' || item_element || '-' || check_digit) AS ISBN_NO,
+                    -- PI.ISBN_NO,
                     PT.TITLE,
                     PT.KEPENG,
                     PT.TEMPAT_TERBIT,
@@ -131,7 +130,6 @@ class PencarianController extends Controller
         try {
             // API call
             $data = kurl('get', 'getlistraw', null, $query, 'sql');
-
             if ($data['Status'] == "Error") {
                 return [];
             } else {
@@ -144,22 +142,17 @@ class PencarianController extends Controller
     }
 
     function kota_penerbit_terbanyak() {
-        $query = "SELECT 
-            city, 
-            jumlah
-        FROM (
+        $query = "SELECT * FROM (
             SELECT 
-                penerbit.city, 
-                COUNT(*) AS jumlah 
-            FROM 
-                penerbit 
-            WHERE 
-                penerbit.city IS NOT NULL
-            GROUP BY 
-                penerbit.city 
-            ORDER BY 
-                jumlah DESC
-        )
+                PT.TEMPAT_TERBIT as CITY, 
+                COUNT(PI.ISBN_NO) AS JUMLAH
+            FROM PENERBIT_ISBN PI
+            JOIN PENERBIT_TERBITAN PT ON PI.PENERBIT_TERBITAN_ID = PT.ID
+            JOIN PENERBIT P ON PI.PENERBIT_ID = P.ID
+                WHERE PT.TEMPAT_TERBIT IS NOT NULL
+            GROUP BY PT.TEMPAT_TERBIT
+            ORDER BY JUMLAH DESC
+        ) 
         WHERE ROWNUM <= 5";
 
         try {

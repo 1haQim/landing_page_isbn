@@ -12,6 +12,36 @@
         color: red;
         background-color: rgb(1, 34, 105);
     }
+    .custom-loader-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .custom-loader {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid rgb(1, 34, 105);
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { 
+            transform: rotate(0deg); 
+        }
+        100% { 
+            transform: rotate(360deg); 
+        }
+    }
 </style>
 
 
@@ -28,7 +58,9 @@
         </div>
     </div>
 </section>
-
+<div class="custom-loader-backdrop" id="datatable-loader" style="display: none;">
+    <div class="custom-loader"></div>
+</div>
 <section class="explore-section section-padding" id="section_pencarian">
     <div class="container" style="margin-top: -200px">
         <div class="row justify-content-center">
@@ -80,15 +112,16 @@
                                 <span class="input-group-text bi-search" id="basic-addon1" style="background-color: rgb(1, 34, 105); color:white; border:none"></span>
                             </button>
                         </div>
+                        
                         <div class="data-tables" style="margin-top:50px">
                             <table id="dataTable" class="display responsive dataTable no-footer dtr-inline">
                                 <thead class="text-center">
                                     <tr>
-                                        <th style="width:1000px">Judul</th>
+                                        <th>Judul</th>
                                         <th>Kepengarangan</th>
                                         <th>Tahun</th>
                                         <th>ISBN</th>
-                                        <th>Tempat Terbit</th>
+                                        <th style="white-space: nowrap;">Tempat Terbit</th>
                                         <th>Penerbit</th>
                                         <th>Jumlah Jilid</th>
                                         <th>Seri</th>
@@ -255,15 +288,31 @@ $('#customSearchField').on('keyup', function() {
                     d.filter_by = filter_by1;
                     d.by_penerbit = document.getElementById('penerbit_filter').value;
                     d.by_kota = document.getElementById('kota_filter').value;
+                },
+                beforeSend: function() {
+                    $('#datatable-loader').show();  // Tampilkan loader sebelum data dimuat
+                },
+                complete: function() {
+                    $('#datatable-loader').hide();  // Sembunyikan loader setelah data selesai dimuat
                 }
             },
             pageLength: 10, // Default number of records per page
             lengthMenu: [5, 10, 25, 50],
             columns: [
-                { data: 'TITLE' },
+                { 
+                    data: 'TITLE',
+                    render: function(data, type, row) {
+                        return '<span style="width:200px">' + data + '</span>';
+                    }
+                },
                 { data: 'KEPENG' },
                 { data: 'TAHUN_TERBIT' },
-                { data: 'ISBN_NO' },
+                { 
+                    data: 'ISBN_NO',
+                    render: function(data, type, row) {
+                        return '<span style="white-space: nowrap;">' + data + '</span>';
+                    }
+                },
                 { data: 'TEMPAT_TERBIT' },
                 { data: 'NAMA_PENERBIT' },
                 { data: 'JML_JILID' },
