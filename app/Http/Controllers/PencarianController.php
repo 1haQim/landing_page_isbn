@@ -65,7 +65,9 @@ class PencarianController extends Controller
                     PT.JML_JILID,
                     PT.TAHUN_TERBIT,
                     PT.SERI,
+                    PT.ID,
                     PT.LINK_BUKU,
+                    PT.IS_KDT_VALID,
                     P.NAME AS NAMA_PENERBIT,
                     P.ID AS PENERBIT_ID,
                     ROW_NUMBER() OVER (ORDER BY PI.CREATEDATE DESC) AS rnum
@@ -169,4 +171,39 @@ class PencarianController extends Controller
             return [];
         }
     }
+
+    function dataKdt() {
+        $query = "SELECT 
+                NAMA_PENERBIT, 
+                jumlah
+            FROM (
+                SELECT 
+                    P.NAME AS NAMA_PENERBIT,
+                    COUNT(*) AS jumlah
+                FROM 
+                    penerbit_terbitan PT
+                JOIN PENERBIT P ON PT.PENERBIT_ID = P.ID 
+                WHERE 
+                    PT.PENERBIT_ID IS NOT NULL
+                GROUP BY 
+                    P.NAME -- Use P.NAME in the GROUP BY instead of PENERBIT_ID
+                ORDER BY 
+                    jumlah DESC
+            ) 
+            WHERE ROWNUM <= 5";
+
+        try {
+            // API call
+            $data = kurl('get', 'getlistraw', null, $query, 'sql');
+            if ($data['Status'] == "Error") {
+                return [];
+            } else {
+                //response
+                return $data['Data']['Items'];
+            }
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+
 }

@@ -126,6 +126,7 @@
                                         <th>Jumlah Jilid</th>
                                         <th>Seri</th>
                                         <th>Link Buku</th>
+                                        <th>Link KDT</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -139,6 +140,21 @@
 
 <input type="hidden" id="kota_filter">
 <input type="hidden" id="penerbit_filter">
+
+
+<!-- Modal pengumuman-->
+Perpustakaan Nasional RI. Data Katalog dalam Terbitan (KDT)
+<div class="modal fade" id="imageModalPengumuman" tabindex="-1" aria-labelledby="imageModalLabelPengumuman" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body" id="modalBody">
+                <div id="modalContent">
+                    Loading content...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- // Event untuk memicu pencarian custom saat input berubah
 $('#customSearchField').on('keyup', function() {
@@ -317,7 +333,26 @@ $('#customSearchField').on('keyup', function() {
                 { data: 'NAMA_PENERBIT' },
                 { data: 'JML_JILID' },
                 { data: 'SERI' },
-                { data: 'LINK_BUKU' }
+                { 
+                    data: 'LINK_BUKU',
+                    render: function(data, type, row) {
+                        if (data) {
+                            return '<a href="'+ data +'">'+ data +'</a>';
+                        } else {
+                            return '';
+                        }
+                    },
+                },
+                { 
+                    data: 'IS_KDT_VALID',
+                    render: function(data, type, row) {
+                        if (data == '1') {
+                            return '<span style="width:200px; color:blue" onclick="showKdt(\'' + row.ID + '\')">LINK KDT</span>';
+                        } else {
+                            return '';
+                        }
+                    },
+                }
             ],
             search: {
                 search: document.getElementById('keyword_pencarian') 
@@ -331,6 +366,25 @@ $('#customSearchField').on('keyup', function() {
             table.ajax.reload(); // Reload DataTable with the current value of customSearchField
         });
 
+    }
+
+    function showKdt(value) {
+        console.log(value)
+        var myModal = new bootstrap.Modal(document.getElementById('imageModalPengumuman'));
+        myModal.show();
+        
+        $.ajax({
+            url: 'http://demo321.online:8212/isbn-bopenerbit/penerbit/isbn/data/view-kdt/'+value,
+            type: 'GET',
+            success: function(response) {
+                // Load the response into the modalContent div
+                $('#modalContent').html(response);
+            },
+            error: function() {
+                // Handle error case
+                $('#modalContent').html('Error loading content.');
+            }
+        });
     }
 
     // Menambahkan event listener untuk menangani tombol Enter
