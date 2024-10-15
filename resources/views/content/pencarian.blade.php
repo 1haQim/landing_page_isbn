@@ -379,6 +379,9 @@ $('#customSearchField').on('keyup', function() {
             success: function(response) {
                 // Load the response into the modalContent div
                 $('#modalContent').html(response);
+
+                $('#modalContent header').remove();
+                $('#modalContent footer').remove();
             },
             error: function() {
                 // Handle error case
