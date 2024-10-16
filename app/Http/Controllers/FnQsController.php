@@ -36,9 +36,9 @@ class FnQsController extends Controller
                 if ($data['Data']['Items']) {
                     foreach ($data['Data']['Items'] as $k => $v) {
                         $cardHtml .= '
-                            <div class="custom-block custom-block-topics-listing bg-white shadow-lg mb-5">
+                            <div class="custom-block custom-block-topics-listing bg-white shadow-lg mb-5 mt-5">
                                 <div class="d-flex" >
-                                    <span class="badge bg-design rounded-pill ms-auto">'.$v['NOMOR_URUT'].'</span>
+                                    <span class="badge bg-design rounded-pill mt-4"">'.$v['NOMOR_URUT'].'</span>
     
                                     <div class="custom-block-topics-listing-info d-flex">
                                         <div >
