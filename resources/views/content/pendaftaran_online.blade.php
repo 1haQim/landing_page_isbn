@@ -243,7 +243,7 @@
                                         <div class="col-lg-8 col-md-8 col-12 mb-6 mb-lg-6" id="if_swasta">
                                             <!-- data diambil dari ajax -->
                                             <center>
-                                                <div id="loading" style="display:none">
+                                                <div id="loading_kategori" style="display:none">
                                                     <div id="loader"></div>
                                                     <span>Mohon Tunggu..</span>
                                                 </div>
@@ -404,41 +404,43 @@
                                         <span id="ket_username" style="font-size:11px; color:red"></span>
                                     </div>
                                 </div>  
-                                <div class="col-lg-6 col-md-6 col-12">
-                                    <label for="name" class="flex-row">Email <p style="color:red; display:inline;">*</p></label> 
-                                    <div class="inputcontainer">
-                                        <input type="text" placeholder="Email" class="form-control" id="email" name="admin_email" onchange="checkDataExisting('admin_email',this.value)" required>
-                                        <div class="icon-container">
-                                            <i class="loader" id="loader_admin_email" style="display: none"></i>
-                                            <svg class="checkmark" id="success_admin_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                                                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                                            </svg>
-                                            <svg class="checkmark1" id="error_admin_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                                <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
-                                                <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
-                                            </svg>
+                                <div class="form-row row" style="margin-top:108px">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <label for="name" class="flex-row">Email <p style="color:red; display:inline;">*</p></label> 
+                                        <div class="inputcontainer">
+                                            <input type="text" placeholder="Email" class="form-control" id="email" name="admin_email" onchange="checkDataExisting('admin_email',this.value)" required>
+                                            <div class="icon-container">
+                                                <i class="loader" id="loader_admin_email" style="display: none"></i>
+                                                <svg class="checkmark" id="success_admin_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                                </svg>
+                                                <svg class="checkmark1" id="error_admin_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                    <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
+                                                    <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
+                                                </svg>
+                                            </div>
                                         </div>
+                                        <span id="ket_admin_email" style="font-size:11px; color:red"></span>
                                     </div>
-                                    <span id="ket_admin_email" style="font-size:11px; color:red"></span>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-12">
-                                    <label for="name" class="flex-row">Email Alternatif<p style="color:red; display:inline;">*</p></label> 
-                                    <div class="inputcontainer">
-                                        <input type="text" placeholder="Email Alternatif" class="form-control" id="email_alternatif" name="alternate_email" onchange="checkDataExisting('alternatif_email',this.value)" required>
-                                        <div class="icon-container">
-                                            <i class="loader" id="loader_alternatif_email" style="display: none"></i>
-                                            <svg class="checkmark" id="success_alternatif_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                                                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                                            </svg>
-                                            <svg class="checkmark1" id="error_alternatif_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                                <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
-                                                <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
-                                            </svg>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <label for="name" class="flex-row">Email Alternatif<p style="color:red; display:inline;">*</p></label> 
+                                        <div class="inputcontainer">
+                                            <input type="text" placeholder="Email Alternatif" class="form-control" id="email_alternatif" name="alternate_email" onchange="checkDataExisting('alternatif_email',this.value)" required>
+                                            <div class="icon-container">
+                                                <i class="loader" id="loader_alternatif_email" style="display: none"></i>
+                                                <svg class="checkmark" id="success_alternatif_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                                </svg>
+                                                <svg class="checkmark1" id="error_alternatif_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                    <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
+                                                    <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
+                                                </svg>
+                                            </div>
                                         </div>
+                                        <span id="ket_alternatif_email" style="font-size:11px; color:red"></span>
                                     </div>
-                                    <span id="ket_alternatif_email" style="font-size:11px; color:red"></span>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col-lg-6 col-md-6 col-12">
@@ -626,14 +628,14 @@
                 },
                 beforeSend: function() {
                     // Tampilkan loader saat request dimulai
-                    const loader = document.getElementById('loading');
+                    const loader = document.getElementById('loading_kategori');
                     loader.style.display = 'block';
                 },
                 success: function(data) {
                     
                     var htmlJenis = '';
                     if (data.code == 200) {
-                        const loader = document.getElementById('loading');
+                        const loader = document.getElementById('loading_kategori');
                         loader.style.display = 'none';
                         data.content.forEach(function(item) {
                             htmlJenis += `
@@ -655,7 +657,7 @@
                     } else {
                         nextStep = false;
                         nextStepKet = "periksa konesi anda";
-                        const loader = document.getElementById('loading');
+                        const loader = document.getElementById('loading_kategori');
                         loader.style.display = 'none'; // Sembunyikan loader
                     }
                     console.error('AJAX error:', textStatus, errorThrown);
@@ -865,9 +867,13 @@
                     document.getElementById('ket_'+ name).innerHTML = ' Nama Penerbit Harus melebihi 8 karakter';
                     document.getElementById('loader_'+ name).style.display = 'none';
                     document.getElementById('error_'+ name).style.display = 'block';
+                    var ket = 'Nama Penerbit sudah terdaftar';
+                    validateDtExisting(name, ket, 1)
                     validate = 'error';
                     nextStep = false;
                 } else {
+                    var ket = ''
+                    validateDtExisting(name, ket, 0)
                     validate = '';
                     nextStep = true;
                     finishValidate = true;
@@ -929,10 +935,12 @@
         // Check if the username contains only letters and numbers
         var validUsername = /^[a-zA-Z0-9]+$/.test(username);
         if (!validUsername) {
+            nextStepKet = "Username tidak boleh mengandung spasi atau karakter khusus.";
             errorMessage = 'Username tidak boleh mengandung spasi atau karakter khusus.';
         }
         // Check if the username has at least 6 characters
         if (username.length < 6) {
+            nextStepKet = "Username harus memiliki minimal 6 karakter.";
             errorMessage = 'Username harus memiliki minimal 6 karakter.';
         }
 
@@ -940,9 +948,11 @@
             document.getElementById('loader_username').style.display = 'none';
             document.getElementById('error_username').style.display = 'block';
             document.getElementById('ket_username').innerHTML = errorMessage;
+            nextStepKet = errorMessage
             finishValidate = false;
             return 'error';
         } else {
+            nextStepKet = ''
             finishValidate = true;
             return 'success';
         }        
@@ -1055,6 +1065,7 @@
                             // Tampilkan loader saat request dimulai
                             const loader = document.getElementById('loading');
                             loader.style.display = 'block';
+                            finishValidate = false;
                         },
                         success: function(data) {
                             nextStepKet = ''

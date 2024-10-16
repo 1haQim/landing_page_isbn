@@ -52,7 +52,7 @@ function kurl_upload($method, $action, $penerbit_id, $file, $ip_user) {
             'contents' => $action,
         ],
         [
-            'name'     => 'penerbitid',
+            'name'     => 'isbn_registrasi_penerbit_id',
             'contents' => $penerbit_id,
         ],
         [

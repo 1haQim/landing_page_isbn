@@ -216,9 +216,7 @@ class PendaftaranController extends Controller
                 'district_id' => 'required',
                 'village_id' => 'required',
                 'admin_phone' => 'required',
-                'admin_contact_name' => 'required',
-                'alternate_contact_name' => 'required',
-
+                'website_url' => 'required',
                 'user_name' => 'required|string|max:50',
                 'admin_email' => 'required|string|email|max:50',
                 'alternate_email' => 'required|string|email|max:50',
@@ -263,6 +261,7 @@ class PendaftaranController extends Controller
                     'jenis_id' => $request->input('jenis'),
                     'kategori_id' => $request->input('kategori_penerbit'),
                     'createby' => 'pendaftaran_online',
+                    'createterminal' => $request->ip(),
                 ]);
 
                 $dataset = $request->all();
