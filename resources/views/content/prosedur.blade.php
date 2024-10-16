@@ -24,6 +24,12 @@
     .topics-detail-block-image {
         max-width: 100%; /* Responsive image */
     }
+    .text-justify {
+        text-align: justify !important;
+    }
+    .figure-caption {
+        text-align: justify !important;
+    }
 </style>
 
 @endpush
@@ -72,13 +78,17 @@
                                     <div class="row my-4">
                                     <hr>
                                     @foreach($group['items'] as $item)
-                                        @if(!empty($item['HREF']))
-                                        <div class="col-lg-4 col-md-6 col-12" >
+                                        <div class="col-lg-6 col-md-6 col-12 mb-5">
+                                            <center><p>{{ $item['NOMOR']. ' ' }} - {{ $item['TITLE'] }}</p></center>
+                                            @if($item['HREF'])
                                             <img src="{{ config('app.url').'/prosedur/'.$item['HREF']}}" class="topics-detail-block-image img-fluid">
-                                            <br>
-                                            <center><p>{{ $item['NOMOR']. ' ' }} {{ $item['TITLE'] }}</p></center>
+                                            <figcaption class="figure-caption text-center">Image. {{  $item['NOMOR'] }} - {{ $item['IMAGE_DESC'] }}</figcaption>
+                                            @endif
+                                            @if(isset($item['DESCRIPTION']) && $item['DESCRIPTION'] != $item['IMAGE_DESC'])
+                                            Deskripsi :
+                                            <figcaption class="figure-caption text-justify">{!! $item['DESCRIPTION'] !!}</figcaption>
+                                            @endif
                                         </div>
-                                        @endif
                                     @endforeach 
                                     </div>
                                 </div>

@@ -9,9 +9,11 @@ class ProsedurController extends Controller
 {
     function index() {
 
-        $data = kurl('GET','getlist', 'ISBN_INFO_PROCEDURE', null, 'KriteriaFilter'); 
+        $filter = [
+            ["name"=>"VISIBLE","Value"=>"1","SearchType"=>"Tepat"]
+        ];
+        $data = kurl('GET','getlist', 'ISBN_INFO_PROCEDURE', $filter, 'KriteriaFilter'); 
         $response = $data['Data']['Items'];
-
 
         if ($data['Data']['Items']) {
             $menu_header = [];
