@@ -115,16 +115,16 @@
                         
                         <div class="data-tables" style="margin-top:50px">
                             <table id="dataTable" class="display responsive dataTable no-footer dtr-inline">
-                                <thead class="text-center">
+                                <thead>
                                     <tr>
-                                        <th>Judul</th>
-                                        <th>Kepengarangan</th>
-                                        <th>Tahun</th>
-                                        <th>ISBN</th>
-                                        <th style="white-space: nowrap;">Tempat Terbit</th>
-                                        <th>Penerbit</th>
-                                        <th>Jumlah Jilid</th>
+                                        <th class="text-center">Judul</th>
                                         <th>Seri</th>
+                                        <th>Kepengarangan</th>
+                                        <th>Penerbit</th>
+                                        <th class="text-center">ISBN</th>
+                                        <th>Tahun</th>
+                                        <th style="white-space: nowrap;">Tempat Terbit</th>
+                                        <th>Jumlah Jilid</th>
                                         <th>Link Buku</th>
                                         <th>Link KDT</th>
                                     </tr>
@@ -321,18 +321,20 @@ $('#customSearchField').on('keyup', function() {
                         return '<span style="width:200px">' + data + '</span>';
                     }
                 },
+                { data: 'SERI' },
                 { data: 'KEPENG' },
-                { data: 'TAHUN_TERBIT' },
+                { data: 'NAMA_PENERBIT' },
                 { 
                     data: 'ISBN_NO',
                     render: function(data, type, row) {
                         return '<span style="white-space: nowrap;">' + data + '</span>';
                     }
                 },
+                { data: 'TAHUN_TERBIT' },
                 { data: 'TEMPAT_TERBIT' },
-                { data: 'NAMA_PENERBIT' },
+                
                 { data: 'JML_JILID' },
-                { data: 'SERI' },
+                
                 { 
                     data: 'LINK_BUKU',
                     render: function(data, type, row) {
@@ -379,9 +381,6 @@ $('#customSearchField').on('keyup', function() {
             success: function(response) {
                 // Load the response into the modalContent div
                 $('#modalContent').html(response);
-
-                $('#modalContent header').remove();
-                $('#modalContent footer').remove();
             },
             error: function() {
                 // Handle error case
