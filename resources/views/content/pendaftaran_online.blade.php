@@ -1,10 +1,12 @@
 @extends('index')
 
 @push('styles')
-    <link href="{{ asset('template/css/pendaftaran.css') }}" rel="stylesheet">
-    <link href="{{ asset('template/css/pendaftaran_styling.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css">
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="{{ asset('template/css/pendaftaran/pendaftaran.css') }}" rel="stylesheet">
+    <link href="{{ asset('template/css/pendaftaran/pendaftaran_styling.css') }}" rel="stylesheet">
+    <link href="{{ asset('template/css/pendaftaran/dropzone.min.css') }}" rel="stylesheet" >
+     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css"> -->
+    <link href="{{ asset('template/css/pendaftaran/select2.min.css') }}" rel="stylesheet" />
+    
     <style>
         #captcha .preview{
             color: #555;
@@ -198,7 +200,7 @@
             location.reload(); // Reload the page to generate new suggestions
         }
     </script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    
 @endpush
 
 @section('content')
@@ -218,13 +220,11 @@
         <div class="row ">
             <div class="col-lg-12 col-md-12 col-12 mb-12 mb-lg-12">
                 <div class="custom-block bg-white shadow-lg">
-                    
                     <form id="contact" action="#">
-
                         <div>
                             <h3>Penerbit</h3>
                             <section>
-                                <label for="name">Penerbit  *</label> <br>
+                                <label for="name" class="flex-row">Penerbit <p style="color:red; display:inline;">*</p></label> <br>
                                 @foreach ($kategori as $kat)
                                 <label>
                                     <input type="radio" id="{{ $kat['NAME']}}" value="{{ $kat['ID']}}" onclick="kat_penerbit(this)" name="kategori_penerbit" required/>
@@ -238,7 +238,7 @@
                                 <div class="col-lg-12 col-md-12 col-12 mb-12 mb-lg-12">
                                     <div class="row" id="jenis_penerbit">
                                         <div class="col-lg-4 col-md-4 col-12 mb-6 mb-lg-6">
-                                            <label for="name" style="float: ri">Jenis Penerbit  *</label>
+                                            <label for="name" class="flex-row">Jenis Penerbit  <p style="color:red; display:inline;">*</p></label> 
                                         </div>
                                         <div class="col-lg-8 col-md-8 col-12 mb-6 mb-lg-6" id="if_swasta">
                                             <!-- data diambil dari ajax -->
@@ -254,7 +254,7 @@
                                 </div>
                                 <div class="row" id="jenis_penerbit">
                                     <div class="col-lg-4 col-md-4 col-12 mb-6 mb-lg-6">
-                                        <label for="name" style="float: ri">File Pernyataan  *</label>
+                                        <label for="name" class="flex-row">File Pernyataan  <p style="color:red; display:inline;">*</p></label> 
                                     </div>
                                     <div class="col-lg-8 col-md-8 col-12 mb-6 mb-lg-6">
                                         <div id="dropzone1" class="dropzone">
@@ -270,7 +270,7 @@
                                 <div id="form-akta" >
                                     <div class="row" id="jenis_penerbit" >
                                         <div class="col-lg-4 col-md-4 col-12 mt-6 mt-lg-6">
-                                            <label for="name" style="float: ri">File Akta  *</label>
+                                            <label for="name" class="flex-row">File Akta  <p style="color:red; display:inline;">*</p></label>
                                         </div>
                                         <div class="col-lg-8 col-md-8 col-12 mb-6 mb-lg-6">
                                             <div id="dropzone2" class="dropzone">
@@ -285,7 +285,7 @@
                             <section>
                                 <div class="form-row row" style="margin-top:90px">
                                     <div class="col">
-                                        <label for="nama_penerbit" style="color:black">Nama Penerbit*</label>
+                                        <label for="name" class="flex-row">Nama Penerbit  <p style="color:red; display:inline;">*</p></label> 
                                         <div class="inputcontainer">
                                             <input type="text" placeholder="Nama Penerbit" class="form-control" onchange="checkDataExisting('nama_penerbit',this.value)" id="nama_penerbit" name="nama_penerbit"  required>
                                             <div class="icon-container">
@@ -312,13 +312,13 @@
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
-                                        <label for="nm_jalan" style="color:black">Nama Jalan*</label>
+                                        <label for="name" class="flex-row">Nama Jalan  <p style="color:red; display:inline;">*</p></label> 
                                         <input type="text" placeholder="Nama Jalan" class="form-control" id="nm_jalan" name="alamat_penerbit" required >
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
-                                        <label for="provinsi" style="color:black">Provinsi*</label>
+                                        <label for="name" class="flex-row">Provinsi <p style="color:red; display:inline;">*</p></label> 
                                         <select id="provinsi" style="width: 100%;" class="form-control select2" name="province_id" onchange="get_wilayah_prov('kab_kot',this.value)" required>
                                             <option value="" disabled="disabled" selected>Pilih Provinsi </option>
                                             @foreach($provinsi as $prov)
@@ -327,7 +327,7 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="kab_kot" style="color:black">Kabupaten / Kota*</label>
+                                        <label for="name" class="flex-row">Kabupaten / Kota <p style="color:red; display:inline;">*</p></label> 
                                         <select id="kab_kot" style="width: 100%;" class="form-control select2" name="city_id" onchange="get_wilayah_prov('kec',this.value)" required>
                                             
                                         </select>
@@ -335,13 +335,13 @@
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="" style="color:black">Kecamatan*</label>
+                                        <label for="name" class="flex-row">Kecamatan <p style="color:red; display:inline;">*</p></label> 
                                         <select id="kec" style="width: 100%;" class="form-control select2" name="district_id" onchange="get_wilayah_prov('kel',this.value)" required>
                                            
                                         </select>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="" style="color:black">Kelurahan*</label>
+                                        <label for="name" class="flex-row">Kelurahan <p style="color:red; display:inline;">*</p></label> 
                                         <select id="kel" style="width: 100%;" class="form-control select2" name="village_id" required>
                                            
                                         </select>
@@ -350,7 +350,7 @@
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="Telephone" style="color:black">Telephone*</label>
+                                        <label for="name" class="flex-row">Telephone <p style="color:red; display:inline;">*</p></label> 
                                         <input type="number" placeholder="Telephone" class="form-control" id="" name="admin_phone" required>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
@@ -360,14 +360,14 @@
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
-                                        <label for="nm_admin" style="color:black">Nama Admin*</label>
+                                        <label for="name" class="flex-row">Nama Admin <p style="color:red; display:inline;">*</p></label> 
                                         <input type="text" placeholder="Nama Admin" class="form-control" id="nm_admin" name="admin_contact_name" required>
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="form-holder">
-                                        <label for="" style="color:black">Admin Alternatif*</label>
-                                        <input type="text" placeholder="Admin Alternatif" class="form-control" id="" name="alternate_contact_name"  required>
+                                        <label for="" style="color:black">Admin Alternatif</label>
+                                        <input type="text" placeholder="Admin Alternatif" class="form-control" id="" name="alternate_contact_name">
                                     </div>
                                     <div class="form-holder">
                                         <label for="" style="color:black">Telephone Alternatif</label>
@@ -376,18 +376,17 @@
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="form-holder form-holder-2">
-                                        <label for="website" style="color:black">Website</label>
-                                        <input type="text" placeholder="Website" class="form-control" id="website" name="website_url" >
+                                        <label for="name" class="flex-row">Website <p style="color:red; display:inline;">*</p></label> 
+                                        <input type="text" placeholder="Website" class="form-control" id="website" name="website_url" required>
                                     </div>
                                 </div>
-                                
                                 <p>(*) Mandatory</p>
                             </section>
                             <h3>Akun</h3>
                             <section>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col">
-                                        <label for="username" style="color:black">Username*</label>
+                                        <label for="name" class="flex-row">Username <p style="color:red; display:inline;">*</p></label> 
                                         <div class="inputcontainer">
                                             <input type="text" placeholder="Username" class="form-control" onchange="checkDataExisting('username',this.value)" id="username" name="user_name"  required>
                                             <div class="icon-container">
@@ -405,47 +404,45 @@
                                         <span id="ket_username" style="font-size:11px; color:red"></span>
                                     </div>
                                 </div>  
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <label for="name" class="flex-row">Email <p style="color:red; display:inline;">*</p></label> 
+                                    <div class="inputcontainer">
+                                        <input type="text" placeholder="Email" class="form-control" id="email" name="admin_email" onchange="checkDataExisting('admin_email',this.value)" required>
+                                        <div class="icon-container">
+                                            <i class="loader" id="loader_admin_email" style="display: none"></i>
+                                            <svg class="checkmark" id="success_admin_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                            </svg>
+                                            <svg class="checkmark1" id="error_admin_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
+                                                <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <span id="ket_admin_email" style="font-size:11px; color:red"></span>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <label for="name" class="flex-row">Email Alternatif<p style="color:red; display:inline;">*</p></label> 
+                                    <div class="inputcontainer">
+                                        <input type="text" placeholder="Email Alternatif" class="form-control" id="email_alternatif" name="alternate_email" onchange="checkDataExisting('alternatif_email',this.value)" required>
+                                        <div class="icon-container">
+                                            <i class="loader" id="loader_alternatif_email" style="display: none"></i>
+                                            <svg class="checkmark" id="success_alternatif_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                            </svg>
+                                            <svg class="checkmark1" id="error_alternatif_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
+                                                <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <span id="ket_alternatif_email" style="font-size:11px; color:red"></span>
+                                </div>
                                 <div class="form-row row" style="margin-top:108px">
                                     <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="email" style="color:black">Email*</label>
-                                        <div class="inputcontainer">
-                                            <input type="text" placeholder="Email" class="form-control" id="email" name="admin_email" onchange="checkDataExisting('admin_email',this.value)" required>
-                                            <div class="icon-container">
-                                                <i class="loader" id="loader_admin_email" style="display: none"></i>
-                                                <svg class="checkmark" id="success_admin_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                                                </svg>
-                                                <svg class="checkmark1" id="error_admin_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                                    <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
-                                                    <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <span id="ket_admin_email" style="font-size:11px; color:red"></span>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="email" style="color:black">Email Alternatif*</label>
-                                        <div class="inputcontainer">
-                                            <input type="text" placeholder="Email Alternatif" class="form-control" id="email_alternatif" name="alternate_email" onchange="checkDataExisting('alternatif_email',this.value)" required>
-                                            <div class="icon-container">
-                                                <i class="loader" id="loader_alternatif_email" style="display: none"></i>
-                                                <svg class="checkmark" id="success_alternatif_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                                                </svg>
-                                                <svg class="checkmark1" id="error_alternatif_email" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                                    <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
-                                                    <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <span id="ket_alternatif_email" style="font-size:11px; color:red"></span>
-                                    </div>
-                                </div>  
-                                <div class="form-row row" style="margin-top:108px">
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="password" style="color:black">Password*</label>
+                                        <label for="name" class="flex-row">Password<p style="color:red; display:inline;">*</p></label> 
                                         <div class="input-group mb-3">
                                             <input type="password" placeholder="Password" class="form-control" id="password" name="password"  onchange="validasi_password(this.value)" required>
                                             <span class="input-group-text">
@@ -454,7 +451,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="confirm_password" style="color:black">Confirm Password*</label>
+                                        <label for="name" class="flex-row">Confirm Password<p style="color:red; display:inline;">*</p></label> 
                                         <div class="input-group mb-3">
                                         <input type="password" placeholder="Confirm Password" class="form-control" id="confirm_password" name="password2" onchange="confirm_password_onchange(this.value)" required>
                                             <span class="input-group-text">
@@ -598,10 +595,11 @@
 </script>
 
 <!-- Select2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{ asset('template/js/pendaftaran/select2.min.js') }}"></script>
 <script>
     var kategoriPenerbitGlobal = 0; // 0 adalah penerbit swasta
     var nextStep = true; // validasi next step
+    var nextStepKet = ''; // validasi next step
     var finishValidate = true; // validasi finish
 
     // validasi kategori penerbit
@@ -613,47 +611,58 @@
             document.getElementById('form-akta').style.display = 'block';
         }
         //untuk get data jenis penerbit
-        $.ajax({
-            url: "{{ route('jenis_penerbit') }}",
-            type: 'GET',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: 'json',
-            data : {
-                'kategori' : radio.value
-            },
-            beforeSend: function() {
-                // Tampilkan loader saat request dimulai
-                const loader = document.getElementById('loading');
-                loader.style.display = 'block';
-            },
-            success: function(data) {
-                var htmlJenis = '';
-                if (data.code == 200) {
+        function fetchData() {
+            nextStepKet = ''
+            nextStep = true;
+            $.ajax({
+                url: "{{ route('jenis_penerbit') }}",
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                data : {
+                    'kategori' : radio.value
+                },
+                beforeSend: function() {
+                    // Tampilkan loader saat request dimulai
                     const loader = document.getElementById('loading');
-                    loader.style.display = 'none';
-                    data.content.forEach(function(item) {
-                        htmlJenis += `
-                            <label>
-                                <input type="radio" value="`+item.ID+`" name="jenis" required/>
-                                <span>`+item.NAME+`</span>
-                            </label><br>
-                        `
-                    });
-                    document.getElementById('pilihan_jenis_penerbit').innerHTML = htmlJenis
-                } else {
-                    alert('error get jenis penerbit')
+                    loader.style.display = 'block';
+                },
+                success: function(data) {
+                    
+                    var htmlJenis = '';
+                    if (data.code == 200) {
+                        const loader = document.getElementById('loading');
+                        loader.style.display = 'none';
+                        data.content.forEach(function(item) {
+                            htmlJenis += `
+                                <label>
+                                    <input type="radio" value="`+item.ID+`" name="jenis" required/>
+                                    <span>`+item.NAME+`</span>
+                                </label><br>
+                            `
+                        });
+                        document.getElementById('pilihan_jenis_penerbit').innerHTML = htmlJenis
+                    } else {
+                        alert('error get jenis penerbit')
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    const userConfirmed = confirm('Periksa koneksi Anda. Apakah Anda ingin mencoba lagi?');
+                    if (userConfirmed) {
+                        fetchData(); // Jika pengguna ingin mencoba lagi, jalankan ulang request
+                    } else {
+                        nextStep = false;
+                        nextStepKet = "periksa konesi anda";
+                        const loader = document.getElementById('loading');
+                        loader.style.display = 'none'; // Sembunyikan loader
+                    }
+                    console.error('AJAX error:', textStatus, errorThrown);
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                const userConfirmed = confirm('Koneksi Anda tidak terhubung ke internet. Apakah Anda ingin memuat ulang halaman?');
-                if (userConfirmed) {
-                    location.reload(); // Reload the page if user clicks "Yes"
-                }
-                console.error('AJAX error:', textStatus, errorThrown);
-            }
-        })
+            })
+        }
+        fetchData();
     }
 
     //select2 pemilihan wilayah
@@ -691,45 +700,91 @@
             var item_var = 'NAMAPROPINSI'
         }
         //get api data berdasarkan filter req
-        $.ajax({
-            url: "{{ route('get_wilayah') }}",
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: 'json',
-            data: req_data,
-            success: function(data) {
-                var selectElement = document.getElementById(name);
-                // Clear existing options
-                selectElement.innerHTML = '';
-                // Tambahkan opsi default "Pilih Wilayah"
-                var defaultOption = document.createElement('option');
-                defaultOption.text = 'Pilih Wilayah';
-                defaultOption.value = ''; 
-                defaultOption.disabled = true; 
-                defaultOption.selected = true; 
-                selectElement.add(defaultOption);
-                // Use forEach to loop through each item in the array
-                data.forEach(function(item) {
-                    // Create a new option element
-                    var newOption = document.createElement('option');
-                    newOption.text = toTitleCase(item[item_var]);
-                    newOption.value = item.ID;
-                    // Add the option to the select element
-                    selectElement.add(newOption);
-                });
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                const userConfirmed = confirm('Koneksi Anda tidak terhubung ke internet. Apakah Anda ingin memuat ulang halaman?');
-                if (userConfirmed) {
-                    location.reload(); // Reload the page if user clicks "Yes"
+        function fetchData() {
+            nextStepKet = ''
+            nextStep = true;
+            $.ajax({
+                url: "{{ route('get_wilayah') }}",
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                data: req_data,
+                success: function(data) {
+                    nextStepKet = ''
+                    var selectElement = document.getElementById(name);
+                    // Clear existing options
+                    selectElement.innerHTML = '';
+                    // Tambahkan opsi default "Pilih Wilayah"
+                    var defaultOption = document.createElement('option');
+                    defaultOption.text = 'Pilih Wilayah';
+                    defaultOption.value = ''; 
+                    defaultOption.disabled = true; 
+                    defaultOption.selected = true; 
+                    selectElement.add(defaultOption);
+                    // Use forEach to loop through each item in the array
+                    data.forEach(function(item) {
+                        // Create a new option element
+                        var newOption = document.createElement('option');
+                        newOption.text = toTitleCase(item[item_var]);
+                        newOption.value = item.ID;
+                        // Add the option to the select element
+                        selectElement.add(newOption);
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    const userConfirmed = confirm('Periksa koneksi Anda. Apakah Anda ingin mencoba lagi?');
+                    if (userConfirmed) {
+                        fetchData(); // Jika pengguna ingin mencoba lagi, jalankan ulang request
+                    } else {
+                        const loader = document.getElementById('loading');
+                        loader.style.display = 'none'; // Sembunyikan loader
+                        nextStep = false;
+                        nextStepKet = "periksa konesi anda";
+                    }
+                    console.error('AJAX error:', textStatus, errorThrown);
                 }
-                console.error('AJAX error:', textStatus, errorThrown);
-            }
-        })
+            })
+        }
+        fetchData();
     }
     //end pemilihan wilayah
+
+    //valdiasi email
+    function validateEmail(email) {
+        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return regex.test(email);
+    }
+    //end valdiasi email
+
+    function validateDtExisting(name, ket, sts) { //name = nama field ket = set keterangan sts = gagal(0)/success (1)
+        //loader
+        document.getElementById('error_'+name).style.display = 'none';
+        document.getElementById('success_'+name).style.display = 'none';
+        document.getElementById('loader_'+name).style.display = 'block';
+        //end loader
+        console.log(sts,'atass');
+        if (sts == 1) {
+            document.getElementById('loader_'+ name).style.display = 'none';
+            document.getElementById('success_'+ name).style.display = 'block';
+            document.getElementById('error_'+ name).style.display = 'none';
+            document.getElementById('ket_'+ name).innerHTML = '';
+            document.getElementById('ket_'+ name).style.display = 'none';
+            
+        } else {
+            document.getElementById('ket_'+ name).innerHTML = ket;
+            document.getElementById('ket_'+ name).style.display = 'block';
+            document.getElementById('loader_'+ name).style.display = 'none';
+            document.getElementById('success_'+ name).style.display = 'none';
+            document.getElementById('error_'+ name).style.display = 'block';
+            
+            validate = 'error';
+            nextStep = false;
+            finishValidate = false;
+        }
+    }
+
     //check data existing username and email
     function checkDataExisting(name, value) {
         //loader
@@ -739,76 +794,132 @@
         //end loader
 
         var validate = ''
-        if (name == 'username') {
-            var req_data = { 'username' : value }
-            validate = validasi_username(value)
-        } else if (name == 'admin_email') {
-            var req_data = { 'admin_email' : value }
-        } else if (name == 'nama_penerbit') {
-            var req_data = { 'nama_penerbit' : value }
-        } else {
-            var req_data = { 'alternatif_email' : value }
-        }
-
-        if (name == 'admin_email' || name == 'alternatif_email' ) {
-            var email = document.getElementById('email').value
-            var email_alternatif = document.getElementById('email_alternatif').value
-
-            if (email == email_alternatif) {
-                document.getElementById('ket_'+ name).innerHTML = ' Email utama dan email alternatif tidak boleh sama';
-                document.getElementById('loader_'+ name).style.display = 'none';
-                document.getElementById('error_'+ name).style.display = 'block';
-                validate = 'error';
-                nextStep = false;
-                finishValidate = false;
-            } 
-        }
-
-        if (name == 'nama_penerbit') {
-            var nama_penerbit_id = document.getElementById('nama_penerbit').value
-            if (nama_penerbit_id.length < 8) {
-                document.getElementById('ket_'+ name).innerHTML = ' Nama Penerbit Harus melebihi 8 karakter';
-                document.getElementById('loader_'+ name).style.display = 'none';
-                document.getElementById('error_'+ name).style.display = 'block';
-                validate = 'error';
-                nextStep = false;
-            } 
-        }
-
-
-        if (validate != 'error') {
-            $.ajax({
-                url: "{{ route('checking_data_existing') }}",
-                type: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                dataType: 'json',
-                serverSide: true,
-                data: req_data,
-                success: function(data) {
-                    if (data.length > 0) {
-                        document.getElementById('loader_'+ name).style.display = 'none';
-                        document.getElementById('error_'+ name).style.display = 'block';
-                        document.getElementById('ket_'+ name).innerHTML = name +' sudah digunakan'
+        switch (name) {
+            case 'username':
+                var req_data = { 'username' : value }
+                validate = validasi_username(value)
+                break;
+            case 'admin_email':
+                //send params fecth api
+                var req_data = { 'admin_email' : value }
+                //validasi Email
+                var email = document.getElementById('email').value
+                var email_alternatif = document.getElementById('email_alternatif').value
+                if (validateEmail(email)) {
+                    if (email_alternatif != "" && email == email_alternatif) {
+                        var ket = ' Email utama dan email alternatif tidak boleh sama';
+                        validateDtExisting(name, ket, 0) //load validasi 
+                        validate = 'error';
                         nextStep = false;
                         finishValidate = false;
-                        // alert( name +'sudah digunakan')
-                        //nanti harus dikasih validasi tidak bisa next jika sudah digunakan
                     } else {
-                        // alert('bisa digunakan')
-                        document.getElementById('loader_'+ name).style.display = 'none';
-                        document.getElementById('success_'+ name).style.display = 'block';
-                        document.getElementById('ket_'+ name).innerHTML = '';
-                        document.getElementById('ket_'+ name).style.display = 'none';
+                        var ket = ''
+                        validateDtExisting(name, ket, 1)
+                        validate = '';
                         nextStep = true;
                         finishValidate = true;
                     }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('AJAX error:', textStatus, errorThrown); // Log any errors
+                } else {
+                    var ket = 'Email tidak valid'
+                    validateDtExisting(name, ket, 0)
+                    validate = 'error';
+                    nextStep = false;
+                    finishValidate = false;
                 }
-            });
+                break;
+            case 'alternatif_email':
+                //send params fecth api
+                var req_data = { 'alternatif_email' : value }
+                //validasi Email
+                var email = document.getElementById('email').value
+                var email_alternatif = document.getElementById('email_alternatif').value
+                if (validateEmail(email_alternatif)) {
+                    if (email != "" && email_alternatif == email) {
+                        var ket = ' Email utama dan email alternatif tidak boleh sama';
+                        validateDtExisting(name, ket, 0) //load validasi 
+                        validate = 'error';
+                        nextStep = false;
+                        finishValidate = false;
+                    } else {
+                        var ket = ''
+                        validateDtExisting(name, ket, 1)
+                        validate = '';
+                        nextStep = true;
+                        finishValidate = true;
+                    }
+                } else {
+                    var ket = 'Email tidak valid'
+                    validateDtExisting(name, ket, 0)
+                    validate = 'error';
+                    nextStep = false;
+                    finishValidate = false;
+                }
+
+                break;
+            case 'nama_penerbit':
+                //send params fecth api
+                var req_data = { 'nama_penerbit' : value }
+                //validasi nama
+                var nama_penerbit_id = document.getElementById('nama_penerbit').value
+                if (nama_penerbit_id.length < 8) {
+                    document.getElementById('ket_'+ name).innerHTML = ' Nama Penerbit Harus melebihi 8 karakter';
+                    document.getElementById('loader_'+ name).style.display = 'none';
+                    document.getElementById('error_'+ name).style.display = 'block';
+                    validate = 'error';
+                    nextStep = false;
+                } else {
+                    validate = '';
+                    nextStep = true;
+                    finishValidate = true;
+                }
+                break;
+            default:
+                break;
+        }
+
+        //End validasi Email
+
+        if (validate != 'error') {
+            function fetchData() {
+                $.ajax({
+                    url: "{{ route('checking_data_existing') }}",
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    dataType: 'json',
+                    serverSide: true,
+                    data: req_data,
+                    success: function(data) {
+                        nextStepKet = ''
+                        if (data.length > 0) {
+                            const ket = name +' sudah digunakan';
+                            validateDtExisting(name, ket, 0) //load validasi 
+                            nextStep = false;
+                            finishValidate = false;
+                        } else {
+                            var ket = ''
+                            validateDtExisting(name, ket, 1)
+                            nextStep = true;
+                            finishValidate = true;
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        const userConfirmed = confirm('Periksa koneksi Anda. Apakah Anda ingin mencoba lagi?');
+                        if (userConfirmed) {
+                            fetchData(); // Jika pengguna ingin mencoba lagi, jalankan ulang request
+                        } else {
+                            const loader = document.getElementById('loading');
+                            loader.style.display = 'none'; // Sembunyikan loader
+                            nextStep = false;
+                            finishValidate = false;
+                            nextStepKet = "periksa konesi anda";
+                        }
+                        console.error('AJAX error:', textStatus, errorThrown); // Log any errors
+                    }
+                });
+            }
+            fetchData();
         }
     }
     // END check data existing username and email
@@ -867,10 +978,9 @@
 </script>
 
 <!-- validasi form -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
+<script src="{{ asset('template/js/pendaftaran/jquery.steps.min.js') }}"></script>
+<script src="{{ asset('template/js/pendaftaran/jquery.validate.js') }}"></script>
 <script>
-    
     //form data pendaftaran
     var form = $("#contact");
     form.validate({
@@ -902,7 +1012,11 @@
             }
             if (newIndex > currentIndex) {
                 if (nextStep == false) { // != 1 adalah bukan pemerintah
-                    alert("Harap lengkapi dan periksa semua kolom sebelum melanjutkan.");
+                    if (nextStepKet != "" ) {
+                        alert("periksa konesi anda");
+                    } else {
+                        alert("Harap lengkapi dan periksa semua kolom sebelum melanjutkan.");
+                    }
                     return false; // Prevent moving to the next step
                 }
             }
@@ -925,36 +1039,53 @@
             if (inputcaptchavalue === captchaValue && finishValidate == true) 
             {
                 $('#contact').append('<input type="hidden" id="" name="nama_kota" value="' + $('#kab_kot option:selected').text() + '">');
-                $.ajax({
-                    url: "{{ route('submit_pendaftaran') }}",
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    dataType: 'json',
-                    data: $('#contact').serialize(),
-                    beforeSend: function() {
-                        // Tampilkan loader saat request dimulai
-                        const loader = document.getElementById('loading');
-                        loader.style.display = 'block';
-                    },
-                    success: function(data) {
-                        console.log(data, 'hakim1234 submit')
-                        if(data.status != "error"){
-                            openNewWindowWithParams() //redirect halaman otp
-                        }else{
-                            const textError = document.getElementById('text_error');
-                            textError.style.display = 'block';
+                function fetchData() {
+                    nextStepKet = ''
+                    nextStep = true;
+                    finishValidate = true;
+                    $.ajax({
+                        url: "{{ route('submit_pendaftaran') }}",
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        dataType: 'json',
+                        data: $('#contact').serialize(),
+                        beforeSend: function() {
+                            // Tampilkan loader saat request dimulai
                             const loader = document.getElementById('loading');
-                            loader.style.display = 'none';
-                            document.getElementById('text_error').innerHTML = data.message;
+                            loader.style.display = 'block';
+                        },
+                        success: function(data) {
+                            nextStepKet = ''
+                            console.log(data, 'hakim1234 submit')
+                            if(data.status != "error"){
+                                openNewWindowWithParams() //redirect halaman otp
+                            }else{
+                                const textError = document.getElementById('text_error');
+                                textError.style.display = 'block';
+                                const loader = document.getElementById('loading');
+                                loader.style.display = 'none';
+                                document.getElementById('text_error').innerHTML = data.message;
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            const userConfirmed = confirm('Periksa koneksi Anda. Apakah Anda ingin mencoba lagi?');
+                            if (userConfirmed) {
+                                fetchData(); // Jika pengguna ingin mencoba lagi, jalankan ulang request
+                            } else {
+                                const loader = document.getElementById('loading');
+                                loader.style.display = 'none'; // Sembunyikan loader
+                                nextStep = false;
+                                finishValidate = false;
+                                nextStepKet = "periksa konesi anda";
+                            }
+                            console.log(textStatus, errorThrown)
+                            // console.error('AJAX error:', textStatus, errorThrown);
                         }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.log(textStatus, errorThrown)
-                        // console.error('AJAX error:', textStatus, errorThrown);
-                    }
-                })
+                    })
+                }
+                fetchData();
             }
             else
             {
@@ -1014,7 +1145,7 @@
 </script>
 
 <!-- dropzone -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
+<script src="{{ asset('template/js/pendaftaran/dropzone.min.js') }}"></script>
 <script>
     //upload file  file_pernyataan
     var uploadedImages1 = false;
