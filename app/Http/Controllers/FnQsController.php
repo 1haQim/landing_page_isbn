@@ -53,7 +53,7 @@ class FnQsController extends Controller
                         ';
                     }
                 } else {
-                    $cardHtml .= '<div class="custom-block custom-block-topics-listing bg-white shadow-lg mb-5">
+                    $cardHtml .= '<div class="custom-block custom-block-topics-listing bg-white shadow-lg mb-5 mt-5">
                                 <div class="d-flex" >
                                     <div class="custom-block-topics-listing-info d-flex">
                                         <div >

@@ -38,6 +38,14 @@
             getData();
         })
         
+        // Menambahkan event listener untuk menangani tombol Enter
+        document.getElementById('keyword_pencarian').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Mencegah form disubmit secara default
+                handleClickPencarianFaq(); // Memanggil fungsi handleClickSearch
+            }
+        });
+
         function handleClickPencarianFaq() {
             //keyword pencarian
             var keyword_pencarian = $("#keyword_pencarian").val();
