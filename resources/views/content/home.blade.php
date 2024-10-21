@@ -5,6 +5,7 @@
     .dropdown {
         position: relative;
         display: inline-block;
+        margin-top:2.5px;
     }
 
     .dropdown-button {
