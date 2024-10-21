@@ -192,7 +192,53 @@
                 margin-top: 15%;
             }
         }
+        /* checkbox  */
+        /* Reset the default checkbox appearance */
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            position: relative;
+        }
 
+        /* Add custom styles for the checked state */
+        input[type="checkbox"]:checked {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        /* Add a checkmark when checked */
+        input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 5px;
+            width: 6px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Flexbox container to align checkbox and label */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Style the label */
+        .checkbox-container label {
+            margin-left: 8px;
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+        }
     </style>
     
     <script>
@@ -388,18 +434,22 @@
                                     <div class="col">
                                         <label for="name" class="flex-row">Username <p style="color:red; display:inline;">*</p></label> 
                                         <div class="inputcontainer">
-                                            <input type="text" placeholder="Username" class="form-control" onchange="checkDataExisting('username',this.value)" id="username" name="user_name"  required>
-                                            <div class="icon-container">
-                                                <i class="loader" id="loader_username" style="display: none"></i>
-                                                <svg class="checkmark" id="success_username" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                                                </svg>
-                                                <svg class="checkmark1" id="error_username" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                                                    <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
-                                                    <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
-                                                </svg>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon2" onclick="GenerateUsername()"  style="cursor: pointer;">Generate</span>
+                                                <input type="" placeholder="Generate Username" class="form-control" id="hasilGenerateUsername" name="user_name" readonly required>
+                                                <div class="icon-container">
+                                                    <i class="loader" id="loader_username" style="display: none"></i>
+                                                    <svg class="checkmark" id="success_username" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                                        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                                    </svg>
+                                                    <svg class="checkmark1" id="error_username" style="display: none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                        <circle class="checkmark__circle1" cx="26" cy="26" r="25" fill="none" />
+                                                        <path class="checkmark__circle1" fill="none" d="M16 16 36 36 M36 16 16 36" />
+                                                    </svg>
+                                                </div>
                                             </div>
+                                            <!-- <input type="text" placeholder="Username" class="form-control" onchange="checkDataExisting('username',this.value)" id="username" name="user_name"  required> -->
                                         </div>
                                         <span id="ket_username" style="font-size:11px; color:red"></span>
                                     </div>
@@ -476,7 +526,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms" >I agree with the Terms and Conditions.</label>
+                                <div class="checkbox-container">
+                                    <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required">
+                                    <label for="acceptTerms" class="mt-2">I agree with the Terms and Conditions.</label>
+                                </div>
                                 <center>
                                     <div id="loading" style="display:none">
                                         <div id="loader"></div>
@@ -497,6 +550,47 @@
 
 <!-- Form container -->
 @push('scripts')
+
+generate username
+<script>
+    function GenerateUsername(){
+        var nm_penerbit = document.getElementById('nama_penerbit').value;
+        var nm_jalan = document.getElementById('nm_jalan').value;
+
+        let wordsArrayPenerbit = nm_penerbit.split(' ');
+        let wordsArrayJalan = nm_jalan.split(' ');
+
+        let nameList = wordsArrayPenerbit.concat(wordsArrayJalan); 
+        var finalName = randName(nameList)
+        document.getElementById('hasilGenerateUsername').value = finalName;
+
+        checkDataExisting('username',finalName)
+    }
+
+    function randName(nameList){
+        let finalName = '';
+        do {
+            finalName = nameList[Math.floor( Math.random() * nameList.length )];
+            finalName += nameList[Math.floor( Math.random() * nameList.length )];
+            if ( Math.random() > 0.5 ) {
+                finalName += nameList[Math.floor( Math.random() * nameList.length )];
+            }
+
+            while (finalName.length < 6) {
+                finalName += nameList[Math.floor( Math.random() * nameList.length )];
+            }
+            //membatasi 6 charakter dari huruf
+            if (finalName.length > 6) {
+                finalName = finalName.substring(0, 6);
+            }
+            // Generate a random 2-digit number (between 10 and 99)
+            const randomTwoDigitNumber = Math.floor(Math.random() * 90) + 10;
+            finalName += randomTwoDigitNumber;
+        } while (finalName.length !== 8);
+
+        return finalName;
+    };
+</script>
 
 <!-- hide and show password -->
 <script>
@@ -583,7 +677,7 @@
             if (inputElement.type !== 'number' &&
                 inputElement.id !== 'email' &&
                 inputElement.id !== 'email_alternatif' && 
-                inputElement.id !== 'username' && 
+                inputElement.id !== 'hasilGenerateUsername' && 
                 inputElement.id !== 'confirm_password' && 
                 inputElement.id !== 'website' && 
                 inputElement.id !== 'password') {
@@ -1123,7 +1217,7 @@
         // Create hidden input fields for the parameters
         const params = {
             'admin_email': $('#email').val(),
-            'user_name': $('#username').val()
+            'user_name': $('#hasilGenerateUsername').val()
         };
 
         for (const key in params) {
