@@ -1,29 +1,80 @@
 @extends('index')
 @section('content')
 
+<style>
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-button {
+        display: inline-flex;
+        align-items: center;
+        column-gap: 0.5rem;
+        border-radius: 0.375rem;
+        background: white;
+        padding: 0.625rem 0.875rem;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        font-weight: 600;
+        color: #13547a;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        border: none;
+        outline: 1px solid #13547a;
+        cursor: pointer;
+        border-radius:20px
+    }
+    .dropdown-button:hover {
+        background: #13547a;
+        color: #fff;
+    }
+
+    .chevron-icon {
+        width: 1rem;
+        height: 1rem;
+        transform: rotate(0);
+        transition: transform 0.3s ease;
+    }
+    .chevron-icon.rotate {
+        transform: rotate(-180deg);
+    }
+
+</style>
+
 <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
     <div class="container">
         <div class="row">
             <div class="col-lg-11 col-12 mx-auto">
                 <h1 class="text-white text-center">ISBN</h1>
-                <!-- <form> -->
+                <form action="{{route('pencarian.index') }}" method="POST">
+                @csrf
                     <h6 class="text-white text-center mb-4">International Standard Book Number</h6>
                         <div class="input-group input-group-lg">
-                        <select id="filter_search" style="border-radius:100px; max-width: 250px;"  class="form-control select2">
+                        <!-- <select id="filter_search" style="border-radius:100px; max-width: 250px;"  class="form-control select2">
                             <option value="all" >Semua</option>
                             <option value="PT.TITLE" >Judul </option>
                             <option value="PT.KEPENG" >Kepengarangan </option>
                             <option value="P.NAME" >Penerbit </option>
                             <option value="PI.ISBN_NO" >ISBN </option>
-                        </select>
+                        </select> -->
+                        <div class="dropdown">
+                            <button type="button" class="dropdown-button btn-lg" data-toggle="modal" data-target="#filter">
+                                Filter
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" id="chevron" class="chevron-icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                </svg>
+                            </button>
+                        </div>
+
                         <!-- <i class="bi bi-caret-down-fill"></i> -->
                         <input style="margin-left:20px" name="keyword" type="search" class="form-control" id="keyword_pencarian" placeholder="Masukan kata untuk mencari Judul, Pengarang, Penerbit, ISBN ..." aria-label="Search">
                         <button type="submit" class="">
                         <!-- <a  class="btn custom-btn mt-2 mt-lg-3" style="background-color: #13547a;" onclick="handleClickSearch()"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a> -->
-                            <a class="nav-link" onclick="handleClickSearch()"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a>
+                            <!-- <a class="nav-link" onclick="handleClickSearch()"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a> -->
+                            <a class="nav-link"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a>
                         </button>
                     </div>
-                <!-- </form> -->
+                </form>
             </div>
         </div>
     </div>
@@ -241,28 +292,59 @@
     </div>
 </div>
 
-<!-- js data table pencarian-->
-<script>
-    function handleClickSearch() {
-        //keyword pencarian
-        var filter_by = $("#filter_search").val();
-        var keyword_pencarian = $("#keyword_pencarian").val();
+<!-- Modal pengumuman-->
+<div class="modal fade" id="filter" tabindex="-1" aria-labelledby="filter" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <form action="{{route('pencarian.index') }}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <center><h5 class="text-center">Filter Berdasarkan</h5></center>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex mb-3">
 
-        //get data pencarian
-        let url = "{{ route('pencarian.index') }}" + "?keyword=" + encodeURIComponent(keyword_pencarian) + "&filter=" + encodeURIComponent(filter_by);
+                        <div class="col-lg-12 col-md-12">
+                            <label class="form-label mb-2">Jenis Media</label>
+                            <select class="form-control "  name="jenis_media" id="options" required>
+                                <option>-- Semua --</option>
+                                <option value="1">Buku</option>
+                                <option value="2">Pdf</option>
+                                <option value="3">Epub</option>
+                                <option value="4">Audio Book</option>
+                                <option value="5">Audio Visual</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12 col-md-12 mt-3">
+                            <label class="form-label mb-2">Berdasarkan</label>
+                            <select class="form-control "  name="filter_by" id="options" required>
+                                <option value="all" >-- Semua -- </option>
+                                <option value="PT.TITLE" >Judul </option>
+                                <option value="PT.KEPENG" >Kepengarangan </option>
+                                <option value="P.NAME" >Penerbit </option>
+                                <option value="PI.ISBN_NO" >ISBN </option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12 col-md-12 mt-3">
+                            <label class="form-label mb-2">Keyword</label>
+                            <input class="form-control " placeholder="Nama Anda" id="" name="keyword" value="" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <center>
+                    <div class="dropdown">
+                        <button type="submit" class="dropdown-button btn-lg">
+                            Filter
+                        </button>
+                    </div>
+                    </center>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-        // Redirect ke URL yang dihasilkan
-        window.location.assign(url);
-    }
-
-    // Menambahkan event listener untuk menangani tombol Enter
-    document.getElementById('keyword_pencarian').addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault(); // Mencegah form disubmit secara default
-            handleClickSearch(); // Memanggil fungsi handleClickSearch
-        }
-    });
-</script>
 
 @push('scripts')
     <!-- modal pengumuman -->
@@ -271,45 +353,45 @@
             return value == null || value == undefined || value.trim() == '';
         }
         //flyer
-        document.addEventListener('DOMContentLoaded', (event) => {
-            var url = window.location.href;
-            // Extract the fragment identifier
-            var fragment = window.location.hash;
-            // You can also remove the '#' character if needed
-            var section = fragment.substring(1);
-            const appUrl = @json(config('app.url'));
-            if (EmptyString(section)) {
-                $.ajax({
-                    url: "{{ route('flyer') }}",
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    dataType: 'json',
-                    serverSide: true,
-                    success: function(data) {
-                        const pathParts = data.split('/');
-                        const filename = pathParts[pathParts.length - 1]; //krn dari server folder ikut tersimpan
-                        // var data1 = appUrl + "/template/images/HasilSKMISBN2024Periode1.jpg" 
-                        var data1 = appUrl + "/images/"+ filename //kalau live dihapus
-                        showPengumuman(data1)
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('AJAX error:', textStatus, errorThrown); // Log any errors
-                    }
-                });
-            }
-        })
-        function showPengumuman(imageUrl) {
-            // Set the image source
-            var imageElement = document.getElementById('modalImage');
-            imageElement.src = imageUrl;
-            // Wait for the image to load before showing the modal
-            imageElement.onload = function() {
-                var myModal = new bootstrap.Modal(document.getElementById('imageModalPengumuman'));
-                myModal.show();
-            };
-        }
+        // document.addEventListener('DOMContentLoaded', (event) => {
+        //     var url = window.location.href;
+        //     // Extract the fragment identifier
+        //     var fragment = window.location.hash;
+        //     // You can also remove the '#' character if needed
+        //     var section = fragment.substring(1);
+        //     const appUrl = @json(config('app.url'));
+        //     if (EmptyString(section)) {
+        //         $.ajax({
+        //             url: "{{ route('flyer') }}",
+        //             type: 'POST',
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //             },
+        //             dataType: 'json',
+        //             serverSide: true,
+        //             success: function(data) {
+        //                 const pathParts = data.split('/');
+        //                 const filename = pathParts[pathParts.length - 1]; //krn dari server folder ikut tersimpan
+        //                 // var data1 = appUrl + "/template/images/HasilSKMISBN2024Periode1.jpg" 
+        //                 var data1 = appUrl + "/images/"+ filename //kalau live dihapus
+        //                 showPengumuman(data1)
+        //             },
+        //             error: function(jqXHR, textStatus, errorThrown) {
+        //                 console.error('AJAX error:', textStatus, errorThrown); // Log any errors
+        //             }
+        //         });
+        //     }
+        // })
+        // function showPengumuman(imageUrl) {
+        //     // Set the image source
+        //     var imageElement = document.getElementById('modalImage');
+        //     imageElement.src = imageUrl;
+        //     // Wait for the image to load before showing the modal
+        //     imageElement.onload = function() {
+        //         var myModal = new bootstrap.Modal(document.getElementById('imageModalPengumuman'));
+        //         myModal.show();
+        //     };
+        // }
         //end flyer
     </script>
     

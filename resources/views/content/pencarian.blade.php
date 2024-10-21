@@ -99,15 +99,23 @@
                 <div class="card bg-white shadow-lg">
                     <div class="card-body">
                         <div class="input-group input-group-lg" >
-                            <select id="filter_search" style=" max-width: 250px;"  class="form-control select2 ">
-                                <option value="all">Semua</option>
-                                <option value="PT.TITLE" >Judul </option>
-                                <option value="PT.KEPENG" >Kepengarangan </option>
-                                <option value="P.NAME" >Penerbit </option>
-                                <option value="PI.ISBN_NO" >ISBN </option>
+                            <select id="jenis_media" style=" max-width: 200px;"  class="form-control select2 ">
+                                <option value="all" {{ $jenis_media == "all" ? 'selected' : '' }}>Semua Media</option>
+                                <option value="1" {{ $jenis_media == 1 ? 'selected' : '' }} >Buku</option>
+                                <option value="2" {{ $jenis_media == 2 ? 'selected' : '' }} >Pdf</option>
+                                <option value="3" {{ $jenis_media == 3 ? 'selected' : '' }} >Epub</option>
+                                <option value="4" {{ $jenis_media == 4 ? 'selected' : '' }} >Audio Book</option>
+                                <option value="5" {{ $jenis_media == 5 ? 'selected' : '' }} >Audio Visual</option>
+                            </select>
+                            <select id="filter_search" style=" max-width: 200px;"  class="form-control select2 ">
+                                <option value="all" {{ $filter_by == "all" ? 'selected' : '' }}>Semua Filter</option>
+                                <option value="PT.TITLE" {{ $filter_by == "PT.TITLE" ? 'selected' : '' }}>Judul </option>
+                                <option value="PT.KEPENG" {{ $filter_by == "PT.KEPENG" ? 'selected' : '' }}>Kepengarangan </option>
+                                <option value="P.NAME" {{ $filter_by == "P.NAME" ? 'selected' : '' }}>Penerbit </option>
+                                <option value="PI.ISBN_NO" {{ $filter_by == "PI.ISBN_NO" ? 'selected' : '' }}>ISBN </option>
                             </select>
                             <!-- <i class="bi bi-caret-down-fill"></i> -->
-                            <input style="margin-left:20px" id="keyword_pencarian" name="" type="search" class="form-control"  placeholder="Masukan kata untuk mencari " aria-label="Search">
+                            <input style="margin-left:20px" id="keyword_pencarian" name="" value="{{ $keyword }}" type="search" class="form-control"  placeholder="Masukan kata untuk mencari " aria-label="Search">
                             <button type="button" class="" id="searchButton" onclick="handleClickSearch()" style="background-color:rgb(1, 34, 105);border:none; border-radius:0px 10px 10px 0px">
                                 <span class="input-group-text bi-search" id="basic-addon1" style="background-color: rgb(1, 34, 105); color:white; border:none"></span>
                             </button>
@@ -166,7 +174,11 @@ $('#customSearchField').on('keyup', function() {
 <script>
     $(document).ready(function() {
         //load datatable
-        dataTables();
+        const keyword = "{{ $keyword }}" ; 
+        const filter = "{{ $filter_by }}" ;
+        const jenis_media = "{{ $jenis_media }}" ;
+
+        dataTables(filter, keyword, jenis_media);
         //end loaddata
     })
 
@@ -186,18 +198,22 @@ $('#customSearchField').on('keyup', function() {
 
             var filter2 = document.getElementById('filter_search').value
             var keyword2 = document.getElementById('keyword_pencarian').value
+            var jenis_media2 = document.getElementById('jenis_media').value 
+
             
-            dataTables(filter2, keyword2); //load data table
+            
+            dataTables(filter2, keyword2,jenis_media2); //load data table
             
         } else {
             removeActiveClass();
                 // filter data table
             const nm_penerbit = clickedLink.textContent;
             document.getElementById('penerbit_filter').value = nm_penerbit; //set value untuk filter by
-            var filter2 = document.getElementById('filter_search').value
-            var keyword2 = document.getElementById('keyword_pencarian').value
-            
-            dataTables(filter2, keyword2); //load data table
+            var filter2 = document.getElementById('filter_search').value = 'all'
+            var keyword2 = document.getElementById('keyword_pencarian').value = ''
+            var jenis_media2 = document.getElementById('jenis_media').value = 'all'
+            // dataTables(filter2, keyword2); //load data table
+            dataTables();
 
             
             clickedLink.classList.add('active');
@@ -229,8 +245,10 @@ $('#customSearchField').on('keyup', function() {
             document.getElementById('kota_filter').value = ""; //set value untuk filter by
             var filter1 = document.getElementById('filter_search').value
             var keyword1 = document.getElementById('keyword_pencarian').value
+            var jenis_media1 = document.getElementById('jenis_media').value
             
-            dataTables(filter1, keyword1); //load data table
+            
+            dataTables(filter1, keyword1, jenis_media1); //load data table
         } else {
             removeActiveClassKota(); //remove aktif
             clickedLinkKota.classList.add('active'); // add new aktif
@@ -239,10 +257,12 @@ $('#customSearchField').on('keyup', function() {
             const nm_kota = listItem.childNodes[0].textContent.trim();
             document.getElementById('kota_filter').value = nm_kota; //set value untuk filter by
 
-            var filter1 = document.getElementById('filter_search').value
-            var keyword1 = document.getElementById('keyword_pencarian').value
+            var filter1 = document.getElementById('filter_search').value = 'all';
+            var keyword1 = document.getElementById('keyword_pencarian').value = '';
+            var jenis_media1 = document.getElementById('jenis_media').value = 'all'
             
-            dataTables(filter1, keyword1); //load data table
+            // dataTables(filter1, keyword1); //load data table
+            dataTables();
         }
     }
 
@@ -255,37 +275,8 @@ $('#customSearchField').on('keyup', function() {
         });
     });
 
-    function dataTables(params = null, keyword = null) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const keyword_pencarian = urlParams.get('keyword');
-        const filter_by = urlParams.get('filter');
-
-        var setFilter = document.getElementById('filter_search').value
-
-        if (filter_by) {
-            var filter_by1 = filter_by
-            // var keyword1 = document.getElementById('keyword_pencarian').value
-        } else {
-            if (params) {
-                var filter_by1 = params;
-            } else {
-                var filter_by1 = 'all';
-            }
-        }
-
-        // console.log(filter_by1,'filter');
-
-        if (keyword_pencarian) {
-            document.getElementById('keyword_pencarian').value = keyword_pencarian;
-        } else {
-            document.getElementById('keyword_pencarian').value = keyword;
-        }
-
+    function dataTables(params = null, keyword = null, jenis_media = null) {
         
-        document.getElementById('filter_search').value = filter_by1;
-       
-        window.history.replaceState({}, document.title, window.location.pathname);
-
         if ($.fn.DataTable.isDataTable('#dataTable')) {
             $('#dataTable').DataTable().destroy();
         }
@@ -300,8 +291,9 @@ $('#customSearchField').on('keyup', function() {
                     // Calculate the current page and send it to the server
                     d.page = (d.start / d.length) + 1; // Current page (1-based)
                     d.pageSize = d.length; // Number of records per page
-                    d.search = document.getElementById('keyword_pencarian').value; // Pencarian global
-                    d.filter_by = filter_by1;
+                    d.search = keyword; // Pencarian global
+                    d.filter_by = params;
+                    d.jenis_media = jenis_media;
                     d.by_penerbit = document.getElementById('penerbit_filter').value;
                     d.by_kota = document.getElementById('kota_filter').value;
                 },
@@ -395,12 +387,16 @@ $('#customSearchField').on('keyup', function() {
             event.preventDefault(); // Mencegah form disubmit secara default
 
             var filter_by = document.getElementById('filter_search').value;
-
             if (filter_by == null || filter_by == '') {
                 filter_by = 'all';
             }
+
+            var jenis_media = document.getElementById('jenis_media').value;
+            if (jenis_media == null || jenis_media == '') {
+                jenis_media = 'all';
+            }
                 
-            dataTables(filter_by, document.getElementById('keyword_pencarian').value); //load data table
+            dataTables(filter_by, document.getElementById('keyword_pencarian').value, jenis_media); //load data table
             // handleClickSearch(); // Memanggil fungsi handleClickSearch
         }
     });
@@ -413,7 +409,12 @@ $('#customSearchField').on('keyup', function() {
         }
         var keyword_pencarian = document.getElementById('keyword_pencarian').value;
 
-        dataTables(filter_by, keyword_pencarian); //load data table
+        var jenis_media = document.getElementById('jenis_media').value;
+        if (jenis_media == null || jenis_media == '') {
+            jenis_media = 'all';
+        }
+
+        dataTables(filter_by, keyword_pencarian, jenis_media); //load data table
        
     }
     

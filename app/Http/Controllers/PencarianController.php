@@ -5,14 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\DB;
 
 
 class PencarianController extends Controller
 {
-    function index() {
+    function index(Request $request) {
 
         $kotaPopuler = $this->kota_penerbit_terbanyak();
         $penerbitPopuler = $this->penerbit_terbanyak();
+
+        if($request->isMethod('post')){
+
+            $keyword = $request->input('keyword');
+            $filter_by = $request->input('filter_by'); // Filter berdasarkan pilihan user
+            $jenis_media = $request->input('jenis_media');
+            return view('content.pencarian',compact('kotaPopuler','penerbitPopuler','keyword', 'filter_by', 'jenis_media'));
+        }
 
         return view('content.pencarian',compact('kotaPopuler','penerbitPopuler'));
     }
@@ -20,19 +29,25 @@ class PencarianController extends Controller
     //serverside
     function search(Request $request) {
         
-        $start = $request->input('page'); // Offset (start of the records for the current page)
-        $length = $request->input('pageSize');
+        $start = $request->input('page', 0); 
+        $length = $request->input('pageSize', 10); 
+        
+        // Calculate starting and ending row for Oracle's ROW_NUMBER
+        $startRow = ($start * $length) + 1; 
+        $endRow = $startRow + $length - 1; 
+        
 
         $keyword = $request->input('search');
         $filter_by = $request->input('filter_by'); // Search filter
+        $jenis_media = $request->input('jenis_media'); // Search filter
 
         $where = '';
         if ($filter_by == 'all' && $keyword != "") {
             $keyword = strtoupper($keyword); //upper
-            $where = "WHERE UPPER(PI.ISBN_NO) LIKE '%".$keyword."%' OR UPPER(PT.TITLE) LIKE '%".$keyword."%' OR UPPER(PT.KEPENG) LIKE '%".$keyword."%' OR UPPER(P.NAME) LIKE '%".$keyword."%'";
+            $where .= "where upper(pi.isbn_no) like '%".$keyword."%' or upper(pt.title) like '%".$keyword."%' or upper(pt.kepeng) like '%".$keyword."%' or upper(p.name) like '%".$keyword."%'";
         } else if($filter_by && $keyword != "") {
             $keyword = strtoupper($keyword); //upper
-            $where = "WHERE UPPER($filter_by) LIKE '%".$keyword."%'"; //filterby ambil dari params filter dihome
+            $where .= "where upper($filter_by) like '%".$keyword."%'"; //filterby ambil dari params filter dihome
         } else {
             $where = '';
         }
@@ -42,57 +57,65 @@ class PencarianController extends Controller
         $by_kota = strtoupper($request->input('by_kota'));
 
         //validasi 
-        $operator = $where != "" ? "AND " : "WHERE ";
+        $operator = $where != "" ? "and " : "where ";
         if ($by_penerbit && $by_kota) {
-            $where = $where . "$operator UPPER(P.NAME) ='$by_penerbit' AND UPPER(PT.TEMPAT_TERBIT) = '$by_kota'";
+            $where .= " $operator upper(p.name) ='$by_penerbit' and upper(pt.tempat_terbit) = '$by_kota'";
         } else if ($by_penerbit){
-            $where = $where . " $operator UPPER(P.NAME) ='$by_penerbit'";
+            $where .= " $operator upper(p.name) ='$by_penerbit'";
         } else if ($by_kota){
-            $where = $where . " $operator UPPER(PT.TEMPAT_TERBIT) = '$by_kota'";
+            $where .= " $operator upper(pt.tempat_terbit) = '$by_kota'";
         } else {
-            $where; //hanya mengambil filter
+            // $where; //hanya mengambil filter
         }
 
+        //filter jenis
+        if ($jenis_media != 'all' && $jenis_media != "") {
+            $operator = $where != "" ? "AND " : "WHERE ";
+            $where = $where. " $operator pt.jenis_media ='$jenis_media'";
+        } else {
+            $where;
+        }
+        
         //query
         $query = "SELECT *
             FROM (
                 SELECT 
-                    (prefix_element || '-' || publisher_element || '-' || item_element || '-' || check_digit) AS ISBN_NO,
+                    (prefix_element || '-' || publisher_element || '-' || item_element || '-' || check_digit) AS isbn_no,
                     -- PI.ISBN_NO,
-                    PT.TITLE,
-                    PT.KEPENG,
-                    PT.TEMPAT_TERBIT,
-                    PT.JML_JILID,
-                    PT.TAHUN_TERBIT,
-                    PT.SERI,
-                    PT.ID,
-                    PT.LINK_BUKU,
-                    PT.IS_KDT_VALID,
-                    P.NAME AS NAMA_PENERBIT,
-                    P.ID AS PENERBIT_ID,
-                    ROW_NUMBER() OVER (ORDER BY PI.CREATEDATE DESC) AS rnum
-                FROM PENERBIT_ISBN PI
-                JOIN PENERBIT_TERBITAN PT ON PI.PENERBIT_TERBITAN_ID = PT.ID
-                JOIN PENERBIT P ON PI.PENERBIT_ID = P.ID
+                    pt.title,
+                    pt.kepeng,
+                    pt.tempat_terbit,
+                    pt.jml_jilid,
+                    pt.tahun_terbit,
+                    pt.seri,
+                    pt.id,
+                    pt.link_buku,
+                    pt.is_kdt_valid,
+                    pt.jenis_media,
+                    p.name as nama_penerbit,
+                    p.id as penerbit_id,
+                    RANK() OVER (ORDER BY pi.createdate DESC) AS rnum
+                FROM penerbit_isbn pi
+                JOIN penerbit_terbitan pt ON pi.penerbit_terbitan_id = pt.id
+                JOIN penerbit p ON pi.penerbit_id = p.id
                 $where
-                ORDER BY PI.CREATEDATE DESC
+                ORDER BY pi.createdate DESC
             )
-            WHERE rnum BETWEEN $start AND $length";
+            WHERE rnum BETWEEN $startRow AND $endRow";
 
         //fetch api
         $data = kurl('get','getlistraw', null, $query, 'sql');
         $responseData = $data['Data'];
 
-
         // Fetch all data for total count
-        $totalQuery = "SELECT COUNT(*) as total
-            FROM PENERBIT_ISBN PI
-            JOIN PENERBIT_TERBITAN PT ON PI.PENERBIT_TERBITAN_ID = PT.ID
-            JOIN PENERBIT P ON PI.PENERBIT_ID = P.ID
-            $where
-        ";
+        $totalQuery = "SELECT count(*) as total from penerbit_isbn pi
+            join penerbit_terbitan pt on pi.penerbit_terbitan_id = pt.id
+            join penerbit p on pi.penerbit_id = p.id
+            $where";
 
         $totalData = kurl('get', 'getlistraw', null, $totalQuery, 'sql');
+        // dd($totalData);
+
         $totalRecords = $totalData['Data']['Items'][0]['TOTAL'];
 
         //Olah data
