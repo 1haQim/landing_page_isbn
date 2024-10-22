@@ -63,14 +63,20 @@ class StatistikController extends Controller
         if ($request->query('year')) {
             $tahun = $request->query('year');
         }
-        $query = "SELECT Id, (
-                    SELECT COUNT( * ) 
-                    FROM PENERBIT 
-                    WHERE
-                        PROPINSI.ID = PENERBIT.PROVINCE_ID 
-                        AND TO_CHAR( CREATEDATE, 'YYYY' ) = '$tahun' 
-                    ) AS Jumlah 
-                FROM PROPINSI ORDER BY ID";
+        $query = "SELECT 
+                PROPINSI.ID,
+                PROPINSI.NAMAPROPINSI,
+                COUNT(PROPINSI.ID) AS Jumlah
+            FROM 
+                PENERBIT_ISBN
+            INNER JOIN 
+                PENERBIT ON PENERBIT_ISBN.PENERBIT_ID = PENERBIT.ID
+            INNER JOIN 
+                PROPINSI ON PENERBIT.PROVINCE_ID = PROPINSI.ID
+            GROUP BY 
+                PROPINSI.ID, PROPINSI.NAMAPROPINSI
+                ORDER BY Jumlah DESC";
+
         try {
             // API call
             $data = kurl('get', 'getlistraw', null, $query, 'sql');
@@ -80,16 +86,35 @@ class StatistikController extends Controller
             // dd($data['Data']['Items']);
 
             //generate to data grafik
+            // $mappedIsbnData = [];
+            // foreach ($data['Data']['Items'] as $row) {
+            //     $hcKey = isset($provinceMap[$row['ID']]) ? $provinceMap[$row['ID']] : null;
+            //     if ($hcKey) {
+            //         $mappedIsbnData[] = [
+            //             'hc-key' => $hcKey,
+            //             'value' => (int) $row['JUMLAH'],
+            //         ];
+            //     }
+            // }
+
             $mappedIsbnData = [];
+
+            // Create an associative array from $data['Data']['Items'] for easier lookup
+            $itemData = [];
             foreach ($data['Data']['Items'] as $row) {
-                $hcKey = isset($provinceMap[$row['ID']]) ? $provinceMap[$row['ID']] : null;
-                if ($hcKey) {
-                    $mappedIsbnData[] = [
-                        'hc-key' => $hcKey,
-                        'value' => (int) $row['JUMLAH'],
-                    ];
-                }
+                $itemData[$row['ID']] = (int) $row['JUMLAH'];
             }
+
+            // Loop through all provinces in the provinceMap
+            foreach ($provinceMap as $provinceId => $hcKey) {
+                // Check if the province exists in the data, if not, set value to 0
+                $mappedIsbnData[] = [
+                    'hc-key' => $hcKey,
+                    'value' => isset($itemData[$provinceId]) ? $itemData[$provinceId] : 0,
+                ];
+            }
+
+
             //response
             return successResponse(content : json_encode($mappedIsbnData));
         } catch (Exception $e) {

@@ -315,7 +315,7 @@
                 console.log(response)
                 var isbnData = JSON.parse(response.content);
 
-                petaIsbnPerProvinsi(isbnData)
+                petaIsbnPerProvinsi(isbnData,isbnData[response.content.lenght - 1], isbnData[0])
             },
             error: function(xhr, status, error) {
                 console.error('AJAX Error:', status, error);
@@ -323,8 +323,11 @@
         });
     }
 
-    function petaIsbnPerProvinsi(params) {
+    function petaIsbnPerProvinsi(params, minScale, maxScale) {
         // Load the Highcharts map
+        console.log(maxScale,'max');
+        console.log(params,'peta')
+
         Highcharts.mapChart('tesMaps', {
             chart: {
                 map: 'countries/id/id-all' // Indonesia map
@@ -340,9 +343,24 @@
                 enableButtons: true
             },
             colorAxis: {
-                min: 0,
+                min: minScale,
+                // max: maxScale,
                 minColor: '#E6E7E8',
-                maxColor: '#0071A7'
+                maxColor: '#0071A7',
+                stops: [
+                    [0, '#f1f1ff'],     // Color for 0
+                    [0.25, '#ffed80'],  // Color for ~100k
+                    [0.5, '#ffd700'],   // Color for ~150k (new stop)
+                    [0.75, '#ffc000'],  // Color for ~200k
+                    [1, '#ff4d4d']      // Color for 300k
+                ],
+                tickPositions: [0, 10000, 20000, 30000, 50000], // Define positions for the ticks
+                labels: {
+                    format: '{value}k', // Add "k" for thousands
+                    formatter: function () {
+                        return this.value === 0 ? '0' : this.value / 1000 + 'k'; // Format as "0", "100k", "200k", "300k"
+                    }
+                }
             },
             series: [{
                 data: params,
@@ -356,8 +374,13 @@
                 },
                 tooltip: {
                     valueSuffix: ' ISBN Per Provinsi'
+                },
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
                 }
             }],
+            
             plotOptions: {
                 series: {
                     point: {
@@ -755,7 +778,7 @@
             processing: true, // Show processing indicator
             serverSide: true, // Enable server-side proces
             success: function(response) {
-                console.log(response.content,'hakim ')
+                // console.log(response.content,'hakim ')
                 dataIsbn(response.content);
             },
             error: function(xhr, status, error) {
