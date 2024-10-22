@@ -328,7 +328,7 @@
                         </div>
                         <div class="col-lg-12 col-md-12 mt-3">
                             <label class="form-label mb-2">Keyword</label>
-                            <input class="form-control " placeholder="Nama Anda" id="" name="keyword" value="" required/>
+                            <input class="form-control " placeholder="Masukan kata untuk mencari Judul, Pengarang, Penerbit, No ISBN" id="" name="keyword" value="" required/>
                         </div>
                     </div>
                 </div>
