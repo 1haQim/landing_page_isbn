@@ -860,7 +860,6 @@ generate username
         document.getElementById('success_'+name).style.display = 'none';
         document.getElementById('loader_'+name).style.display = 'block';
         //end loader
-        console.log(sts,'atass');
         if (sts == 1) {
             document.getElementById('loader_'+ name).style.display = 'none';
             document.getElementById('success_'+ name).style.display = 'block';
@@ -961,13 +960,13 @@ generate username
                     document.getElementById('ket_'+ name).innerHTML = ' Nama Penerbit Harus melebihi 8 karakter';
                     document.getElementById('loader_'+ name).style.display = 'none';
                     document.getElementById('error_'+ name).style.display = 'block';
-                    var ket = 'Nama Penerbit sudah terdaftar';
-                    validateDtExisting(name, ket, 1)
+                    var ket = 'Nama Penerbit Kurang Dari 8 karakter ';
+                    validateDtExisting(name, ket, 0)
                     validate = 'error';
                     nextStep = false;
                 } else {
                     var ket = ''
-                    validateDtExisting(name, ket, 0)
+                    validateDtExisting(name, ket, 1)
                     validate = '';
                     nextStep = true;
                     finishValidate = true;
