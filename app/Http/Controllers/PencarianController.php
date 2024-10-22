@@ -15,15 +15,15 @@ class PencarianController extends Controller
         $kotaPopuler = $this->kota_penerbit_terbanyak();
         $penerbitPopuler = $this->penerbit_terbanyak();
 
-        if($request->isMethod('post')){
+        //if($request->isMethod('post')){
 
             $keyword = $request->input('keyword');
             $filter_by = $request->input('filter_by'); // Filter berdasarkan pilihan user
-            $jenis_media = $request->input('jenis_media');
+            $jenis_media = $request->input('jenis_media') ? $request->input('jenis_media') : 'all';
             return view('content.pencarian',compact('kotaPopuler','penerbitPopuler','keyword', 'filter_by', 'jenis_media'));
-        }
+        //}
 
-        return view('content.pencarian',compact('kotaPopuler','penerbitPopuler'));
+        //return view('content.pencarian',compact('kotaPopuler','penerbitPopuler'));
     }
 
     //serverside
@@ -102,6 +102,7 @@ class PencarianController extends Controller
                 ORDER BY pi.createdate DESC
             )
             WHERE rnum BETWEEN $startRow AND $endRow";
+        \Log::info($query);
 
         //fetch api
         $data = kurl('get','getlistraw', null, $query, 'sql');
