@@ -8,7 +8,7 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 
 
-class PencarianController extends Controller
+class PencarianControllerOld extends Controller
 {
     function index(Request $request) {
 
@@ -18,9 +18,9 @@ class PencarianController extends Controller
         //if($request->isMethod('post')){
 
             $keyword = $request->input('keyword');
-            $filter_by = $request->input('filter_by'); // Filter berdasarkan pilihan user
+            $filter_by = $request->input('filter_by') ? $request->input('filter_by') : 'all'; // Filter berdasarkan pilihan user
             $jenis_media = $request->input('jenis_media') ? $request->input('jenis_media') : 'all';
-            return view('content.pencarian2',compact('keyword', 'filter_by', 'jenis_media'));
+            return view('content.pencarian',compact('keyword', 'filter_by', 'jenis_media'));
         //}
 
         //return view('content.pencarian',compact('kotaPopuler','penerbitPopuler'));
@@ -29,20 +29,13 @@ class PencarianController extends Controller
     //serverside
     function search(Request $request) {
         
-       // $start = $request->input('page', 0); 
-        //$length = $request->input('pageSize', 10); 
+        $start = $request->input('page', 0); 
+        $length = $request->input('pageSize', 10); 
         
         // Calculate starting and ending row for Oracle's ROW_NUMBER
-        //$startRow = ($start * $length) + 1; 
-        //$endRow = $startRow + $length - 1; 
+        $startRow = ($start * $length) + 1; 
+        $endRow = $startRow + $length - 1; 
         
-        $start  = $request->input('start');
-        $length = $request->input('length');
-        //$order  = $whereLike[$request->input('order.0.column')];
-        //$dir    = $request->input('order.0.dir');
-        //$search = $request->input('search.value');
-        //$id = session('penerbit')['ID'];
-        $end = $start + $length;
 
         $keyword = $request->input('search');
         $filter_by = $request->input('filter_by'); // Search filter
@@ -104,12 +97,12 @@ class PencarianController extends Controller
                     p.name as nama_penerbit,
                     p.id as penerbit_id
                 FROM penerbit_isbn pi
-                JOIN penerbit_terbitan pt ON pi.penerbit_terbitan_id = pt.id
-                JOIN penerbit p ON pi.penerbit_id = p.id
+                LEFT JOIN penerbit_terbitan pt ON pi.penerbit_terbitan_id = pt.id
+                LEFT JOIN penerbit p ON pi.penerbit_id = p.id
                 $where
             ) inner
-            WHERE rownum <= $end ) outer where rn >$start ";
-        \Log::info($query);
+            WHERE rownum <= $endRow ) outer where rn >=$startRow ";
+
         //fetch api
         $data = kurl('get','getlistraw', null, $query, 'sql');
         $responseData = $data['Data'];
@@ -139,49 +132,7 @@ class PencarianController extends Controller
         ]);
     }
 
-    function penerbit_terbanyak(Request $request) {
-        $keyword = $request->input('search');
-        $filter_by = $request->input('filter_by'); // Search filter
-        $jenis_media = $request->input('jenis_media'); // Search filter
-
-        $where = '';
-        if ($filter_by == 'all' && $keyword != "") {
-            $keyword = strtoupper($keyword); //upper
-            $where .= "where upper(pi.isbn_no) like '%".$keyword."%' or upper(pt.title) like '%".$keyword."%' or upper(pt.kepeng) like '%".$keyword."%' or upper(p.name) like '%".$keyword."%'";
-        } else if($filter_by && $keyword != "") {
-            $keyword = strtoupper($keyword); //upper
-            if($filter_by == 'PI.ISBN_NO'){
-                $keyword = str_replace ('-', '', $keyword);
-            }
-            $where .= "where upper($filter_by) like '%".$keyword."%'"; //filterby ambil dari params filter dihome
-        } else {
-            $where = '';
-        }
-
-        //filter dari halaman pencarian 
-        $by_penerbit = strtoupper($request->input('by_penerbit'));
-        $by_kota = strtoupper($request->input('by_kota'));
-
-        //validasi 
-        $operator = $where != "" ? "and " : "where ";
-        if ($by_penerbit && $by_kota) {
-            $where .= " $operator upper(p.name) ='$by_penerbit' and upper(pt.tempat_terbit) = '$by_kota'";
-        } else if ($by_penerbit){
-            $where .= " $operator upper(p.name) ='$by_penerbit'";
-        } else if ($by_kota){
-            $where .= " $operator upper(pt.tempat_terbit) = '$by_kota'";
-        } else {
-            // $where; //hanya mengambil filter
-        }
-
-        //filter jenis
-        if ($jenis_media != 'all' && $jenis_media != "") {
-            $operator = $where != "" ? "AND " : "WHERE ";
-            $where = $where. " $operator pt.jenis_media ='$jenis_media'";
-        } else {
-            $where;
-        }
-        
+    function penerbit_terbanyak() {
         $query = "SELECT 
                 NAMA_PENERBIT, 
                 jumlah
@@ -192,15 +143,15 @@ class PencarianController extends Controller
                 FROM 
                     penerbit_terbitan PT
                 JOIN PENERBIT P ON PT.PENERBIT_ID = P.ID 
-                $where  
-                    AND PT.PENERBIT_ID IS NOT NULL 
+                WHERE 
+                    PT.PENERBIT_ID IS NOT NULL
                 GROUP BY 
                     P.NAME -- Use P.NAME in the GROUP BY instead of PENERBIT_ID
                 ORDER BY 
                     jumlah DESC
             ) 
             WHERE ROWNUM <= 5";
-        
+
         try {
             // API call
             $data = kurl('get', 'getlistraw', null, $query, 'sql');
@@ -215,48 +166,7 @@ class PencarianController extends Controller
         }
     }
 
-    function kota_penerbit_terbanyak(Request $request) {
-        $keyword = $request->input('search');
-        $filter_by = $request->input('filter_by'); // Search filter
-        $jenis_media = $request->input('jenis_media'); // Search filter
-
-        $where = '';
-        if ($filter_by == 'all' && $keyword != "") {
-            $keyword = strtoupper($keyword); //upper
-            $where .= "where upper(pi.isbn_no) like '%".$keyword."%' or upper(pt.title) like '%".$keyword."%' or upper(pt.kepeng) like '%".$keyword."%' or upper(p.name) like '%".$keyword."%'";
-        } else if($filter_by && $keyword != "") {
-            $keyword = strtoupper($keyword); //upper
-            if($filter_by == 'PI.ISBN_NO'){
-                $keyword = str_replace ('-', '', $keyword);
-            }
-            $where .= "where upper($filter_by) like '%".$keyword."%'"; //filterby ambil dari params filter dihome
-        } else {
-            $where = '';
-        }
-
-        //filter dari halaman pencarian 
-        $by_penerbit = strtoupper($request->input('by_penerbit'));
-        $by_kota = strtoupper($request->input('by_kota'));
-
-        //validasi 
-        $operator = $where != "" ? "and " : "where ";
-        if ($by_penerbit && $by_kota) {
-            $where .= " $operator upper(p.name) ='$by_penerbit' and upper(pt.tempat_terbit) = '$by_kota'";
-        } else if ($by_penerbit){
-            $where .= " $operator upper(p.name) ='$by_penerbit'";
-        } else if ($by_kota){
-            $where .= " $operator upper(pt.tempat_terbit) = '$by_kota'";
-        } else {
-            // $where; //hanya mengambil filter
-        }
-
-        //filter jenis
-        if ($jenis_media != 'all' && $jenis_media != "") {
-            $operator = $where != "" ? "AND " : "WHERE ";
-            $where = $where. " $operator pt.jenis_media ='$jenis_media'";
-        } else {
-            $where;
-        }
+    function kota_penerbit_terbanyak() {
         $query = "SELECT * FROM (
             SELECT 
                 PT.TEMPAT_TERBIT as CITY, 
@@ -264,7 +174,7 @@ class PencarianController extends Controller
             FROM PENERBIT_ISBN PI
             JOIN PENERBIT_TERBITAN PT ON PI.PENERBIT_TERBITAN_ID = PT.ID
             JOIN PENERBIT P ON PI.PENERBIT_ID = P.ID
-            $where AND PT.TEMPAT_TERBIT IS NOT NULL
+                WHERE PT.TEMPAT_TERBIT IS NOT NULL
             GROUP BY PT.TEMPAT_TERBIT
             ORDER BY JUMLAH DESC
         ) 
