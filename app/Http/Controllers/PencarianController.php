@@ -47,6 +47,9 @@ class PencarianController extends Controller
             $where .= "where upper(pi.isbn_no) like '%".$keyword."%' or upper(pt.title) like '%".$keyword."%' or upper(pt.kepeng) like '%".$keyword."%' or upper(p.name) like '%".$keyword."%'";
         } else if($filter_by && $keyword != "") {
             $keyword = strtoupper($keyword); //upper
+            if($filter_by == 'PI.ISBN_NO'){
+                $keyword = str_replace ('-', '', $keyword);
+            }
             $where .= "where upper($filter_by) like '%".$keyword."%'"; //filterby ambil dari params filter dihome
         } else {
             $where = '';
@@ -94,12 +97,11 @@ class PencarianController extends Controller
                     p.name as nama_penerbit,
                     p.id as penerbit_id
                 FROM penerbit_isbn pi
-                JOIN penerbit_terbitan pt ON pi.penerbit_terbitan_id = pt.id
-                JOIN penerbit p ON pi.penerbit_id = p.id
+                LEFT JOIN penerbit_terbitan pt ON pi.penerbit_terbitan_id = pt.id
+                LEFT JOIN penerbit p ON pi.penerbit_id = p.id
                 $where
             ) inner
             WHERE rownum <= $endRow ) outer where rn >=$startRow ";
-        //\Log::info($query);
 
         //fetch api
         $data = kurl('get','getlistraw', null, $query, 'sql');
@@ -226,5 +228,7 @@ class PencarianController extends Controller
             return [];
         }
     }
+
+    
 
 }

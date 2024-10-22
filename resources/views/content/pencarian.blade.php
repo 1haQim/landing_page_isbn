@@ -69,25 +69,16 @@
                     <div class="card-body">
                         <center><p>Top 5 Penerbit</p></center>
                         <nav id="navbar-penerbit" class="h-100 flex-column align-items-stretch pe-4 border-end">
-                            <nav class="nav nav-pills flex-column">
-                                @foreach($penerbitPopuler as $k => $v)
-                                    <a class="nav-link" href="">{{ $v['NAMA_PENERBIT'] }}</a>
-                                @endforeach
+                            <nav class="nav nav-pills flex-column" id="top5penerbit">
+                               
                             </nav>
                         </nav>
                     </div>
                     <div class="card-body">
                         <center><p>Top 5 Kota, Penerbit Terbanyak</p></center>
                         <nav id="navbar-kota" class="h-100 flex-column align-items-stretch pe-4 border-end">
-                            <nav class="nav nav-pills flex-column">
-                                @foreach($kotaPopuler as $k => $v)
-                                    <a class="nav-link" href="">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        {{ $v['CITY'] }}
-                                        <!-- <span class="badge badge-primary badge-pill" style="color:red">{{ number_format($v['JUMLAH']) }}</span> -->
-                                    </li>
-                                    </a>
-                                @endforeach
+                            <nav class="nav nav-pills flex-column" id="top5kotapenerbit">
+                                
                             </nav>
                         </nav>
                        
@@ -181,6 +172,38 @@ $('#customSearchField').on('keyup', function() {
         dataTables(filter, keyword, jenis_media);
         //end loaddata
     })
+    function generateDataPenerbitTerbanyak() {
+		$.ajax({
+            url: '{{ url("searchval/penerbit-terbanyak") }}',
+            type: 'GET',
+            contentType: false,
+            processData: false,
+			async :false,
+            success: function(response) {
+                for (var d = 0; d < response.length; d++) {
+                    $('#top5penerbit').append('<a class="nav-link" href="">'+ response[d]['NAMA_PENERBIT'] + '</a>');
+				}
+
+            },
+        });
+	};
+    function generateDataKotaPenerbitTerbanyak() {
+		$.ajax({
+            url: '{{ url("searchval/kota-penerbit-terbanyak") }}',
+            type: 'GET',
+            contentType: false,
+            processData: false,
+			async :false,
+            success: function(response) {
+                for (var d = 0; d < response.length; d++) {
+                    $('#top5kotapenerbit').append('<a class="nav-link" href=""><li class="list-group-item d-flex justify-content-between align-items-center">' +
+                                                                            response[d]['CITY'] + '</li></a>');
+				}
+            },
+        });
+	};
+    generateDataPenerbitTerbanyak();
+    generateDataKotaPenerbitTerbanyak();
 
     //link aktif untuk menu penerbit
     const navLinksPenerbit = document.querySelectorAll('#navbar-penerbit .nav-link');
@@ -284,6 +307,12 @@ $('#customSearchField').on('keyup', function() {
         var table = $('#dataTable').DataTable({
             processing: true,
             serverSide: true,
+            scrollX: true,
+			//processing: true,
+			//"searching": true,
+			//filter: false,
+			//serverSide: true,
+			destroy: true,
             ajax: {
                 url: "{{ route('pencarian.search') }}", 
                 type: 'GET', 

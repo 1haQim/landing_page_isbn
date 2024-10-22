@@ -36,6 +36,8 @@ Route::get('/isbn_info', [HomeController::class, 'isbn_info'])->name('isbn_info'
 //pencarian home
 Route::match(['get', 'post'],'search', [PencarianController::class, 'index'])->name('pencarian.index');
 Route::get('/serverside_search', [PencarianController::class, 'search'])->name('pencarian.search');
+Route::get('/searchval/penerbit-terbanyak', [PencarianController::class, 'penerbit_terbanyak']);
+Route::get('/searchval/kota-penerbit-terbanyak', [PencarianController::class, 'kota_penerbit_terbanyak']);
 //bip
 Route::get('bip', [BIPsController::class, 'index'])->name('bip.index');
 Route::get('serverside_bip', [BIPsController::class, 'serverside_bip'])->name('bip.serverside_bip');
