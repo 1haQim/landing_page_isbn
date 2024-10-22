@@ -169,8 +169,7 @@ $('#customSearchField').on('keyup', function() {
 @push('scripts')
 <script>
     $(document).ready(function() {
-        generateDataPenerbitTerbanyak();
-        generateDataKotaPenerbitTerbanyak();
+      
         //load datatable
         const keyword = "{{ $keyword }}" ; 
         const filter = "{{ $filter_by }}" ;
@@ -222,7 +221,8 @@ $('#customSearchField').on('keyup', function() {
             },
         });
 	};
-    
+    generateDataPenerbitTerbanyak();
+    generateDataKotaPenerbitTerbanyak();
 
     //link aktif untuk menu penerbit
     const navLinksPenerbit = document.querySelectorAll('#navbar-penerbit .nav-link');
