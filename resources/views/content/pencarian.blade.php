@@ -142,7 +142,6 @@
 
 
 <!-- Modal pengumuman-->
-Perpustakaan Nasional RI. Data Katalog dalam Terbitan (KDT)
 <div class="modal fade" id="imageModalPengumuman" tabindex="-1" aria-labelledby="imageModalLabelPengumuman" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
