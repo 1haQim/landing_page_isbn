@@ -258,17 +258,18 @@ class PencarianController extends Controller
             $where;
         }
         $query = "SELECT * FROM (
-            SELECT 
-                PT.TEMPAT_TERBIT as CITY, 
-                COUNT(PI.ISBN_NO) AS JUMLAH
-            FROM PENERBIT_ISBN PI
-            JOIN PENERBIT_TERBITAN PT ON PI.PENERBIT_TERBITAN_ID = PT.ID
-            JOIN PENERBIT P ON PI.PENERBIT_ID = P.ID
-            $where AND PT.TEMPAT_TERBIT IS NOT NULL
-            GROUP BY PT.TEMPAT_TERBIT
-            ORDER BY JUMLAH DESC
-        ) 
-        WHERE ROWNUM <= 5";
+                SELECT * FROM (        
+                    SELECT
+                        PT.TEMPAT_TERBIT as CITY, 
+                        COUNT(1) AS JUMLAH
+                    FROM PENERBIT_ISBN PI
+                    INNER JOIN PENERBIT_TERBITAN PT ON PI.PENERBIT_TERBITAN_ID = PT.ID
+                    $where AND PT.TEMPAT_TERBIT IS NOT NULL
+                    GROUP BY PT.TEMPAT_TERBIT
+                    ) a
+                    ORDER BY JUMLAH DESC
+                    ) b
+                    WHERE ROWNUM <= 5";
 
         try {
             // API call
