@@ -64,6 +64,7 @@ Route::get('/kota_penerbit_terbanyak', [StatistikController::class, 'kota_penerb
 Route::match(['get', 'post'],'/isbn_periode', [StatistikController::class, 'isbn_periode'])->name('isbn_periode');
 Route::get('/jenis_cetak_isbn', [StatistikController::class, 'jenis_cetak_isbn'])->name('jenis_cetak_isbn');
 Route::get('/berdasarkan_kckr', [StatistikController::class, 'berdasarkan_kckr'])->name('berdasarkan_kckr');
+Route::get('peta_provinsi', [StatistikController::class, 'peta_provinsi'])->name('peta_provinsi');
 
 
 Route::get('/pelacakan', [PelacakanController::class, 'index']);

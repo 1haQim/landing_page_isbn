@@ -353,46 +353,46 @@
         function EmptyString(value) {
             return value == null || value == undefined || value.trim() == '';
         }
-        //flyer
-        // document.addEventListener('DOMContentLoaded', (event) => {
-        //     var url = window.location.href;
-        //     // Extract the fragment identifier
-        //     var fragment = window.location.hash;
-        //     // You can also remove the '#' character if needed
-        //     var section = fragment.substring(1);
-        //     const appUrl = @json(config('app.url'));
-        //     if (EmptyString(section)) {
-        //         $.ajax({
-        //             url: "{{ route('flyer') }}",
-        //             type: 'POST',
-        //             headers: {
-        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //             },
-        //             dataType: 'json',
-        //             serverSide: true,
-        //             success: function(data) {
-        //                 const pathParts = data.split('/');
-        //                 const filename = pathParts[pathParts.length - 1]; //krn dari server folder ikut tersimpan
-        //                 // var data1 = appUrl + "/template/images/HasilSKMISBN2024Periode1.jpg" 
-        //                 var data1 = appUrl + "/images/"+ filename //kalau live dihapus
-        //                 showPengumuman(data1)
-        //             },
-        //             error: function(jqXHR, textStatus, errorThrown) {
-        //                 console.error('AJAX error:', textStatus, errorThrown); // Log any errors
-        //             }
-        //         });
-        //     }
-        // })
-        // function showPengumuman(imageUrl) {
-        //     // Set the image source
-        //     var imageElement = document.getElementById('modalImage');
-        //     imageElement.src = imageUrl;
-        //     // Wait for the image to load before showing the modal
-        //     imageElement.onload = function() {
-        //         var myModal = new bootstrap.Modal(document.getElementById('imageModalPengumuman'));
-        //         myModal.show();
-        //     };
-        // }
+        flyer
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var url = window.location.href;
+            // Extract the fragment identifier
+            var fragment = window.location.hash;
+            // You can also remove the '#' character if needed
+            var section = fragment.substring(1);
+            const appUrl = @json(config('app.url'));
+            if (EmptyString(section)) {
+                $.ajax({
+                    url: "{{ route('flyer') }}",
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    dataType: 'json',
+                    serverSide: true,
+                    success: function(data) {
+                        const pathParts = data.split('/');
+                        const filename = pathParts[pathParts.length - 1]; //krn dari server folder ikut tersimpan
+                        // var data1 = appUrl + "/template/images/HasilSKMISBN2024Periode1.jpg" 
+                        var data1 = appUrl + "/images/"+ filename //kalau live dihapus
+                        showPengumuman(data1)
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('AJAX error:', textStatus, errorThrown); // Log any errors
+                    }
+                });
+            }
+        })
+        function showPengumuman(imageUrl) {
+            // Set the image source
+            var imageElement = document.getElementById('modalImage');
+            imageElement.src = imageUrl;
+            // Wait for the image to load before showing the modal
+            imageElement.onload = function() {
+                var myModal = new bootstrap.Modal(document.getElementById('imageModalPengumuman'));
+                myModal.show();
+            };
+        }
         //end flyer
     </script>
     

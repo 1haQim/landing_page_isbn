@@ -53,6 +53,26 @@
         </div>
     </div>
 
+    <div class="container mb-4">
+        <div style="position: relative; width: 100%; height: 600px; margin: 50px 0;">
+            <!-- Dropdown filter -->
+            @php
+                $currentYear = date('Y'); // Mendapatkan tahun berjalan
+                $startYear = $currentYear - 5; // Tahun mulai (5 tahun ke belakang)
+            @endphp
+            <select id="yearFilterPeta" style="position: absolute; top: 10px; left: 10px; z-index: 1000;" onchange="fetctIsbnPerProvinsi(this.value)">
+                @for ($year = $currentYear; $year >= $startYear; $year--)
+                    <option class="mb-0 text-center" value="{{ $year }}" {{ $year == $currentYear ? 'selected' : '' }} >
+                        {{ $year }} 
+                    </option>
+                @endfor
+            </select>
+            
+            <!-- Peta -->
+            <div id="tesMaps" style="width: 100%; height: 100%;"></div>
+        </div>
+    </div>
+
     <!-- grafik  media dan kckr -->
     <div class="container mb-4">
         <div class="row">
@@ -130,7 +150,7 @@
                         <div>
                             <h5 class="mb-3 text-center">Data ISBN </h5>
                             <p class="mb-3 text-center copyright-text">
-                                Informasi tentang Data ISBN yang sudah didaftaran berdasarkan <span id="ket_dt_isbn"></span>
+                                Informasi tentang Data ISBN yang sudah didaftaran berdasarkan Tahun<span id="ket_dt_isbn"></span>
                             </p>
                         </div>
                     </div>
@@ -258,12 +278,19 @@
 
 
 
+
 <script src= "https://cdn.zingchart.com/zingchart.min.js"></script>
 <script src= "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 <script src= "https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/mapdata/countries/id/id-all.js"></script> <!-- Indonesia map -->
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        fetctIsbnPerProvinsi()
         fetctJenisCetak()
         fetctStatusKCKR()
         fetchTerbitan()
@@ -273,6 +300,77 @@
         data_isbn_propinsi();
 
     })
+
+    function fetctIsbnPerProvinsi(params = null) {
+        $.ajax({
+            url: "{{ route('peta_provinsi') }}", // Replace with your API endpoint
+            type: 'GET', // Or 'POST' depending on your API
+            dataType: 'json',
+            processing: true, // Show processing indicator
+            serverSide: true, // Enable server-side proces
+            data: {
+                year: params, // Kirim nilai dari dropdown
+            },
+            success: function(response) {
+                console.log(response)
+                var isbnData = JSON.parse(response.content);
+
+                petaIsbnPerProvinsi(isbnData)
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+            }
+        });
+    }
+
+    function petaIsbnPerProvinsi(params) {
+        // Load the Highcharts map
+        Highcharts.mapChart('tesMaps', {
+            chart: {
+                map: 'countries/id/id-all' // Indonesia map
+            },
+            title: {
+                text: 'ISBN Data per Province di Indonesia'
+            },
+            subtitle: {
+                text: 'Source: perpusnas ISBN'
+            },
+            mapNavigation: {
+                enabled: true,
+                enableButtons: true
+            },
+            colorAxis: {
+                min: 0,
+                minColor: '#E6E7E8',
+                maxColor: '#0071A7'
+            },
+            series: [{
+                data: params,
+                mapData: Highcharts.maps['countries/id/id-all'],
+                joinBy: 'hc-key', // Link the map data to your data
+                name: 'ISBN per Province',
+                states: {
+                    hover: {
+                        color: '#BADA55'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' ISBN Per Provinsi'
+                }
+            }],
+            plotOptions: {
+                series: {
+                    point: {
+                        events: {
+                            click: function() {
+                                alert(this.name + ': ' + this.value + ' ISBN Per Provinsi');
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
 
     function fetctJenisCetak(params = null) {
         $.ajax({
@@ -710,7 +808,7 @@
         var options = {
             title: {
                 display: true,
-                text: "Data ISBN per tahun/bulan",
+                text: "Data ISBN per tahun",
                 position: "bottom"
             },
             scales: {
