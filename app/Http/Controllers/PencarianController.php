@@ -12,15 +12,15 @@ class PencarianController extends Controller
 {
     function index(Request $request) {
 
-        $kotaPopuler = $this->kota_penerbit_terbanyak();
-        $penerbitPopuler = $this->penerbit_terbanyak();
+        //$kotaPopuler = $this->kota_penerbit_terbanyak();
+        //$penerbitPopuler = $this->penerbit_terbanyak();
 
         //if($request->isMethod('post')){
 
             $keyword = $request->input('keyword');
             $filter_by = $request->input('filter_by'); // Filter berdasarkan pilihan user
             $jenis_media = $request->input('jenis_media') ? $request->input('jenis_media') : 'all';
-            return view('content.pencarian',compact('kotaPopuler','penerbitPopuler','keyword', 'filter_by', 'jenis_media'));
+            return view('content.pencarian',compact('keyword', 'filter_by', 'jenis_media'));
         //}
 
         //return view('content.pencarian',compact('kotaPopuler','penerbitPopuler'));
@@ -229,6 +229,6 @@ class PencarianController extends Controller
         }
     }
 
-    
+
 
 }
