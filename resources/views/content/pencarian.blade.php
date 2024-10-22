@@ -163,7 +163,7 @@ $('#customSearchField').on('keyup', function() {
 <!-- js data table pencarian-->
 @push('scripts')
 <script>
-    $(document).ready(function() {
+    //$(document).ready(function() {
         //load datatable
         const keyword = "{{ $keyword }}" ; 
         const filter = "{{ $filter_by }}" ;
@@ -171,7 +171,7 @@ $('#customSearchField').on('keyup', function() {
 
         dataTables(filter, keyword, jenis_media);
         //end loaddata
-    })
+    //})
     function generateDataPenerbitTerbanyak() {
 		$.ajax({
             url: '{{ url("searchval/penerbit-terbanyak") }}',
