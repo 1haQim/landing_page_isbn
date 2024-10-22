@@ -54,7 +54,7 @@
     <div class="container" style="margin-top: -200px">
         <div class="row justify-content-center">
   
-            <div class="col-lg-4 col-md-6 col-12">
+            <div class="col-lg-4 col-md-4 col-12">
                 <div class="card bg-white shadow-lg" style=" position: -webkit-sticky; position: sticky; top: 20px; z-index: 1000;">
                     <div class="card-body">
                         <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end">
@@ -68,28 +68,44 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 col-md-6 col-12">
+            <div class="col-lg-8 col-md-8 col-12">
                 <div class="card bg-white shadow-lg">
                     <div class="card-body">
                         <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example-2" tabindex="0">
                             @foreach($grouped_data as $index => $group)
                                 <div class="content-section" id="item-{{ $index }}">
                                     <center><h5 class="mb-3">{{ $group['header'] }}</h5></center>
-                                    <div class="row my-4">
+                                    <div class="row d-flex ">
                                     <hr>
                                     @foreach($group['items'] as $item)
+                                        @if($item['HREF'])
+                                        <div class="card" style="width: 15rem;">
+                                            <div style="height: 200px; overflow: hidden;">
+                                                <img src="{{ config('app.url').'/prosedur/'.$item['HREF']}}" class="card-img-top" alt="..." style="height: 100%; width: 100%; object-fit: cover; object-position: center;" onclick="openModalImg('<?php echo htmlspecialchars($item['TITLE']); ?>', '{{ config('app.url').'/prosedur/'.$item['HREF'] }}', '<?php echo htmlspecialchars($item['NOMOR']); ?>', '<?php echo htmlspecialchars($item['DESCRIPTION']); ?>')">
+                                            </div>
+                                            <div class="card-body d-inline" >
+                                                {{ $item['NOMOR']. ' ' }} - {{ $item['TITLE'] }}
+                                            </div>
+                                            <button type="button" class="btn btn-sm btn-primary" onclick="openModalImg('<?php echo htmlspecialchars($item['TITLE']); ?>', '{{ config('app.url').'/prosedur/'.$item['HREF'] }}', '<?php echo htmlspecialchars($item['NOMOR']); ?>', '<?php echo htmlspecialchars($item['DESCRIPTION']); ?>')">
+                                                Lihat Detail
+                                            </button>
+                                        </div>
+                                        @endif
+                                    @endforeach 
+
+                                    <!-- @foreach($group['items'] as $item)
+                                        @if($item['HREF'])
                                         <div class="col-lg-6 col-md-6 col-12 mb-5">
                                             <center><p>{{ $item['NOMOR']. ' ' }} - {{ $item['TITLE'] }}</p></center>
-                                            @if($item['HREF'])
                                             <img src="{{ config('app.url').'/prosedur/'.$item['HREF']}}" class="topics-detail-block-image img-fluid">
                                             <figcaption class="figure-caption text-center">Image. {{  $item['NOMOR'] }} - {{ $item['IMAGE_DESC'] }}</figcaption>
-                                            @endif
                                             @if(isset($item['DESCRIPTION']) && $item['DESCRIPTION'] != $item['IMAGE_DESC'])
                                             Deskripsi :
                                             <figcaption class="figure-caption text-justify">{!! $item['DESCRIPTION'] !!}</figcaption>
                                             @endif
                                         </div>
-                                    @endforeach 
+                                        @endif
+                                    @endforeach  -->
                                     </div>
                                 </div>
                             @endforeach
@@ -103,8 +119,47 @@
     </div>
 </section>
 
+<div class="modal fade" id="sliderModal" tabindex="-1" aria-labelledby="sliderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sliderModalLabel">Slider Modal</h5>
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+            </div>
+            <div class="modal-body">
+                <!-- Slider (Carousel) -->
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner" id="carouselItems">
+                        @foreach($group['items'] as $item)
+                            @if($item['HREF'])
+                                <div class="carousel-item" >
+                                    <img src="{{ config('app.url').'/prosedur/'.$item['HREF']}}" class="d-block w-100" alt="Slide 1">
+                                </div>
+                            @endif
+                        @endforeach 
+                    </div>
+                    <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button> -->
+                </div>
+            </div>
+            <div style="padding:30px">
+                Deskripsi : <div id="sliderModalDesc"></div>
+            </div>
+            <div class="modal-footer">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-     document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
         const navLinks = document.querySelectorAll('#navbar-example3 .nav-link');
         const sections = document.querySelectorAll('.content-section');
 
@@ -152,4 +207,40 @@
             });
         });
     });
+
+    function openModalImg(title, img, no, desc){
+        var modalElement = document.getElementById('sliderModal');
+
+        document.getElementById('sliderModalLabel').innerText = title;
+        document.getElementById('sliderModalDesc').innerText = desc;
+
+        var carouselInner = document.getElementById('carouselItems');
+        carouselInner.innerHTML = ''; // Clear previous items
+
+        // Create new carousel item with image and description
+        var carouselItem = document.createElement('div');
+        carouselItem.className = 'carousel-item active'; // Set active to make this the initial slide
+
+        // Create image element
+        var imgElement = document.createElement('img');
+        imgElement.src = img; // Set image source dynamically
+        imgElement.className = 'd-block w-100';
+        imgElement.alt = title;
+
+
+        // Append image and caption to the carousel item
+        carouselItem.appendChild(imgElement);
+
+        // Append the new carousel item to the carousel-inner
+        carouselInner.appendChild(carouselItem);
+
+        // Initialize the modal with Bootstrap's Modal class
+        var modal = new bootstrap.Modal(modalElement);
+
+        modal.show();
+
+    }
+    
+
+
 </script>
