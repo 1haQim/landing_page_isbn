@@ -77,8 +77,7 @@ class PencarianController extends Controller
         }
         
         //query
-        $query = "SELECT *
-            FROM (
+        $query = "SELECT outer.* FROM (SELECT inner.*, rownum rn FROM (
                 SELECT 
                     (prefix_element || '-' || publisher_element || '-' || item_element || '-' || check_digit) AS isbn_no,
                     -- PI.ISBN_NO,
@@ -93,31 +92,29 @@ class PencarianController extends Controller
                     pt.is_kdt_valid,
                     pt.jenis_media,
                     p.name as nama_penerbit,
-                    p.id as penerbit_id,
-                    RANK() OVER (ORDER BY pi.createdate DESC) AS rnum
+                    p.id as penerbit_id
                 FROM penerbit_isbn pi
                 JOIN penerbit_terbitan pt ON pi.penerbit_terbitan_id = pt.id
                 JOIN penerbit p ON pi.penerbit_id = p.id
                 $where
-                ORDER BY pi.createdate DESC
-            )
-            WHERE rnum BETWEEN $startRow AND $endRow";
-        \Log::info($query);
+            ) inner
+            WHERE rownum <= $endRow ) outer where rn >=$startRow ";
+        //\Log::info($query);
 
         //fetch api
         $data = kurl('get','getlistraw', null, $query, 'sql');
         $responseData = $data['Data'];
 
         // Fetch all data for total count
-        $totalQuery = "SELECT count(*) as total from penerbit_isbn pi
+        $totalQuery = "SELECT count(pi.id) as total from penerbit_isbn pi
             join penerbit_terbitan pt on pi.penerbit_terbitan_id = pt.id
-            join penerbit p on pi.penerbit_id = p.id
-            $where";
+            join penerbit p on pi.penerbit_id = p.id ";
 
         $totalData = kurl('get', 'getlistraw', null, $totalQuery, 'sql');
-        // dd($totalData);
+        $totalFiltered = kurl('get', 'getlistraw', null, $totalQuery . $where, 'sql');
 
         $totalRecords = $totalData['Data']['Items'][0]['TOTAL'];
+        $totalFilteredRecords = $totalFiltered['Data']['Items'][0]['TOTAL'];
 
         //Olah data
         $data = $responseData['Items']; // Data for the current page
@@ -128,7 +125,7 @@ class PencarianController extends Controller
         return response()->json([
             'draw' => intval($request->input('draw')),
             'recordsTotal' => $totalRecords,
-            'recordsFiltered' => $totalRecords,
+            'recordsFiltered' => $totalFilteredRecords,
             'data' => $data
         ]);
     }
