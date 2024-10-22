@@ -58,22 +58,37 @@
                             <option value="P.NAME" >Penerbit </option>
                             <option value="PI.ISBN_NO" >ISBN </option>
                         </select> -->
-                        <div class="dropdown">
+                        <!-- <div class="dropdown">
                             <button type="button" class="dropdown-button btn-lg" data-toggle="modal" data-target="#filter">
                                 Filter
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" id="chevron" class="chevron-icon">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                                 </svg>
                             </button>
+                        </div> -->
+                        <div class="input-group input-group-lg" >
+                            <select id="jenis_media" style=" max-width: 200px; border-radius:30px 0px 0px 30px" name="jenis_media"  class="form-control select2 ">
+                                <option value="all">Semua Media</option>
+                                <option value="1" >Buku Cetak</option>
+                                <option value="2" >Pdf</option>
+                                <option value="3" >Epub</option>
+                                <option value="4" >Audio Book</option>
+                                <option value="5" >Audio Visual</option>
+                            </select>
+                            <select id="filter_by" style=" max-width: 200px;" name="filter_by"  class="form-control select2 ">
+                                <option value="all" >Semua Filter</option>
+                                <option value="PT.TITLE">Judul </option>
+                                <option value="PT.KEPENG" >Kepengarangan </option>
+                                <option value="P.NAME">Penerbit </option>
+                                <option value="PI.ISBN_NO">ISBN </option>
+                            </select>
+                            <input style="margin-left:20px" name="keyword" type="search" class="form-control" id="keyword_pencarian" placeholder="Masukan kata untuk mencari Judul, Pengarang, Penerbit, ISBN ..." aria-label="Search">
+                            <button type="submit" class="">
+                            <!-- <a  class="btn custom-btn mt-2 mt-lg-3" style="background-color: #13547a;" onclick="handleClickSearch()"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a> -->
+                                <!-- <a class="nav-link" onclick="handleClickSearch()"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a> -->
+                                <a class="nav-link"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a>
+                            </button>
                         </div>
-
-                        <!-- <i class="bi bi-caret-down-fill"></i> -->
-                        <input style="margin-left:20px" name="keyword" type="search" class="form-control" id="keyword_pencarian" placeholder="Masukan kata untuk mencari Judul, Pengarang, Penerbit, ISBN ..." aria-label="Search">
-                        <button type="submit" class="">
-                        <!-- <a  class="btn custom-btn mt-2 mt-lg-3" style="background-color: #13547a;" onclick="handleClickSearch()"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a> -->
-                            <!-- <a class="nav-link" onclick="handleClickSearch()"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a> -->
-                            <a class="nav-link"><span class="input-group-text bi-search" id="basic-addon1" style="color:white"></span></a>
-                        </button>
                     </div>
                 </form>
             </div>
@@ -297,8 +312,8 @@
 <div class="modal fade" id="filter" tabindex="-1" aria-labelledby="filter" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            <form action="{{route('pencarian.index') }}" method="POST">
-                @csrf
+            <!-- <form action="{{route('pencarian.index') }}" method="POST">
+                @csrf -->
                 <div class="modal-header">
                     <center><h5 class="text-center">Filter Berdasarkan</h5></center>
                 </div>
@@ -341,7 +356,7 @@
                     </div>
                     </center>
                 </div>
-            </form>
+            <!-- </form> -->
         </div>
     </div>
 </div>
@@ -353,7 +368,7 @@
         function EmptyString(value) {
             return value == null || value == undefined || value.trim() == '';
         }
-        flyer
+        // flyer
         document.addEventListener('DOMContentLoaded', (event) => {
             var url = window.location.href;
             // Extract the fragment identifier

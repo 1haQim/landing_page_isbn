@@ -18,7 +18,7 @@ class PencarianController extends Controller
         //if($request->isMethod('post')){
 
             $keyword = $request->input('keyword');
-            $filter_by = $request->input('filter_by'); // Filter berdasarkan pilihan user
+            $filter_by = $request->input('filter_by') ? $request->input('filter_by') : 'all'; // Filter berdasarkan pilihan user
             $jenis_media = $request->input('jenis_media') ? $request->input('jenis_media') : 'all';
             return view('content.pencarian',compact('keyword', 'filter_by', 'jenis_media'));
         //}

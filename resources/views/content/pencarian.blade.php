@@ -42,6 +42,12 @@
             transform: rotate(360deg); 
         }
     }
+
+    #dataTable_paginate {
+        margin-top:50px;
+        display: flex;
+        justify-content: center;
+    }
 </style>
 
 
@@ -92,7 +98,7 @@
                         <div class="input-group input-group-lg" >
                             <select id="jenis_media" style=" max-width: 200px;"  class="form-control select2 ">
                                 <option value="all" {{ $jenis_media == "all" ? 'selected' : '' }}>Semua Media</option>
-                                <option value="1" {{ $jenis_media == 1 ? 'selected' : '' }} >Buku</option>
+                                <option value="1" {{ $jenis_media == 1 ? 'selected' : '' }} >Buku Cetak</option>
                                 <option value="2" {{ $jenis_media == 2 ? 'selected' : '' }} >Pdf</option>
                                 <option value="3" {{ $jenis_media == 3 ? 'selected' : '' }} >Epub</option>
                                 <option value="4" {{ $jenis_media == 4 ? 'selected' : '' }} >Audio Book</option>
@@ -162,15 +168,18 @@ $('#customSearchField').on('keyup', function() {
 <!-- js data table pencarian-->
 @push('scripts')
 <script>
-    //$(document).ready(function() {
+    $(document).ready(function() {
+        generateDataPenerbitTerbanyak();
+        generateDataKotaPenerbitTerbanyak();
         //load datatable
         const keyword = "{{ $keyword }}" ; 
         const filter = "{{ $filter_by }}" ;
         const jenis_media = "{{ $jenis_media }}" ;
 
+        // console.log(filter, keyword, jenis_media, 'hakim');
         dataTables(filter, keyword, jenis_media);
         //end loaddata
-    //})
+    })
     function generateDataPenerbitTerbanyak() {
 		$.ajax({
             url: '{{ url("searchval/penerbit-terbanyak") }}',
@@ -178,6 +187,12 @@ $('#customSearchField').on('keyup', function() {
             contentType: false,
             processData: false,
 			async :false,
+            beforeSend: function() {
+                $('#datatable-loader').show();  // Tampilkan loader sebelum data dimuat
+            },
+            complete: function() {
+                $('#datatable-loader').hide();  // Sembunyikan loader setelah data selesai dimuat
+            },
             success: function(response) {
                 for (var d = 0; d < response.length; d++) {
                     $('#top5penerbit').append('<a class="nav-link" href="">'+ response[d]['NAMA_PENERBIT'] + '</a>');
@@ -193,16 +208,21 @@ $('#customSearchField').on('keyup', function() {
             contentType: false,
             processData: false,
 			async :false,
+            beforeSend: function() {
+                $('#datatable-loader').show();  // Tampilkan loader sebelum data dimuat
+            },
+            complete: function() {
+                $('#datatable-loader').hide();  // Sembunyikan loader setelah data selesai dimuat
+            },
             success: function(response) {
                 for (var d = 0; d < response.length; d++) {
                     $('#top5kotapenerbit').append('<a class="nav-link" href=""><li class="list-group-item d-flex justify-content-between align-items-center">' +
-                                                                            response[d]['CITY'] + '</li></a>');
+                    response[d]['CITY'] + '</li></a>');
 				}
             },
         });
 	};
-    generateDataPenerbitTerbanyak();
-    generateDataKotaPenerbitTerbanyak();
+    
 
     //link aktif untuk menu penerbit
     const navLinksPenerbit = document.querySelectorAll('#navbar-penerbit .nav-link');
