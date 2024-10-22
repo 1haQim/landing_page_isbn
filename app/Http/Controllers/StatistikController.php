@@ -13,6 +13,90 @@ class StatistikController extends Controller
         return view('content.statistik');
     }
 
+    function dataMapsMaping() {
+        $provinceMap = [
+            11 => 'id-ac', // Aceh
+            12 => 'id-su', // Sumatera Utara
+            13 => 'id-sb', // Sumatera Barat
+            14 => 'id-ri', // Riau
+            15 => 'id-ja', // Jambi
+            16 => 'id-sl', // Sumatera Selatan
+            17 => 'id-be', // Bengkulu
+            18 => 'id-1024', // Lampung
+            19 => 'id-bb', // Kepulauan Bangka Belitung
+            21 => 'id-kr', // Kepulauan Riau
+            31 => 'id-jk', // DKI Jakarta
+            32 => 'id-jr', // Jawa Barat
+            33 => 'id-jt', // Jawa Tengah
+            34 => 'id-yo', // Daerah Istimewa Yogyakarta
+            35 => 'id-ji', // Jawa Timur
+            36 => 'id-bt', // Banten
+            51 => 'id-ba', // Bali
+            52 => 'id-nb', // Nusa Tenggara Barat
+            53 => 'id-nt', // Nusa Tenggara Timur
+            61 => 'id-kb', // Kalimantan Barat
+            62 => 'id-kt', // Kalimantan Tengah
+            63 => 'id-ks', // Kalimantan Selatan
+            64 => 'id-ki', // Kalimantan Timur
+            65 => 'id-kp', // Kalimantan Utara
+            71 => 'id-sw', // Sulawesi Utara
+            72 => 'id-st', // Sulawesi Tengah
+            73 => 'id-se', // Sulawesi Selatan
+            74 => 'id-sg', // Sulawesi Tenggara
+            75 => 'id-go', // Gorontalo
+            76 => 'id-sr', // Sulawesi Barat
+            81 => 'id-ma', // Maluku
+            82 => 'id-la', // Maluku Utara
+            91 => 'id-pa', // Papua
+            92 => 'id-ib', // Papua Barat
+            93 => 'id-ps', // Papua Selatan
+            94 => 'id-pt', // Papua Tengah
+            95 => 'id-pp', // Papua Pegunungan
+            96 => 'id-pbd', // Papua Barat Daya
+        ];
+
+        return $provinceMap;
+    }
+
+    function peta_provinsi(Request $request) {
+        $tahun = date("Y");
+        if ($request->query('year')) {
+            $tahun = $request->query('year');
+        }
+        $query = "SELECT Id, (
+                    SELECT COUNT( * ) 
+                    FROM PENERBIT 
+                    WHERE
+                        PROPINSI.ID = PENERBIT.PROVINCE_ID 
+                        AND TO_CHAR( CREATEDATE, 'YYYY' ) = '$tahun' 
+                    ) AS Jumlah 
+                FROM PROPINSI ORDER BY ID";
+        try {
+            // API call
+            $data = kurl('get', 'getlistraw', null, $query, 'sql');
+
+            $provinceMap = $this->dataMapsMaping();
+
+            // dd($data['Data']['Items']);
+
+            //generate to data grafik
+            $mappedIsbnData = [];
+            foreach ($data['Data']['Items'] as $row) {
+                $hcKey = isset($provinceMap[$row['ID']]) ? $provinceMap[$row['ID']] : null;
+                if ($hcKey) {
+                    $mappedIsbnData[] = [
+                        'hc-key' => $hcKey,
+                        'value' => (int) $row['JUMLAH'],
+                    ];
+                }
+            }
+            //response
+            return successResponse(content : json_encode($mappedIsbnData));
+        } catch (Exception $e) {
+            return errorResponseWithContent(content : $e->getMessage());
+        }
+    }
+
     function jenis_cetak_isbn(Request $request) {
         $tahun = date("Y");
         if ($request->query('year')) {
