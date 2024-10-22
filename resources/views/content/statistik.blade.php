@@ -363,7 +363,7 @@
                     point: {
                         events: {
                             click: function() {
-                                alert(this.name + ': ' + this.value + ' ISBN Per Provinsi');
+                                // alert(this.name + ': ' + this.value + ' ISBN Per Provinsi');
                             }
                         }
                     }
