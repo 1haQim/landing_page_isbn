@@ -81,14 +81,15 @@
                                         @if($item['HREF'])
                                         <div class="card" style="width: 15rem;">
                                             <div style="height: 200px; overflow: hidden;">
+                                                {{ $item['NOMOR']. ' ' }} - {{ $item['TITLE'] }}
+                                                <hr>
                                                 <img src="{{ config('app.url').'/prosedur/'.$item['HREF']}}" class="card-img-top" alt="..." style="height: 100%; width: 100%; object-fit: cover; object-position: center;" onclick="openModalImg('<?php echo htmlspecialchars($item['TITLE']); ?>', '{{ config('app.url').'/prosedur/'.$item['HREF'] }}', '<?php echo htmlspecialchars($item['NOMOR']); ?>', '<?php echo htmlspecialchars($item['DESCRIPTION']); ?>')">
                                             </div>
-                                            <div class="card-body d-inline" >
-                                                {{ $item['NOMOR']. ' ' }} - {{ $item['TITLE'] }}
-                                            </div>
-                                            <button type="button" class="btn btn-sm btn-primary" onclick="openModalImg('<?php echo htmlspecialchars($item['TITLE']); ?>', '{{ config('app.url').'/prosedur/'.$item['HREF'] }}', '<?php echo htmlspecialchars($item['NOMOR']); ?>', '<?php echo htmlspecialchars($item['DESCRIPTION']); ?>')">
+                                            <center><p style="font-size:11px">Image. {{  $item['NOMOR'] }} - {{ $item['IMAGE_DESC'] }}</p></center>
+                                            <button type="button" class="btn btn-sm btn-primary" onclick="openModalImg('<?php echo htmlspecialchars($item['TITLE']); ?>', '{{ config('app.url').'/prosedur/'.$item['HREF'] }}', '<?php echo htmlspecialchars($item['NOMOR']); ?>', '<?php echo htmlspecialchars($item['DESCRIPTION']); ?>', '<?php echo htmlspecialchars($item['IMAGE_DESC']); ?>')">
                                                 Lihat Detail
                                             </button>
+                                            <hr>
                                         </div>
                                         @endif
                                     @endforeach 
@@ -129,23 +130,8 @@
             <div class="modal-body">
                 <!-- Slider (Carousel) -->
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner" id="carouselItems">
-                        @foreach($group['items'] as $item)
-                            @if($item['HREF'])
-                                <div class="carousel-item" >
-                                    <img src="{{ config('app.url').'/prosedur/'.$item['HREF']}}" class="d-block w-100" alt="Slide 1">
-                                </div>
-                            @endif
-                        @endforeach 
-                    </div>
-                    <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button> -->
+                    <img src="{{ config('app.url').'/prosedur/'.$item['HREF']}}" class="d-block w-100" alt="Slide 1">
+                    <center><p style="font-size:14px; margin-top:30px" id="sliderModalImgDesc"></p></center>
                 </div>
             </div>
             <div style="padding:30px">
@@ -208,31 +194,21 @@
         });
     });
 
-    function openModalImg(title, img, no, desc){
+    function openModalImg(title, img, no, desc, imgdesc){
         var modalElement = document.getElementById('sliderModal');
 
-        document.getElementById('sliderModalLabel').innerText = title;
+        document.getElementById('sliderModalLabel').innerText = no + ' - ' +title;
         document.getElementById('sliderModalDesc').innerText = desc;
-
-        var carouselInner = document.getElementById('carouselItems');
-        carouselInner.innerHTML = ''; // Clear previous items
+        document.getElementById('sliderModalImgDesc').innerText = 'Image. '+no+ ' - ' +imgdesc;
 
         // Create new carousel item with image and description
         var carouselItem = document.createElement('div');
-        carouselItem.className = 'carousel-item active'; // Set active to make this the initial slide
 
         // Create image element
         var imgElement = document.createElement('img');
         imgElement.src = img; // Set image source dynamically
         imgElement.className = 'd-block w-100';
         imgElement.alt = title;
-
-
-        // Append image and caption to the carousel item
-        carouselItem.appendChild(imgElement);
-
-        // Append the new carousel item to the carousel-inner
-        carouselInner.appendChild(carouselItem);
 
         // Initialize the modal with Bootstrap's Modal class
         var modal = new bootstrap.Modal(modalElement);
