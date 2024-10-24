@@ -152,10 +152,10 @@
         <div class="row">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="education-tab" data-bs-toggle="tab" data-bs-target="#education-tab-pane" type="button" role="tab" aria-controls="education-tab-pane" aria-selected="false">Statistik</button>
+                    <button class="nav-link active" id="finance-tab" data-bs-toggle="tab" data-bs-target="#finance-tab-pane" type="button" role="tab" aria-controls="finance-tab-pane" aria-selected="false">Berita</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link " id="finance-tab" data-bs-toggle="tab" data-bs-target="#finance-tab-pane" type="button" role="tab" aria-controls="finance-tab-pane" aria-selected="false">Berita</button>
+                    <button class="nav-link " id="education-tab" data-bs-toggle="tab" data-bs-target="#education-tab-pane" type="button" role="tab" aria-controls="education-tab-pane" aria-selected="false">Statistik</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="marketing-tab" data-bs-toggle="tab" data-bs-target="#marketing-tab-pane" type="button" role="tab" aria-controls="marketing-tab-pane" aria-selected="false">BIP</button>
@@ -171,7 +171,10 @@
         <div class="row">
             <div class="col-12">
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="education-tab-pane" role="tabpanel" aria-labelledby="education-tab" tabindex="0">
+                    <div class="tab-pane fade show active" id="finance-tab-pane" role="tabpanel" aria-labelledby="finance-tab" tabindex="0">   
+                       @include('content.home_berita')
+                    </div>
+                    <div class="tab-pane fade " id="education-tab-pane" role="tabpanel" aria-labelledby="education-tab" tabindex="0">
                         <div class="row">
                             <!-- detail statistik singkat-->
                             <div class="col-lg-12 col-md-12 col-12 mb-12 mb-lg-12" id="statistik_singkat">
@@ -191,9 +194,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade " id="finance-tab-pane" role="tabpanel" aria-labelledby="finance-tab" tabindex="0">   
-                       @include('content.home_berita')
-                    </div>
+                    
                     {{-- BIP PAGE --}}
                     <div class="tab-pane fade" id="marketing-tab-pane" role="tabpanel" aria-labelledby="marketing-tab" tabindex="0">
                         @include('content.home_bip')
