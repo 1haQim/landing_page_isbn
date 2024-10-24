@@ -366,9 +366,16 @@ $('#customSearchField').on('keyup', function() {
                 },
                 { data: 'TAHUN_TERBIT' },
                 { data: 'TEMPAT_TERBIT' },
-                
-                { data: 'JML_JILID' },
-                
+                { 
+                    data: 'JML_JILID',
+                    render: function(data) {
+                        if (data <= 1 ) {
+                            return 'Lepas';
+                        } else {
+                            return data;
+                        }
+                    },
+                },
                 { 
                     data: 'LINK_BUKU',
                     render: function(data, type, row) {
@@ -410,7 +417,7 @@ $('#customSearchField').on('keyup', function() {
         myModal.show();
         
         $.ajax({
-            url: 'http://demo321.online:8212/isbn-bopenerbit/penerbit/isbn/data/view-kdt/'+value,
+            url: 'http://demo321.online:8212/isbn-bopenerbit/penerbit/isbn/data/view-kdt/'+value+'?bo_penerbit=1',
             type: 'GET',
             success: function(response) {
                 // Load the response into the modalContent div
