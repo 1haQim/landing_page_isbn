@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/home') }} ">
-            <img src="{{ asset('template/images/isbn.jpg') }}" class="" alt="" style="width: 120px;">
+        <img src="{{ asset('template/images/logo.png') }}" class="" alt="" style="width: 280px;">
+            <!-- <img src="{{ asset('template/images/logo.jpg') }}" class="" alt="" style="width: 120px;"> -->
         </a>
 
         <div class="d-lg-none ms-auto me-4">
