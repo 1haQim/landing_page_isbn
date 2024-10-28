@@ -380,7 +380,7 @@ $('#customSearchField').on('keyup', function() {
                     data: 'LINK_BUKU',
                     render: function(data, type, row) {
                         if (data) {
-                            return '<a href="'+ data +'">'+ data +'</a>';
+                            return '<a href="'+ data +'" target="_blank">'+ data +'</a>';
                         } else {
                             return '';
                         }
