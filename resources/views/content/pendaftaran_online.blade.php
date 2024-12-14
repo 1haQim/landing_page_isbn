@@ -400,8 +400,8 @@
                                         <input type="number" placeholder="Telephone" class="form-control" id="" name="admin_phone" required>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="confirm_password" style="color:black">Kode Pos</label>
-                                        <input type="number" placeholder="Kode Pos" class="form-control" id="" name="kodepos">
+                                        <label for="confirm_password" style="color:black">Kode Pos  <p style="color:red; display:inline;">*</p></label>
+                                        <input type="number" placeholder="Kode Pos" class="form-control" id="" name="kodepos" required>
                                     </div>
                                 </div>
                                 <div class="form-row row" style="margin-top:108px">
@@ -955,22 +955,22 @@ generate username
                 //send params fecth api
                 var req_data = { 'nama_penerbit' : value }
                 //validasi nama
-                var nama_penerbit_id = document.getElementById('nama_penerbit').value
-                if (nama_penerbit_id.length < 8) {
-                    document.getElementById('ket_'+ name).innerHTML = ' Nama Penerbit Harus melebihi 8 karakter';
-                    document.getElementById('loader_'+ name).style.display = 'none';
-                    document.getElementById('error_'+ name).style.display = 'block';
-                    var ket = 'Nama Penerbit Kurang Dari 8 karakter ';
-                    validateDtExisting(name, ket, 0)
-                    validate = 'error';
-                    nextStep = false;
-                } else {
-                    var ket = ''
-                    validateDtExisting(name, ket, 1)
-                    validate = '';
-                    nextStep = true;
-                    finishValidate = true;
-                }
+                // var nama_penerbit_id = document.getElementById('nama_penerbit').value
+                // if (nama_penerbit_id.length < 8) {
+                //     document.getElementById('ket_'+ name).innerHTML = ' Nama Penerbit Harus melebihi 8 karakter';
+                //     document.getElementById('loader_'+ name).style.display = 'none';
+                //     document.getElementById('error_'+ name).style.display = 'block';
+                //     var ket = 'Nama Penerbit Kurang Dari 8 karakter ';
+                //     validateDtExisting(name, ket, 0)
+                //     validate = 'error';
+                //     nextStep = false;
+                // } else {
+                //     var ket = ''
+                //     validateDtExisting(name, ket, 1)
+                //     validate = '';
+                //     nextStep = true;
+                //     finishValidate = true;
+                // }
                 break;
             default:
                 break;
