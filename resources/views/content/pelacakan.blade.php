@@ -127,10 +127,7 @@
                                     <th>Tahun Terbit</th>
                                     <td>`+ data.Items[0].TAHUN_TERBIT + ` </td>
                                 </tr>
-                                <tr>
-                                    <th>Jilid Volume</th>
-                                    <td>`+ data.Items[0].JILID_VOLUME + ` </td>
-                                </tr>
+                               
                             `
                         } else {
                             bodyTbl += `
@@ -150,3 +147,8 @@
         }
     </script>
 @endpush
+
+<!-- <tr> -->
+    <!-- <th>Jilid Volume</th> -->
+    <!-- <td>`+ data.Items[0].JILID_VOLUME + ` </td> -->
+<!-- </tr> -->
