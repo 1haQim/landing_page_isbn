@@ -291,26 +291,24 @@ class PendaftaranController extends Controller
                         $sts_ket = 'error';
                         $ket = 'gagal upload file';
                         //masukkan kedalam log untuk kegunaan tracking data
-                    }
-
-                    // dd()
-
-                    $data_send_otp = [
-                        'email_admin'       => $request->input('admin_email'),
-                        'email_alternatif'  => $request->input('alternate_email'),
-                        'password'          => $pass_untuk_send_email,
-                        'username'    => $request->input('user_name'),
-                        'kode_otp'    => $otp
-                    ];
-
-                    $res_otp = $this->send_email($data_send_otp);
-                    if ($res_otp) {
-                        //return json berhasil
-                        $sts_ket = 'success';
-                        $ket = 'berhasil pendaftaran silahkan check email anda untuk verifikasi';
                     } else {
-                        $sts_ket = 'error';
-                        $ket = 'Gagal mengirim email klik kirim ulang kode OTP';
+                        $data_send_otp = [
+                            'email_admin'       => $request->input('admin_email'),
+                            'email_alternatif'  => $request->input('alternate_email'),
+                            'password'          => $pass_untuk_send_email,
+                            'username'    => $request->input('user_name'),
+                            'kode_otp'    => $otp
+                        ];
+    
+                        $res_otp = $this->send_email($data_send_otp);
+                        if ($res_otp) {
+                            //return json berhasil
+                            $sts_ket = 'success';
+                            $ket = 'berhasil pendaftaran silahkan check email anda untuk verifikasi';
+                        } else {
+                            $sts_ket = 'error';
+                            $ket = 'Gagal mengirim email klik kirim ulang kode OTP';
+                        }
                     }
 
                     $res_data = [
